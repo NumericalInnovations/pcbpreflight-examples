@@ -8,4 +8,4 @@ and makes calls to our API.
 * Type `node app.js` to start web server.
 * Open a browser and point to `http://localhost:3000`
 * Pick Gerber files and make sure there is an FM6 file included also.
-* Submit, it will process, and pictures will display.
+* Press the submit button, wait for processing, and pictures will display.
