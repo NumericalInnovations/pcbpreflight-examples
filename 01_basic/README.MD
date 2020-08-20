@@ -1,5 +1,5 @@
 # Cloud DFM Basic Example
-This is a very basic example.  Your CLOUDDFM_TOKEN should never be exposed to the public.  
+This is a very basic example.  Your `CLOUDDFM_TOKEN` should never be exposed to the public.  
 This is only to show how our API can be used.  Please see "Cloud DFM Web Server Example"
 for a better example of CloudDFM usage on your own web server.
 
