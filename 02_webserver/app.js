@@ -1,6 +1,6 @@
 //Numerical Innovations
 
-const CLOUDDFM_TOKEN = 'dlmkIv6SQQPIeLwX3PX5JGfqDSFJgICD'; //This should be stored as an ENV variable
+const CLOUDDFM_TOKEN = 'YOUR-CLOUDDFM-TOKEN'; //This should be stored as an ENV variable
 
 const multer = require('multer')
 const FormData = require('form-data')
