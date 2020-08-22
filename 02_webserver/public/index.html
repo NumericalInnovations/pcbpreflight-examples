@@ -38,7 +38,7 @@
               if(data.ok==1) {
                 $('#results').empty();
                 for(var i=0;i<data.result.outputs.length;i++) {
-                  let src = data.result.outputs[i];
+                  var src = data.result.outputs[i];
                   if(src.ext=='jpg'||src.ext=='png') {
                     $('#results').append('<img src="'+src.url+'" width="320"/>');
                   }
