@@ -96,7 +96,7 @@
             if(file.length==0) break;
             var filename = file.split('\\').pop();
             var layer_type = $('#select'+i).val();
-            fm6 += '   LAYER='+i+','+filename+';'+layer_type+'\n';
+            fm6 += '   LAYER=,'+filename+';'+layer_type+'\n';
           }
           fm6 += '}\n';
           fm6 += 'EXPORT_IMAGE {\n'
