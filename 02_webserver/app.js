@@ -24,8 +24,8 @@ app.post('/process', upload.array('files'), (req,res,next) => {
 
   //Create form data with multiple files
   let form = new FormData()
-  form.append('async','false')
-  form.append('output','files')
+  form.append('async','false') //Set to false to wait for results, true to return immediately
+  form.append('output','files')  //Either multiple "files" or one "zip"
   req.files.forEach(n=>{form.append('files',fs.createReadStream(n.path),n.originalname)})
 
   //Make a request to CloudDFM
