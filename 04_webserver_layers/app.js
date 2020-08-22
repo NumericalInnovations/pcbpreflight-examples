@@ -26,7 +26,7 @@ app.post('/process', upload.array('files'), (req,res,next) => {
   let form = new FormData()
   form.append('async','false')
   form.append('output','files')
-  form.append('fm6',req.body.fm6)
+  form.append('fm6',req.body.fm6) //Client generated this file, you can generate this server-side also
   req.files.forEach(n=>{form.append('files',fs.createReadStream(n.path),n.originalname)})
 
   //Make a request to CloudDFM
