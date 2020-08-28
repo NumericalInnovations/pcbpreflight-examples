@@ -6,3 +6,4 @@ Examples on how you can integrate Cloud DFM APIs on your own web server.  Always
 1. Webserver Example - NodeJS, Express, HTML and JQuery.
 1. Basic Layers Example - HTML, JQuery with dynamically generated FM6 file.
 1. Webserver Layers Example - NodeJS, Express, HTML, JQuery with dynamically generated FM6 file.
+1. Basic DFM Checker - HTML, JQuery with FM6 file that results in a TXT and PDF file.
