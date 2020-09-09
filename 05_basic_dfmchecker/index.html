@@ -110,9 +110,8 @@
           $('#results').text('Please wait ...')
 
           //Create FM6 file
-          var fm6 = 'OPTIONS {\n'
-		      fm6 += 'OPTIONS {\n   fab-generate_border\n}\n'
-		      fm6 +='JOB {\n'
+          var fm6 = 'OPTIONS {\n   fab-generate_border\n}\n';
+	  fm6 +='JOB {\n';
           fm6 +='   NAME=sample_pcb\n';
           for(var i=1;i<=10;i++) {
             var file = $('#file'+i).val();
