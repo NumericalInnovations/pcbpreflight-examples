@@ -90,8 +90,12 @@
           $('#results').text('Please wait ...')
 
           //Create FM6 file
-          var fm6 = 'JOB {\n'
-          fm6 +='   NAME=testgerber\n';
+          var fm6 = '';
+          fm6 += 'OPTIONS {\n';
+          fm6 += '  fab-generate_border\n';
+          fm6 += '}\n';
+          fm6 += 'JOB {\n';
+          fm6 += '   NAME=testgerber\n';
           for(var i=1;i<=5;i++) {
             var file = $('#file'+i).val();
             if(file.length==0) break;
