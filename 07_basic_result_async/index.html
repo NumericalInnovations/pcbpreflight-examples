@@ -174,7 +174,7 @@
             success: function(data) { //Get results, and show all images
               if(data.ok==1) {
                 job_id = data.result.job_id; //Store the job ID and constantly check its progress
-                $('#results').html('Job #'+job_id+" processing ..."); //Add PRE for monospace font
+                $('#results').html('Job #'+job_id+" processing ..."); 
                 checkJobProgress();
               }
               else {
