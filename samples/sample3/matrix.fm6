@@ -1,0 +1,298 @@
+# SAMPLE MATRIX FILE
+
+OPTIONS {
+   fab-generate_border
+}
+
+LAYER {
+    TYPE=SILK_TOP
+    NAME=sst
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=255,0,0
+    FLASH_COLOR=255,0,0
+}
+
+LAYER {
+    TYPE=PASTE_TOP
+    NAME=spt
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=100,223,223
+    FLASH_COLOR=100,223,223
+}
+
+
+LAYER {
+    TYPE=MASK_TOP
+    NAME=smt
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=223,100,100
+    FLASH_COLOR=223,100,100
+}
+
+
+LAYER {
+    TYPE=TOP
+    NAME=top
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=100,223,0
+    FLASH_COLOR=100,223,0
+}
+
+LAYER {
+    TYPE=pos_plane
+    NAME=layer_2
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=50,100,50
+    FLASH_COLOR=50,100,50
+}
+
+LAYER {
+    TYPE=internal
+    NAME=layer_3
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=100,223,200
+    FLASH_COLOR=100,223,200
+}
+
+LAYER {
+    TYPE=internal
+    NAME=layer_4
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=223,100,223
+    FLASH_COLOR=223,100,223
+}
+
+LAYER {
+    TYPE=pos_plane
+    NAME=layer_5
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=223,100,223
+    FLASH_COLOR=223,100,223
+}
+
+LAYER {
+    TYPE=internal
+    NAME=layer_6
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=223,100,223
+    FLASH_COLOR=223,100,223
+}
+
+LAYER {
+    TYPE=internal
+    NAME=layer_7
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=223,100,223
+    FLASH_COLOR=223,100,223
+}
+
+LAYER {
+    TYPE=internal
+    NAME=layer_8
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=223,100,223
+    FLASH_COLOR=223,100,223
+}
+
+LAYER {
+    TYPE=internal
+    NAME=layer_9
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=223,100,223
+    FLASH_COLOR=223,100,223
+}
+
+LAYER {
+    TYPE=internal
+    NAME=layer_10
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=223,100,223
+    FLASH_COLOR=223,100,223
+}
+
+LAYER {
+    TYPE=internal
+    NAME=layer_11
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=223,100,223
+    FLASH_COLOR=223,100,223
+}
+
+LAYER {
+    TYPE=BOTTOM
+    NAME=bottom
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=223,100,223
+    FLASH_COLOR=223,100,223
+}
+
+
+LAYER {
+    TYPE=MASK_BOTTOM
+    NAME=smb
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=173,173,173
+    FLASH_COLOR=173,173,173
+}
+
+
+LAYER {
+    TYPE=PASTE_BOTTOM
+    NAME=spb
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=192,32,32
+    FLASH_COLOR=192,32,32
+}
+
+
+LAYER {
+    TYPE=SILK_BOTTOM
+    NAME=ssb
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=100,192,128
+    FLASH_COLOR=100,192,128
+}
+
+
+LAYER {
+    TYPE=DRILL
+    NAME=drill
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=192,192,100
+    FLASH_COLOR=192,192,100
+}
+
+LAYER {
+    TYPE=ROUT
+    NAME=rout
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=30,128,96
+    FLASH_COLOR=30,128,96
+}
+
+
+LAYER {
+    TYPE=GRAPHIC
+    NAME=assemt
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=32,96,100
+    FLASH_COLOR=32,96,100
+}
+
+
+LAYER {
+    TYPE=GRAPHIC
+    NAME=assemb
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=32,100,96
+    FLASH_COLOR=32,100,96
+}
+
+
+LAYER {
+    TYPE=GRAPHIC
+    NAME=ddt
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=128,96,32
+    FLASH_COLOR=128,96,32
+}
+
+
+LAYER {
+    TYPE=GRAPHIC
+    NAME=c-nummer
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=64,128,64
+    FLASH_COLOR=64,128,64
+}
+
+
+LAYER {
+    TYPE=BORDER
+    NAME=pcb_border
+    START_DRILL=
+    END_DRILL=
+    DRAW_COLOR=32,192,192
+    FLASH_COLOR=32,192,192
+}
+
+NCTOOLS {
+   UNITS=INCH
+   INTEGER=3
+   DECIMAL=5
+   TYPE=ABSOLUTE
+   SUPPRESSION=NONE
+}
+
+#Job - 1
+JOB {
+    NAME=bigDfmTest
+    LAYER=top,top_layer.gbr
+    LAYER=layer_2,gnd.gbr    
+    LAYER=layer_3,horiz.gbr
+    LAYER=layer_4,vert.gbr    
+    LAYER=layer_5,power.gbr
+    LAYER=bottom,bottom_layer.gbr
+    LAYER=sst,top_overlay.gbr
+    LAYER=spt,top_paste.gbr
+    LAYER=smt,top_solder.gbr
+    LAYER=smb,bottom_solder.gbr
+    LAYER=spb,bottom_paste.gbr
+    LAYER=ssb,bottom_overlay.gbr
+    LAYER=drill,drill.drl
+    LAYER=pcb_border,profile_layer.gbr
+}
+
+#Lets run DFM Checker (choose units or mil or mm)
+DFMCHECKER {
+    units=mil
+    signal_minimum_pad_size=15.0
+    signal_minimum_smt_pad_width=5.0
+    signal_minimum_trace_width=4.0
+    signal_minimum_clearance_outer_layers=9.0
+    signal_minimum_clearance_inner_layers=6.0
+    signal_minimum_annular_ring_drill_pad=4.0
+    signal_clearance_from_board_edge=10.0
+    find_nonfunctional_internalpads
+    drill_minimum_drill_size=7.0
+    drill_find_double_hits
+    drill_find_pads_without_drills
+    drill_find_plated_drill_without_pads
+    drill_find_touching_holes
+    silk_minimum_silkscreen_line_width=4.0
+    silk_find_silkscreen_over_mask=1.0
+    silk_clearance_board_edge=10.0
+    mask_find_undersized_mask_clearances=4.0
+    mask_find_missing_mask_clearances
+    mask_find_mask_slivers=8.0
+    mask_find_solder_bridges=8.0
+    plane_minimum_annular_ring=4.0
+    plane_find_starved_thermal=8.0
+	output_pdf_file=dfm_report.pdf
+	output_text_file=dfm_report.txt
+	output_gerber_file=dfm_report.gbr
+}
