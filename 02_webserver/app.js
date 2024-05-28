@@ -33,7 +33,7 @@ app.post('/process', upload.array('files'), (req,res,next) => {
     method: 'post',
     host: 'www.clouddfm.com',
     path: '/api/v1/job',
-    headers: Object.assign({'clouddfm-token':CLOUDDFM_TOKEN},form.getHeaders())
+    headers: Object.assign({'Authorization':CLOUDDFM_TOKEN},form.getHeaders())
   }, function(response) {
     let body = ''
     response.on('data',function(chunk) {body+=chunk})

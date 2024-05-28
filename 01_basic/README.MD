@@ -7,4 +7,4 @@ for a better example of CloudDFM usage on your own web server.
 * Open `index.html` in an editor and replace CLOUDDFM_TOKEN with your own token.
 * Open a browser and point to the `index.html` local file.
 * Pick Gerber files and make sure there is an FM6 file included also.
-* Press the submit button, wait for processing, and pictures will display.
+* Press the submit button, wait for processing, and a job_id will be returned for

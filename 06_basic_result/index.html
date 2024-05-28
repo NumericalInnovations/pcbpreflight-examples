@@ -159,7 +159,7 @@
             type: 'POST',
             url: 'https://www.clouddfm.com/api/v1/job',
             enctype: 'multipart/form-data',
-            headers: {'clouddfm-token':CLOUDDFM_TOKEN},
+            headers: {'Authorization':CLOUDDFM_TOKEN},
             data: new FormData($('#form1')[0]),
             dataType: "json",
             cache: false,

@@ -166,7 +166,7 @@
             type: 'POST',
             url: 'https://www.clouddfm.com/api/v1/job',
             enctype: 'multipart/form-data',
-            headers: {'clouddfm-token':CLOUDDFM_TOKEN},
+            headers: {'Authorization':CLOUDDFM_TOKEN},
             data: new FormData($('#form1')[0]),
             dataType: "json",
             cache: false,
@@ -193,7 +193,7 @@
         $.ajax({
           type: 'GET',
           url: 'https://www.clouddfm.com/api/v1/job/'+job_id,
-          headers: {'clouddfm-token':CLOUDDFM_TOKEN},
+          headers: {'Authorization':CLOUDDFM_TOKEN},
           success: function(data) { //Get results, and show all images
             if(data.ok==1) {
               if(data.result.status=='complete') { //Job is done

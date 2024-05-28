@@ -125,7 +125,7 @@
             type: 'POST',
             url: 'https://www.clouddfm.com/api/v1/job',
             enctype: 'multipart/form-data',
-            headers: {'clouddfm-token':CLOUDDFM_TOKEN},
+            headers: {'Authorization':CLOUDDFM_TOKEN},
             data: new FormData($('#form1')[0]),
             dataType: "json",
             cache: false,
@@ -135,12 +135,13 @@
               console.info(data);
               if(data.ok==1) {
                 $('#results').empty();
-                for(var i=0;i<data.result.outputs.length;i++) {
-                  let src = data.result.outputs[i];
-                  if(src.ext=='jpg'||src.ext=='png') {
-                    $('#results').append('<img src="'+src.url+'" width="320"/>');
-                  }
-                }
+                $('#results').append('job_id_hash = '+data.result.job_id_hash);
+                // for(var i=0;i<data.result.outputs.length;i++) {
+                //   let src = data.result.outputs[i];
+                //   if(src.ext=='jpg'||src.ext=='png') {
+                //     $('#results').append('<img src="'+src.url+'" width="320"/>');
+                //   }
+                // }
               }
               else {
                 $('#results').text(data.err.message);
