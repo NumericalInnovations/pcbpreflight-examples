@@ -10,7 +10,7 @@
     <h1>PCB Preflight API Basic Example</h1>
 
     <form id="form1">
-      <input type="hidden" name="async" value="false"/>
+      Your API Key <input id="api_key" type="text" value=""/>
       <input type="hidden" name="output" value="files"/>
       <input type="hidden" name="save_input" value="false"/>
       <input type="hidden" name="send_email" value="true"/>
@@ -18,8 +18,10 @@
       <p>Upload Multiple Files <input type="file" name="files" id="files" multiple/></p>
       <p><input type="submit" id="submitButton" value="Submit"/></p>
     </form>
-    <br/>
 
+    <span id="errorMessage" style="color:red"></span><br/>
+    <br/>
+    
     <div id="result1Container" style="display:none">
       <div>Get Job ID, then keep checking if status='complete'</div>
       <pre id="result1" style="width:90%;padding:8px;border:1px solid black;font-family:'Courier New', Courier, monospace;overflow:hidden"></pre>
@@ -34,7 +36,7 @@
     <script>
       // This should NOT be public, you can regenerate keys if it is abused.
       // See the webserver code for a better example how to integrate CloudDFM to your website
-      const PCBPREFLIGHT_API_KEY = 'YOUR-PCB-PREFLIGHT-API-KEY'; 
+      let api_key = null;
       let job = null
       let job_id_hash = null;
 
@@ -54,10 +56,15 @@
       async function submit() {
         const formData = new FormData(document.getElementById('form1'));
 
+        // Clear error
+        document.getElementById('errorMessage').textContent = ''
+
         try {
+          api_key = document.getElementById('api_key').value;
+
           const response = await fetch('https://www.pcbpreflight.com/api/v1/job', {
             method: 'POST',
-            headers: {'Authorization': PCBPREFLIGHT_API_KEY},
+            headers: {'Authorization': api_key},
             body: formData,
             cache: 'no-cache',
           });
@@ -68,7 +75,7 @@
             document.getElementById('result1Container').style.display = 'block'
             const result1 = document.getElementById('result1');
             result1.textContent = JSON.stringify(data.result,null,2)
-
+            
             // Keep trying to get the job until status=='complete'
             while(job==null || job.status!='complete') {
               await delay(1000)
@@ -76,23 +83,23 @@
               updateResult()
             }
           } else {
-            result1.textContent = data.err.message;
+            document.getElementById('errorMessage').textContent = data.err.message;
           }
         } catch (err) {
-          result1.textContent = err.statusText;
+          console.error(err)
+          document.getElementById('errorMessage').textContent = err.message;
         }
       }
 
       async function checkJob() {
         const response = await fetch(`https://www.pcbpreflight.com/api/v1/job/${job_id_hash}`, {
           method: 'GET',
-          headers: {'Authorization': PCBPREFLIGHT_API_KEY},
+          headers: {'Authorization': api_key},
           cache: 'no-cache',
         });
-
         const data = await response.json();
         if (data.ok === 1) return data.result
-        throw Error(data.error)
+        throw Error(data.err.message)
       }
 
       function updateResult() {
