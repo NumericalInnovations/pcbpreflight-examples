@@ -18,16 +18,25 @@
       <p>Upload Multiple Files <input type="file" name="files" id="files" multiple/></p>
       <p><input type="submit" id="submitButton" value="Submit"/></p>
     </form>
+    <br/>
 
-    <div id="results"></div>
+    <div id="result1Container" style="display:none">
+      <div>Get Job ID, then keep checking if status='complete'</div>
+      <pre id="result1" style="width:90%;padding:8px;border:1px solid black;font-family:'Courier New', Courier, monospace;overflow:hidden"></pre>
+    </div>
+    <br/>
+
+    <div id="result2Container" style="display:none">
+      <div>Result of processing</div>
+      <pre id="result2" style="width:90%;padding:8px;border:1px solid black;font-family:'Courier New', Courier, monospace;overflow:hidden"></pre>
+    </div>
 
     <script>
       // This should NOT be public, you can regenerate keys if it is abused.
       // See the webserver code for a better example how to integrate CloudDFM to your website
-      const PCBPREFLIGHT_API_KEY = 'YOUR-PCBPREFLIGHT-API-KEY'; 
-      let job_id_hash = null;
-      let resultsElement = null;
+      const PCBPREFLIGHT_API_KEY = 'YOUR-PCB-PREFLIGHT-API-KEY'; 
       let job = null
+      let job_id_hash = null;
 
       document.addEventListener("DOMContentLoaded", init);
 
@@ -37,15 +46,12 @@
 
       function init() {
         document.getElementById("submitButton").addEventListener("click", async function(e) {
-          resultsElement = document.getElementById('results');
           e.preventDefault();
           submit()
         })
       }
 
       async function submit() {
-        resultsElement.textContent = 'Please wait ...';
-
         const formData = new FormData(document.getElementById('form1'));
 
         try {
@@ -59,19 +65,21 @@
           const data = await response.json();
           if (data.ok === 1) {
             job_id_hash = data.result.job_id_hash;
-            resultsElement.innerHTML = '';
-            resultsElement.innerHTML += `job_id_hash = ${job_id_hash} <br/>`;
+            document.getElementById('result1Container').style.display = 'block'
+            const result1 = document.getElementById('result1');
+            result1.textContent = JSON.stringify(data.result,null,2)
+
+            // Keep trying to get the job until status=='complete'
             while(job==null || job.status!='complete') {
               await delay(1000)
-              resultsElement.innerHTML += `Checking ... <br/>`;
               job = await checkJob()
+              updateResult()
             }
-            onJobComplete()
           } else {
-            resultsElement.textContent = data.err.message;
+            result1.textContent = data.err.message;
           }
         } catch (err) {
-          resultsElement.textContent = err.statusText;
+          result1.textContent = err.statusText;
         }
       }
 
@@ -87,15 +95,9 @@
         throw Error(data.error)
       }
 
-      function onJobComplete() {
-        console.error(job)
-        for(var i=0;i<job.outputs.length;i++) {
-          let src = job.outputs[i];
-          if(src.ext=='jpg'||src.ext=='png') {
-            resultsElement.innerHTML += '<img src="'+src.url+'" width="320"/><br/>';
-          }
-        }
-        resultsElement.innerHTML += 'DONE<br/>';
+      function updateResult() {
+        document.getElementById('result2Container').style.display = 'block';
+        document.getElementById('result2').textContent = JSON.stringify(job,null,2)
       }
     </script>
   </body>
