@@ -1,4 +1,5 @@
 # SAMPLE MATRIX FILE
+# Purpose: This example can runs a DFM check.
 
 OPTIONS {
    fab-generate_border

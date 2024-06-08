@@ -5,7 +5,7 @@
 # 2. Output an image for each layer.
 
 
-# Important:  All files paths in the JOB Array must be realtive (for CloudDFM.com)
+# Important:  All files paths in the JOB Array must be realtive (for pcbpreflight.com)
 #             For more information about the JOB array please review the MATRIX file User Reference,
 #             https://numerical-help-guide.s3.amazonaws.com/matrixfile/html/matrix-job-array.html
 

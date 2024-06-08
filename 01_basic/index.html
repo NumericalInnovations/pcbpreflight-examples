@@ -14,6 +14,11 @@
       You can upload a ZIP file or multiple files.  
       A matrix FM6 file must be included in those files.
       For testing, you can use our included sample files.
+      <ol>
+        <li>Sample 1 - Basic Example</li>
+        <li>Sample 2 - Basic Image Output Example</li>
+        <li>Sample 3 - Basic DFM Check Example</li>
+      </ol>
     </p>
 
     <form id="form1">
@@ -30,7 +35,7 @@
     <br/>
     
     <div id="result1Container" style="display:none">
-      <div>Get Job ID, then keep checking if status='complete'</div>
+      <div>Get Job ID, then keep checking if status='complete' every few seconds.</div>
       <pre id="result1" style="width:90%;padding:8px;border:1px solid black;font-family:'Courier New', Courier, monospace;overflow:hidden"></pre>
     </div>
     <br/>
@@ -42,7 +47,6 @@
 
     <script>
       // This should NOT be public, you can regenerate keys if it is abused.
-      // See the webserver code for a better example how to integrate CloudDFM to your website
       let api_key = null;
       let job = null
       let job_id_hash = null;
