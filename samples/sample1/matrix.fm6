@@ -3,9 +3,10 @@
 #
 # 1. Load Gerber and Drill Files.
 # 2. Output an image for each layer.
+# 3. Output a FAB 3000 Workspace file (*.wrk)
 
 
-# Important:  All files paths in the JOB Array must be realtive (for pcbpreflight.com)
+# Important:  All files paths in the JOB Array must be realtive (for CloudDFM.com)
 #             For more information about the JOB array please review the MATRIX file User Reference,
 #             https://numerical-help-guide.s3.amazonaws.com/matrixfile/html/matrix-job-array.html
 
@@ -41,4 +42,10 @@ EXPORT_IMAGE {
    CELL=testgerber
    FILE=all.jpg
    WIDTH=2000
+}
+
+# The SERIALIZE array saves the entire design environment to a Workspace file (*.wrk). 
+# Workspace files (*.wrk) are compatible with: FAB 3000, PCB Preflight, and ACE Translator.
+SERIALIZE{
+FILE=pcb2311.wrk
 }

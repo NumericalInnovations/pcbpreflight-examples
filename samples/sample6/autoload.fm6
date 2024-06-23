@@ -1,0 +1,11 @@
+ODB++{
+   FILE=PC4-SODIMM.tgz
+}
+
+EXPORT_IMAGE {
+   CELL=active
+   FOLDER=MyImages
+   WIDTH=1200
+   EXTENSION=jpg
+   BACKGROUND=white
+}
