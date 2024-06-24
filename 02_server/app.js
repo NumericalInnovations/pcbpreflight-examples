@@ -4,7 +4,7 @@ import delay from 'delay'
 import { FormData,Blob } from "formdata-node"
 import { promises as fs } from 'fs'
 
-const PCBPREFLIGHT_API_KEY = '9te6cbsn463nasvvzhf5rnhnxdh3334i'
+const PCBPREFLIGHT_API_KEY = '<< YOUR OWN PCBPREFLIGHT API KEY HERE >>'
 const SAMPLE1_FILE = '../samples/sample1.zip'
 const DIRNAME = path.dirname(new URL(import.meta.url).pathname);
 
