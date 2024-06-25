@@ -4,6 +4,7 @@ import delay from 'delay'
 import { FormData,Blob } from "formdata-node"
 import { promises as fs } from 'fs'
 
+const API_URL = `https://www.pcbpreflight.com/api/v1/job`
 const PCBPREFLIGHT_API_KEY = '<< YOUR OWN PCBPREFLIGHT API KEY HERE >>'
 const SAMPLE1_FILE = '../samples/sample1.zip'
 const DIRNAME = path.dirname(new URL(import.meta.url).pathname);
@@ -20,7 +21,7 @@ async function processJob(file) {
 		form.append('timeout', 60)
 
     // Request to process job, get a job ID
-    const response = await fetch(`https://www.pcbpreflight.com/api/v1/job`, {
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: {Authorization: PCBPREFLIGHT_API_KEY},
       body: form
