@@ -26,16 +26,17 @@ async function processJob(file) {
       headers: {Authorization: PCBPREFLIGHT_API_KEY},
       body: form
     })
-    if(!response.ok) throw Error(`Error: ${await response.text()}`)
-    const job_id_hash = (await response.json()).result.job_id_hash
-    console.log(`Job Submitted: ${job_id_hash}`)
+    const jsonResult = await response.json()
+    if(!jsonResult.ok) throw Error(`Error: ${jsonResult.err.message}`)
+    const job_id = jsonResult.result.job_id
+    console.log(`Job Submitted: ${job_id}`)
 
     // Keep checking the job if its complete, put a delay so as not to check too frequently
     let job = null
     while(true) {
       await delay(3000)
 
-      const response = await fetch(`https://www.pcbpreflight.com/api/v1/job/${job_id_hash}`, {
+      const response = await fetch(`https://www.pcbpreflight.com/api/v1/job/${job_id}`, {
         method: 'GET',
         headers: {Authorization: PCBPREFLIGHT_API_KEY},
         cache: 'no-cache',
