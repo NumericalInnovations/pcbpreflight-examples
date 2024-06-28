@@ -1,0 +1,23 @@
+DFMCHECKER {
+cell=active
+units=mil
+maximumErrorsPerRule=25
+signal_minimum_pad_size=15.0
+signal_minimum_smt_pad_width=6.0
+signal_minimum_trace_width=5.0
+signal_minimum_clearance_outer_layers=5.0
+signal_minimum_clearance_inner_layers=8.0
+drill_minimum_drill_size=7.0
+drill_find_double_hits
+drill_find_pads_without_drills
+drill_find_plated_drill_without_pads
+drill_find_touching_holes
+drill_minimum_clearance_drills_rout=5
+drill_minimum_clearance_rout_rout=10.0
+silk_minimum_silkscreen_line_width=5.0
+silk_find_silkscreen_over_mask=1.0
+silk_clearance_board_edge=10.0
+mask_find_undersized_mask_clearances=5.0
+mask_find_missing_mask_clearances
+output_pdf_file=DFMReport.pdf
+}

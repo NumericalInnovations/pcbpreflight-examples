@@ -1,0 +1,59 @@
+##################################################################
+#
+# PCB Preflight API Sample
+# https://www.pcbpreflight.com/
+#
+# Description: Import Gerber and Drill files, then output Images and Workspace file (*.wrk)
+#
+# 1. Loads Gerber and Drill Files.
+# 2. Output an image for each layer.
+# 3. Output a FAB 3000 Workspace file (*.wrk)
+#
+# Get more information about the MATRIX File Reference,
+# https://www.numericalinnovations.com/pages/fab-3000-matrix-file-description
+#
+# Numerical Innovations, Inc.
+# https://www.numericalinnovations.com/
+#
+##################################################################
+
+
+JOB {
+    NAME=testgerber
+    LAYER=layer_1,Art0121.pho;TOP
+    LAYER=layer_4,Art02.pho;BOTTOM
+    LAYER=layer_2,Pgp2529.pho;POS_PLANE
+    LAYER=layer_3,gnd2530.pho;POS_PLANE
+    LAYER=sst,Sst0126.pho;SILK_TOP
+    LAYER=spt,Sp0128.pho;PASTE_TOP
+    LAYER=smb,Sm0227.pho;MASK_BOTTOM
+    LAYER=smt,Sm0128.pho;MASK_TOP
+    LAYER=d_1_2,Drill.drl;DRILL_THRUHOLE
+}
+
+
+# Lets Generate images for each layer that has been imported.
+# Empty layers (i.e with no data) are automatically ignored.
+
+EXPORT_IMAGE {
+   CELL=active
+   FOLDER=myGerberViewerImages
+   WIDTH=1000
+   BACKGROUND=white
+}
+
+
+# Lets Generate a single jpeg image that includes all layers with 2000 width (pixels) for extra quality.
+# Notice Black background is the default
+
+EXPORT_IMAGE {
+   CELL=testgerber
+   FILE=all.jpg
+   WIDTH=2000
+}
+
+# The SERIALIZE array saves the entire design environment to a Workspace file (*.wrk). 
+# Workspace files (*.wrk) are compatible with: FAB 3000, PCB Preflight, and ACE Translator.
+SERIALIZE{
+FILE=pcb2311.wrk
+}

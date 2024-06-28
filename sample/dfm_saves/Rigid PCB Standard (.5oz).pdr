@@ -1,0 +1,542 @@
+{
+  "rule_id": null,
+  "user_id": null,
+  "dt": "2024-01-26 00:45:06.339549",
+  "rule_data": {
+    "rule_data": [
+      {
+        "active": true,
+        "rule": "Clearance from Board Edge",
+        "value": 10
+      },
+      {
+        "active": true,
+        "rule": "Minimum Annular Ring: Drill-Pad",
+        "value": 4
+      },
+      {
+        "active": true,
+        "rule": "Minimum Pad Size",
+        "value": 10
+      },
+      {
+        "active": true,
+        "rule": "Minimum Width: SMT Pad",
+        "value": 4
+      },
+      {
+        "active": true,
+        "rule": "Minimum Width: Trace",
+        "value": 3
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Outer Layers",
+        "value": 3
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Inner Layers",
+        "value": 4
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Track-Track",
+        "value": 3
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Track-Pad",
+        "value": 3
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Pad-Pad",
+        "value": 3
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Rout-Copper",
+        "value": 8
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Same Net",
+        "value": 3
+      },
+      {
+        "active": true,
+        "rule": "Hole Registration",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Find Missing Pads",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Redundant Pads",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Unconnected Lines",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Features Connection",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Verify Text Features",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Acid Traps",
+        "value": 5
+      },
+      {
+        "active": true,
+        "rule": "Non-Functional Pads",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Find Net Discrepancy",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Antennas / Dangling Traces",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Copper Slivers",
+        "value": 5
+      },
+      {
+        "active": false,
+        "rule": "Invalid Polygons",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Minimum Drill Size",
+        "value": 8
+      },
+      {
+        "active": true,
+        "rule": "Double Drill Hits",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Pads without Drills",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Plated Drill without Pads",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Touching Drill Hits",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Plated Drills to Copper",
+        "value": 8
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Unplated Drills to Copper",
+        "value": 5
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Drills to Rout",
+        "value": 15
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Rout to Rout",
+        "value": 15
+      },
+      {
+        "active": true,
+        "rule": "Minimum Drill Hole Spacing",
+        "value": 15
+      },
+      {
+        "active": true,
+        "rule": "Drill-Plane Shorts",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Silk Screen to Board Edge",
+        "value": 10
+      },
+      {
+        "active": true,
+        "rule": "Minimum Width: Silkscreen Line",
+        "value": 5
+      },
+      {
+        "active": true,
+        "rule": "Minimum Silkscreen Text Height",
+        "value": 50
+      },
+      {
+        "active": true,
+        "rule": "Silkscreen over Soldermask",
+        "value": 4
+      },
+      {
+        "active": true,
+        "rule": "Silkscreen over Copper Text",
+        "value": 4
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Silk Screen to Copper",
+        "value": 4
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Silk Screen to Drill",
+        "value": 8
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Silk Screen to Rout",
+        "value": 8
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Silk Screen (Line to Line)",
+        "value": 10
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Silk Screen (Line to Pad)",
+        "value": 10
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Silk Screen (Pad to Pad)",
+        "value": 10
+      },
+      {
+        "active": true,
+        "rule": "Undersized Mask Clearances",
+        "value": 5
+      },
+      {
+        "active": true,
+        "rule": "Missing Mask Clearances",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Mask Slivers",
+        "value": 8
+      },
+      {
+        "active": true,
+        "rule": "Solder Bridges",
+        "value": 8
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Solder Mask to Copper",
+        "value": 4
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Solder Mask to Rout",
+        "value": 8
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Mask (Draw to Draw)",
+        "value": 28
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Mask (Draw to Pad)",
+        "value": 28
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Mask (Pad to Pad)",
+        "value": 28
+      },
+      {
+        "active": true,
+        "rule": "Partial Clearances",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Minimum Annular Ring: Drill-Plane",
+        "value": 4
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Plane\"",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Minimum Width: Plane",
+        "value": 4
+      },
+      {
+        "active": true,
+        "rule": "Minimum Thermal Air gap",
+        "value": 4
+      },
+      {
+        "active": true,
+        "rule": "Minimum Thermal Spoke Width",
+        "value": 4
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Plane to Drill",
+        "value": 8
+      },
+      {
+        "active": true,
+        "rule": "Minimum Clearance: Plane to Rout",
+        "value": 10
+      },
+      {
+        "active": true,
+        "rule": "Starved Thermal",
+        "value": 8
+      },
+      {
+        "active": true,
+        "rule": "Power/Ground Short",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Neg. Plane Thermal Conflicts",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Isolated Connections",
+        "value": 0
+      },
+      {
+        "active": true,
+        "rule": "Drill Registration",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Component",
+        "value": 100
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Small Component",
+        "value": 12
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: BGA Component",
+        "value": 200
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Component to Board Edge",
+        "value": 60
+      },
+      {
+        "active": false,
+        "rule": "Maximum Component Height",
+        "value": 400
+      },
+      {
+        "active": false,
+        "rule": "Component Overlaps",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Invalid RefDes",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Invalid Component Rotation",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Footprint to Pad Registration",
+        "value": 1
+      },
+      {
+        "active": false,
+        "rule": "BOM File Comparison",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Minimum Width: SMT Stencil Pad",
+        "value": 7
+      },
+      {
+        "active": false,
+        "rule": "Minimum Annular Ring: Drill-SMT Stencil Pad",
+        "value": 8
+      },
+      {
+        "active": false,
+        "rule": "Minimum Aspect Ratio: SMT Stencil Pad",
+        "value": 1.5
+      },
+      {
+        "active": false,
+        "rule": "Minimum Area Ratio: SMT Stencil Pad",
+        "value": 0.666
+      },
+      {
+        "active": false,
+        "rule": "Minimum Volume: SMT Stencil Pad",
+        "value": 400
+      },
+      {
+        "active": false,
+        "rule": "SMT Stencil Foil Thickness",
+        "value": 5
+      },
+      {
+        "active": false,
+        "rule": "SMT Stencil Pad to Pad Registration",
+        "value": 1
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance:  SMT Pad to Board Edge",
+        "value": 3.5
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: SMT Stencil (Pad to Pad)",
+        "value": 3.5
+      },
+      {
+        "active": false,
+        "rule": "Minimum Test Point Diameter",
+        "value": 15
+      },
+      {
+        "active": false,
+        "rule": "Minimum Distance: Test Point Center to Center",
+        "value": 40
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Test Point to Board Edge",
+        "value": 100
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Test Point Pad to Pad",
+        "value": 15
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Test Point to Mask",
+        "value": 1
+      },
+      {
+        "active": false,
+        "rule": "Minimum Clearance: Test Point to Rout",
+        "value": 100
+      },
+      {
+        "active": false,
+        "rule": "Find Test Point without Net",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Open Net Detected",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Shorted Net Detected",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Missing Copper",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "External Net Missing",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Open Boundary Point",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Compare Layers: CRITICAL",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Compare Layers: ELEVATED",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Compare Layers",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Compare Jobs: CRITICAL",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Compare Jobs: ELEVATED",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Compare Jobs",
+        "value": 0
+      },
+      {
+        "active": false,
+        "rule": "Custom",
+        "value": 0
+      }
+    ]
+  },
+  "rule_name": "Rigid PCB Standard (.5oz)",
+  "active": true,
+  "rule_units": "mil"
+}
