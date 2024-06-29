@@ -6,7 +6,7 @@ import { promises as fs } from 'fs'
 
 const API_URL = `https://www.pcbpreflight.com/api/v1/job`
 const PCBPREFLIGHT_API_KEY = '<< YOUR OWN PCBPREFLIGHT API KEY HERE >>'
-const SAMPLE1_FILE = '../samples/sample1.zip'
+const SAMPLE1_FILE = '../samples/sample2-gerber-images-workspace.zip'
 const DIRNAME = path.dirname(new URL(import.meta.url).pathname);
 
 async function processJob(file) {
