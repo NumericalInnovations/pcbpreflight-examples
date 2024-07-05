@@ -1,5 +1,5 @@
-# PCB Preflight Basic Example
-This is a very basic example of uploading a design and getting back results.  
+# PCB Preflight Extract Example
+This is a example extracts the JSON and displays the information in a table.  
 Your PCB Preflight API Key should never be exposed to the public.  
 This is only to show how our API can be used, you can use your own preferred language.
 

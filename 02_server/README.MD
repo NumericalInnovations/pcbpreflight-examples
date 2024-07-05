@@ -2,7 +2,6 @@
 This is a very basic example for processing a job on a NodeJS server.  
 Your PCB Preflight API Key should never be exposed to the public.  
 This is only to show how our API can be used, you can use your own preferred language.
-for a better example of PCB Preflight usage on your own web server.
 
 ## Installation
 * Make sure you have Node 16 or higher installed on your system `nvm use 16`.
