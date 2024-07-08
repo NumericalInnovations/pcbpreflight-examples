@@ -1,277 +1,271 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>PCB Preflight API Extract Example</title>
-    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-    <meta content="utf-8" http-equiv="encoding">
-    <style>
-      table {
-        width: 50%;
-        border-collapse: collapse;
-      }
-      th, td {
-        border: 1px solid black;
-        padding: 8px;
-        text-align: left;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      td {
-        text-align: right;
-      }
-    </style>  
-  </head>
-  <body>
+	<head>
+		<title>PCB Preflight API Extract Example</title>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+		<meta content="utf-8" http-equiv="encoding" />
+		<style>
+			table {
+				width: 50%;
+				border-collapse: collapse;
+			}
+			th,
+			td {
+				border: 1px solid black;
+				padding: 8px;
+				text-align: left;
+			}
+			th {
+				background-color: #f2f2f2;
+			}
+			td {
+				text-align: right;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>PCB Preflight API Extract Example</h1>
+		<div>
+			Enter your own API key in the form below. Then choose Gerber files to upload. You can upload a ZIP file or multiple files. A matrix FM6 file must be included in those files. For testing, you can use our included sample files.
+			<ol>
+				<li>Sample 1 - Basic Example</li>
+				<li>Sample 2 - Basic Image Output Example</li>
+				<li>Sample 3 - Basic DFM Check Example</li>
+				<li>Sample 4 - PCB Images and DXF Example</li>
+				<li>Sample 5 - ODB DFM Example</li>
+				<li>Sample 6 - ODB Image Export Example</li>
+			</ol>
+		</div>
 
-    <h1>PCB Preflight API Extract Example</h1>
-    <p>
-      Enter your own API key in the form below.  
-      Then choose Gerber files to upload. 
-      You can upload a ZIP file or multiple files.  
-      A matrix FM6 file must be included in those files.
-      For testing, you can use our included sample files.
-      <ol>
-        <li>Sample 1 - Basic Example</li>
-        <li>Sample 2 - Basic Image Output Example</li>
-        <li>Sample 3 - Basic DFM Check Example</li>
-        <li>Sample 4 - PCB Images and DXF Example</li>
-        <li>Sample 5 - ODB DFM Example</li>
-        <li>Sample 6 - ODB Image Export Example</li>
-      </ol>
-    </p>
+		<form id="form1">
+			Your API Key <input id="api_key" type="text" value="" />
+			<input type="hidden" name="output" value="files" />
+			<input type="hidden" name="save_input" value="false" />
+			<input type="hidden" name="send_email" value="true" />
+			<input type="hidden" name="timeout" value="60" />
+			<p>Upload Multiple Files <input type="file" name="files" id="files" multiple /></p>
+			<p><input type="submit" id="submitButton" value="Submit" /></p>
+		</form>
 
-    <form id="form1">
-      Your API Key <input id="api_key" type="text" value=""/>
-      <input type="hidden" name="output" value="files"/>
-      <input type="hidden" name="save_input" value="false"/>
-      <input type="hidden" name="send_email" value="true"/>
-      <input type="hidden" name="timeout" value="60"/>
-      <p>Upload Multiple Files <input type="file" name="files" id="files" multiple/></p>
-      <p><input type="submit" id="submitButton" value="Submit"/></p>
-    </form>
+		<span id="errorMessage" style="color: red"></span><br />
+		<br />
 
-    <span id="errorMessage" style="color:red"></span><br/>
-    <br/>
-    
-    <div id="result1Container" style="display:none">
-      <div>Get Job ID, then keep checking if status='complete' every few seconds.</div>
-      <pre id="result1" style="width:90%;padding:8px;border:1px solid black;font-family:'Courier New', Courier, monospace;overflow:hidden"></pre>
-    </div>
-    <br/>
-    <span id="loadingMessage" style="color:blue;display:none">Loading ...</span><br/>
-    <br/>
+		<div id="result1Container" style="display: none">
+			<div>Get Job ID, then keep checking if status='complete' every few seconds.</div>
+			<pre id="result1" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
+		</div>
+		<br />
+		<span id="loadingMessage" style="color: blue; display: none">Loading ...</span><br />
+		<br />
 
-    <table id="resultExtract" style="display:none">
-      <tr>
-        <th>Job ID</th>
-        <td id="jobId">-</td>
-      </tr>
-      <tr>
-        <th>Board Size</th>
-        <td id="board.BoardSize">-</td>
-      </tr>
-      <tr>
-        <th>Board Thickness</th>
-        <td id="board.Thickness-mm">-</td>
-      </tr>
-      <tr>
-        <th>Board Units (source)</th>
-        <td id="board.Units">-</td>
-      </tr>
-      <tr>
-        <th>Layer Count</th>
-        <td id="board.LayerCount">-</td>
-      </tr>
-      <tr>
-        <th>Min Trace</th>
-        <td id="board.MinTrace-mm">-</td>
-      </tr>
-      <tr>
-        <th>Min Space</th>
-        <td id="board.MinSpace-mm">-</td>
-      </tr>
-      <tr>
-        <th>Min SMT Pitch Size</th>
-        <td id="board.MinSmtPitch-mm">-</td>
-      </tr>
-      <tr>
-        <th>Min SMT Pad Width</th>
-        <td id="board.MinSmtPadWidth-mm">-</td>
-      </tr>
-      <tr>
-        <th>Drill Count</th>
-        <td id="board.DrillCount">-</td>
-      </tr>
-      <tr>
-        <th>Unique Drill Sizes</th>
-        <td id="board.UniqueDrillSizes">-</td>
-      </tr>
-      <tr>
-        <th>Min Drill Diameter</th>
-        <td id="board.MinDrillSize-mm">-</td>
-      </tr>
-      <tr>
-        <th>Buried Via Count</th>
-        <td id="board.BuriedViaCount">-</td>
-      </tr>
-      <tr>
-        <th>Blind Via Count</th>
-        <td id="board.BlindViaCount">-</td>
-      </tr>
-      <tr>
-        <th>Nets Total Count</th>
-        <td id="nets.TotalCount">-</td>
-      </tr>
-      <tr>
-        <th>Nets Endpoint Count</th>
-        <td id="nets.EndpointCount">-</td>
-      </tr>
-      <tr>
-        <th>Components Total</th>
-        <td id="components.Total">-</td>
-      </tr>
-      <tr>
-        <th>Components Top</th>
-        <td id="components.TopCount">-</td>
-      </tr>
-      <tr>
-        <th>Components Bottom</th>
-        <td id="components.BottomCount">-</td>
-      </tr>
-      <tr>
-        <th>Unique Components</th>
-        <td id="board.UniqueComponents">-</td>
-      </tr>
-      <tr>
-        <th>Thru-Hole Count</th>
-        <td id="board.ThruholeCount">-</td>
-      </tr>
-      <tr>
-        <th>SMT Count</th>
-        <td id="board.SMTCount">-</td>
-      </tr>
-      <tr>
-        <th>BGA Count</th>
-        <td id="board.BGACount">-</td>
-      </tr>
-      <tr>
-        <th>Fine Pitch Count</th>
-        <td id="board.FinePitchCount">-</td>
-      </tr>
-      <tr>
-        <th>Press-Fit Count</th>
-        <td id="board.PressFitCount">-</td>
-      </tr>
-    </table>
+		<table id="resultExtract" style="display: none">
+			<tr>
+				<th>Job ID</th>
+				<td id="jobId">-</td>
+			</tr>
+			<tr>
+				<th>Board Size</th>
+				<td id="board.BoardSize">-</td>
+			</tr>
+			<tr>
+				<th>Board Thickness</th>
+				<td id="board.Thickness-mm">-</td>
+			</tr>
+			<tr>
+				<th>Board Units (source)</th>
+				<td id="board.Units">-</td>
+			</tr>
+			<tr>
+				<th>Layer Count</th>
+				<td id="board.LayerCount">-</td>
+			</tr>
+			<tr>
+				<th>Min Trace</th>
+				<td id="board.MinTrace-mm">-</td>
+			</tr>
+			<tr>
+				<th>Min Space</th>
+				<td id="board.MinSpace-mm">-</td>
+			</tr>
+			<tr>
+				<th>Min SMT Pitch Size</th>
+				<td id="board.MinSmtPitch-mm">-</td>
+			</tr>
+			<tr>
+				<th>Min SMT Pad Width</th>
+				<td id="board.MinSmtPadWidth-mm">-</td>
+			</tr>
+			<tr>
+				<th>Drill Count</th>
+				<td id="board.DrillCount">-</td>
+			</tr>
+			<tr>
+				<th>Unique Drill Sizes</th>
+				<td id="board.UniqueDrillSizes">-</td>
+			</tr>
+			<tr>
+				<th>Min Drill Diameter</th>
+				<td id="board.MinDrillSize-mm">-</td>
+			</tr>
+			<tr>
+				<th>Buried Via Count</th>
+				<td id="board.BuriedViaCount">-</td>
+			</tr>
+			<tr>
+				<th>Blind Via Count</th>
+				<td id="board.BlindViaCount">-</td>
+			</tr>
+			<tr>
+				<th>Nets Total Count</th>
+				<td id="nets.TotalCount">-</td>
+			</tr>
+			<tr>
+				<th>Nets Endpoint Count</th>
+				<td id="nets.EndpointCount">-</td>
+			</tr>
+			<tr>
+				<th>Components Total</th>
+				<td id="components.Total">-</td>
+			</tr>
+			<tr>
+				<th>Components Top</th>
+				<td id="components.TopCount">-</td>
+			</tr>
+			<tr>
+				<th>Components Bottom</th>
+				<td id="components.BottomCount">-</td>
+			</tr>
+			<tr>
+				<th>Unique Components</th>
+				<td id="board.UniqueComponents">-</td>
+			</tr>
+			<tr>
+				<th>Thru-Hole Count</th>
+				<td id="board.ThruholeCount">-</td>
+			</tr>
+			<tr>
+				<th>SMT Count</th>
+				<td id="board.SMTCount">-</td>
+			</tr>
+			<tr>
+				<th>BGA Count</th>
+				<td id="board.BGACount">-</td>
+			</tr>
+			<tr>
+				<th>Fine Pitch Count</th>
+				<td id="board.FinePitchCount">-</td>
+			</tr>
+			<tr>
+				<th>Press-Fit Count</th>
+				<td id="board.PressFitCount">-</td>
+			</tr>
+		</table>
 
-    <script>
-      // This should NOT be public, you can regenerate keys if needed.
-      let api_key = null;
-      let job = null
-      let job_id = null;
+		<script>
+			let api_key = null
+			let job = null
+			let job_id = null
 
-      document.addEventListener("DOMContentLoaded", init);
+			document.addEventListener('DOMContentLoaded', init)
 
-      function delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-      }
+			function delay(ms) {
+				return new Promise(resolve => setTimeout(resolve, ms))
+			}
 
-      function init() {
-        document.getElementById("submitButton").addEventListener("click", async function(e) {
-          e.preventDefault();
-          submit()
-        })
-      }
+			function init() {
+				document.getElementById('submitButton').addEventListener('click', async function (e) {
+					e.preventDefault()
+					submit()
+				})
+			}
 
-      async function submit() {
-        const formData = new FormData(document.getElementById('form1'));
+			async function submit() {
+				const formData = new FormData(document.getElementById('form1'))
 
-        // Clear error
-        document.getElementById('errorMessage').textContent = ''
+				// Clear error
+				document.getElementById('errorMessage').textContent = ''
 
-        try {
-          api_key = document.getElementById('api_key').value;
+				try {
+					api_key = document.getElementById('api_key').value
 
-          // Start job
-          const response = await fetch('https://www.pcbpreflight.com/api/v1/job', {
-            method: 'POST',
-            headers: {'Authorization': api_key},
-            body: formData,
-            cache: 'no-cache',
-          });
+					// Start job
+					const response = await fetch('https://www.pcbpreflight.com/api/v1/job', {
+						method: 'POST',
+						headers: { Authorization: api_key },
+						body: formData,
+						cache: 'no-cache',
+					})
 
-          const data = await response.json();
-          if (data.ok === 0) {
-            throw Error(data.err.message)
-          }
+					const data = await response.json()
+					if (data.ok === 0) {
+						throw Error(data.err.message)
+					}
 
-          job_id = data.result.job_id;
-          document.getElementById('result1Container').style.display = 'block'
-          const result1 = document.getElementById('result1');
-          result1.textContent = JSON.stringify(data.result,null,2)
-          
-          // Keep trying to get the job until status=='complete' put a delay so it is not too frequent
-          while(job==null || job.status!='complete') {
-            await delay(1000)
-            job = await checkJob()
-            document.getElementById('loadingMessage').style.display = 'block'
-            document.getElementById('loadingMessage').textContent += '.';
-          }
-          document.getElementById('loadingMessage').textContent += ' Done!';
+					job_id = data.result.job_id
+					document.getElementById('result1Container').style.display = 'block'
+					const result1 = document.getElementById('result1')
+					result1.textContent = JSON.stringify(data.result, null, 2)
 
-          showResult()
+					// Keep trying to get the job until status=='complete' put a delay so it is not too frequent
+					while (job == null || job.status != 'complete') {
+						await delay(1000)
+						job = await checkJob()
+						document.getElementById('loadingMessage').style.display = 'block'
+						document.getElementById('loadingMessage').textContent += '.'
+					}
+					document.getElementById('loadingMessage').textContent += ' Done!'
 
-        } catch (err) {
-          console.error(err)
-          document.getElementById('errorMessage').textContent = err.message;
-        }
-      }
+					showResult()
+				} catch (err) {
+					console.error(err)
+					document.getElementById('errorMessage').textContent = err.message
+				}
+			}
 
-      async function checkJob() {
-        const response = await fetch(`https://www.pcbpreflight.com/api/v1/job/${job_id}`, {
-          method: 'GET',
-          headers: {'Authorization': api_key},
-          cache: 'no-cache',
-        });
-        const data = await response.json();
-        if (data.ok === 1) return data.result
-        throw Error(data.err.message)
-      }
+			async function checkJob() {
+				const response = await fetch(`https://www.pcbpreflight.com/api/v1/job/${job_id}`, {
+					method: 'GET',
+					headers: { Authorization: api_key },
+					cache: 'no-cache',
+				})
+				const data = await response.json()
+				if (data.ok === 1) return data.result
+				throw Error(data.err.message)
+			}
 
-      function showResult() {
-        let data = job.cam_json.cam_info
-        console.log(data)
-        document.getElementById('resultExtract').style.display = 'block';
-        document.getElementById('jobId').textContent = job_id
-        document.getElementById('board.BoardSize').textContent = `${data.board['Width-mm']}mm x ${data.board['Height-mm']}mm`
-        document.getElementById('board.Thickness-mm').textContent = data.board['Thickness-mm']
-        document.getElementById('board.Units').textContent = data.board['Units']
-        document.getElementById('board.LayerCount').textContent = data.board['LayerCount']
-        document.getElementById('board.MinTrace-mm').textContent = data.board['MinTrace-mm']
-        document.getElementById('board.MinSpace-mm').textContent = data.board['MinSpace-mm']
-        document.getElementById('board.MinSmtPitch-mm').textContent = data.board['MinSmtPitch-mm']
-        document.getElementById('board.MinSmtPadWidth-mm').textContent = data.board['MinSmtPadWidth-mm']
-        document.getElementById('board.DrillCount').textContent = data.board['DrillCount']
-        document.getElementById('board.UniqueDrillSizes').textContent = data.board['UniqueDrillSizes']
-        document.getElementById('board.MinDrillSize-mm').textContent = data.board['MinDrillSize-mm']
-        document.getElementById('board.BuriedViaCount').textContent = data.board['BuriedViaCount']
-        document.getElementById('board.BlindViaCount').textContent = data.board['BlindViaCount']
-        
-        document.getElementById('nets.TotalCount').textContent = data.nets['TotalCount']
-        document.getElementById('nets.EndpointCount').textContent = data.nets['EndpointCount']
+			function showResult() {
+				let data = job.cam_json.cam_info
+				console.log(data)
+				document.getElementById('resultExtract').style.display = 'block'
+				document.getElementById('jobId').textContent = job_id
+				document.getElementById('board.BoardSize').textContent = `${data.board['Width-mm']}mm x ${data.board['Height-mm']}mm`
+				document.getElementById('board.Thickness-mm').textContent = data.board['Thickness-mm']
+				document.getElementById('board.Units').textContent = data.board['Units']
+				document.getElementById('board.LayerCount').textContent = data.board['LayerCount']
+				document.getElementById('board.MinTrace-mm').textContent = data.board['MinTrace-mm']
+				document.getElementById('board.MinSpace-mm').textContent = data.board['MinSpace-mm']
+				document.getElementById('board.MinSmtPitch-mm').textContent = data.board['MinSmtPitch-mm']
+				document.getElementById('board.MinSmtPadWidth-mm').textContent = data.board['MinSmtPadWidth-mm']
+				document.getElementById('board.DrillCount').textContent = data.board['DrillCount']
+				document.getElementById('board.UniqueDrillSizes').textContent = data.board['UniqueDrillSizes']
+				document.getElementById('board.MinDrillSize-mm').textContent = data.board['MinDrillSize-mm']
+				document.getElementById('board.BuriedViaCount').textContent = data.board['BuriedViaCount']
+				document.getElementById('board.BlindViaCount').textContent = data.board['BlindViaCount']
 
-        document.getElementById('components.Total').textContent = data.components['TopCount'] + data.components['BottomCount']
-        document.getElementById('components.TopCount').textContent = data.components['TopCount']
-        document.getElementById('components.BottomCount').textContent = data.components['BottomCount']
+				document.getElementById('nets.TotalCount').textContent = data.nets['TotalCount']
+				document.getElementById('nets.EndpointCount').textContent = data.nets['EndpointCount']
 
-        document.getElementById('board.UniqueComponents').textContent = data.board['UniqueComponents']
-        document.getElementById('board.ThruholeCount').textContent = data.board['ThruholeCount']
-        document.getElementById('board.SMTCount').textContent = data.board['SMTCount']
-        document.getElementById('board.BGACount').textContent = data.board['BGACount']
-        document.getElementById('board.FinePitchCount').textContent = data.board['FinePitchCount']
-        document.getElementById('board.PressFitCount').textContent = data.board['PressFitCount']
-      }
-    </script>
-  </body>
+				document.getElementById('components.Total').textContent = data.components['TopCount'] + data.components['BottomCount']
+				document.getElementById('components.TopCount').textContent = data.components['TopCount']
+				document.getElementById('components.BottomCount').textContent = data.components['BottomCount']
+
+				document.getElementById('board.UniqueComponents').textContent = data.board['UniqueComponents']
+				document.getElementById('board.ThruholeCount').textContent = data.board['ThruholeCount']
+				document.getElementById('board.SMTCount').textContent = data.board['SMTCount']
+				document.getElementById('board.BGACount').textContent = data.board['BGACount']
+				document.getElementById('board.FinePitchCount').textContent = data.board['FinePitchCount']
+				document.getElementById('board.PressFitCount').textContent = data.board['PressFitCount']
+			}
+		</script>
+	</body>
 </html>

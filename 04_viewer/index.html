@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Interactive SVG Viewer</title>
+		<style>
+			#container {
+				display: none;
+				width: 100vw;
+				height: 100vh;
+				overflow: hidden;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background-color: rgba(255, 255, 255, 1);
+			}
+			#svgContainer {
+				width: 100%;
+				height: 100%;
+			}
+			#zoomInfo {
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				background-color: rgba(255, 255, 255, 0.7);
+				padding: 5px;
+				border-radius: 5px;
+			}
+			#resetButton {
+				position: absolute;
+				bottom: 10px;
+				right: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="svgContainer"></div>
+			<div id="zoomInfo">Zoom: 100%</div>
+			<button id="resetButton">Reset</button>
+		</div>
+
+		<h1>PCB Preflight API SVG Viewer Example</h1>
+		<div>
+			Enter your own API key in the form below. Then choose Gerber files to upload. You can upload a ZIP file or multiple files. 
+			A matrix FM6 file must be included in those files, and must output an SVG file.  
+			For testing, you can use our included sample files.
+			Once the viewer opens, use your left mouse button to grab and drag, and your mouse wheel to zoom.
+			<ul>
+				<li>Use "sample-autoload-viewer" to test displaying an SVG after job processing.</li>
+			</ul>
+		</div>
+
+		<form id="form1">
+			Your API Key <input id="api_key" type="text" value="" />
+			<input type="hidden" name="output" value="files" />
+			<input type="hidden" name="save_input" value="false" />
+			<input type="hidden" name="send_email" value="true" />
+			<input type="hidden" name="timeout" value="60" />
+			<p>Upload Multiple Files <input type="file" name="files" id="files" multiple /></p>
+			<p><input type="submit" id="submitButton" value="Submit" /></p>
+		</form>
+
+		<span id="errorMessage" style="color: red"></span><br />
+		<br />
+
+		<div id="result1Container" style="display: none">
+			<div>Get Job ID, then keep checking if status='complete' every few seconds.</div>
+			<pre id="result1" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
+		</div>
+		<br />
+		<span id="loadingMessage" style="color: blue; display: none">Loading ...</span><br />
+		<br />
+
+		<script>
+			let api_key = null
+			let job = null
+			let job_id = null
+
+			const container = document.getElementById('container')
+			const svgContainer = document.getElementById('svgContainer')
+			const zoomInfo = document.getElementById('zoomInfo')
+			const resetButton = document.getElementById('resetButton')
+
+			let svg
+			let originalViewBox = { x: 0, y: 0, width: 0, height: 0 }
+			let viewBox = { x: 0, y: 0, width: 100, height: 100 }
+			let isPanning = false
+			let startPoint = { x: 0, y: 0 }
+			let zoomLevel = 1
+
+			const MIN_ZOOM = 0.01 // 1% minimum zoom
+
+			document.addEventListener('DOMContentLoaded', init)
+
+			function delay(ms) {
+				return new Promise(resolve => setTimeout(resolve, ms))
+			}
+
+			function init() {
+				document.getElementById('submitButton').addEventListener('click', async function (e) {
+					e.preventDefault()
+					submit()
+				})
+			}
+
+			async function submit() {
+				const formData = new FormData(document.getElementById('form1'))
+
+				// Clear error
+				document.getElementById('errorMessage').textContent = ''
+
+				try {
+					api_key = document.getElementById('api_key').value
+
+					// Start job
+					const response = await fetch('https://www.pcbpreflight.com/api/v1/job', {
+						method: 'POST',
+						headers: { Authorization: api_key },
+						body: formData,
+						cache: 'no-cache',
+					})
+
+					const data = await response.json()
+					if (data.ok === 0) {
+						throw Error(data.err.message)
+					}
+
+					job_id = data.result.job_id
+					document.getElementById('result1Container').style.display = 'block'
+					const result1 = document.getElementById('result1')
+					result1.textContent = JSON.stringify(data.result, null, 2)
+
+					// Keep trying to get the job until status=='complete' put a delay so it is not too frequent
+					while (job == null || job.status != 'complete') {
+						await delay(1000)
+						job = await checkJob()
+						document.getElementById('loadingMessage').style.display = 'block'
+						document.getElementById('loadingMessage').textContent += '.'
+					}
+					document.getElementById('loadingMessage').textContent += ' Done!'
+
+					// Find "viewer.svg" in list of outputs
+					const svgOutput = job.outputs.find(n => n.path == 'viewer.svg')
+					if(!svgOutput) throw Error(`Job did not have an "viewer.svg" output file.`)
+
+					// Start the SVG viewer with SVG file
+					startViewer(svgOutput.url)
+				} catch (err) {
+					console.error(err)
+					document.getElementById('errorMessage').textContent = err.message
+				}
+			}
+
+			async function checkJob() {
+				const response = await fetch(`https://www.pcbpreflight.com/api/v1/job/${job_id}`, {
+					method: 'GET',
+					headers: { Authorization: api_key },
+					cache: 'no-cache',
+				})
+				const data = await response.json()
+				if (data.ok === 1) return data.result
+				throw Error(data.err.message)
+			}
+
+			// Load SVG
+			function startViewer(url) {
+				fetch(url)
+					.then(response => response.text())
+					.then(svgContent => {
+						container.style.display = 'block'
+						svgContainer.innerHTML = svgContent
+						svg = svgContainer.querySelector('svg')
+						svg.setAttribute('width', '100%')
+						svg.setAttribute('height', '100%')
+						svg.setAttribute('transform', 'scale(1,1)')
+
+						const gElements = svg.querySelectorAll('g')
+						gElements.forEach(g => {
+							g.setAttribute('display', 'inline')
+						})
+
+						originalViewBox.x = svg.viewBox.baseVal.x
+						originalViewBox.y = svg.viewBox.baseVal.y
+						originalViewBox.width = svg.viewBox.baseVal.width
+						originalViewBox.height = svg.viewBox.baseVal.height
+						resetView()
+					})
+					.catch(error => {
+						console.error('Error loading SVG:', error)
+						svgContainer.textContent = 'Failed to load SVG. Please check the file path and try again.'
+					})
+
+				function updateSVG() {
+					if (svg) {
+						svg.setAttribute('viewBox', `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`)
+						zoomInfo.textContent = `Zoom: ${Math.round((100 / viewBox.width) * 100)}%`
+					}
+				}
+
+				function resetView() {
+					if (svg) {
+						const svgViewBox = originalViewBox
+						const containerAspectRatio = container.clientWidth / container.clientHeight
+						const svgAspectRatio = svgViewBox.width / svgViewBox.height
+
+						if (containerAspectRatio > svgAspectRatio) {
+							// Container is wider, fit to height
+							viewBox.height = svgViewBox.height
+							viewBox.width = svgViewBox.height * containerAspectRatio
+						} else {
+							// Container is taller, fit to width
+							viewBox.width = svgViewBox.width
+							viewBox.height = svgViewBox.width / containerAspectRatio
+						}
+
+						viewBox.x = svgViewBox.x + (svgViewBox.width - viewBox.width) / 2
+						viewBox.y = svgViewBox.y + (svgViewBox.height - viewBox.height) / 2
+
+						zoomLevel = svgViewBox.width / viewBox.width
+						updateSVG()
+					}
+				}
+
+				container.addEventListener('mousedown', e => {
+					if (e.button === 0) {
+						isPanning = true
+						startPoint = { x: e.clientX, y: e.clientY }
+					}
+				})
+
+				container.addEventListener('mousemove', e => {
+					if (isPanning) {
+						const dx = ((e.clientX - startPoint.x) * viewBox.width) / container.clientWidth
+						const dy = ((e.clientY - startPoint.y) * viewBox.height) / container.clientHeight
+						viewBox.x -= dx
+						viewBox.y -= dy
+						startPoint = { x: e.clientX, y: e.clientY }
+						updateSVG()
+					}
+				})
+
+				container.addEventListener('mouseup', () => {
+					isPanning = false
+				})
+
+				container.addEventListener('wheel', e => {
+					e.preventDefault()
+					let zoom = e.deltaY < 0 ? 0.9 : 1.1
+
+					// Check if zooming out would exceed the minimum zoom
+					if (zoom > 1 && viewBox.width * zoom > svg.viewBox.baseVal.width / MIN_ZOOM) {
+						zoom = svg.viewBox.baseVal.width / MIN_ZOOM / viewBox.width
+					}
+
+					const mouseX = e.clientX - container.getBoundingClientRect().left
+					const mouseY = e.clientY - container.getBoundingClientRect().top
+
+					const svgX = viewBox.x + (mouseX / container.clientWidth) * viewBox.width
+					const svgY = viewBox.y + (mouseY / container.clientHeight) * viewBox.height
+
+					viewBox.width *= zoom
+					viewBox.height *= zoom
+					viewBox.x = svgX - (mouseX / container.clientWidth) * viewBox.width
+					viewBox.y = svgY - (mouseY / container.clientHeight) * viewBox.height
+
+					zoomLevel = svg.viewBox.baseVal.width / viewBox.width
+					updateSVG()
+				})
+
+				resetButton.addEventListener('click', resetView)
+			}
+		</script>
+	</body>
+</html>
