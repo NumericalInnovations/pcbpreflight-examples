@@ -1,0 +1,82 @@
+# SAMPLE MATRIX FILE
+# Load Gerber and Drill Files
+# Run a DFM Check and output both Text and PDF Reports.
+
+# Important:  All files paths in the Matix file must be realtive (for CloudDFM.com)
+
+# The OPTIONS Array (not required)
+# The option fab-generate_border will ensure a border is generated, because this example does not include a border file.  
+# Note:  It's always better practice to have a seperate gerber file with the border; and not rely solely on generate_border
+#        For more information about the JOB array please review the MATRIX file User Reference,
+#        https://numerical-help-guide.s3.amazonaws.com/matrixfile/html/matrix-options-array.html
+
+OPTIONS {
+   fab-generate_border
+}
+
+
+# Important:  All files paths in the JOB Array must be realtive (for CloudDFM.com)
+# Important:  Placing a semi-colon ; at the end of either LAYER or COMPOSITE fields will 
+#             allow you to assign LAYER_TYPE and the Drill Span without having to create LAYER arrays. 
+#             It's a very useful feature for quickly creating MATRIX files.
+#             For more information about the JOB array please review the MATRIX file User Reference,
+#             https://numerical-help-guide.s3.amazonaws.com/matrixfile/html/matrix-job-array.html
+
+JOB {
+    NAME=testgerber
+    LAYER=layer_1,274X\Art0121.pho;top
+    LAYER=layer_4,274X\Art02.pho;bottom 
+    LAYER=layer_2,274X\Pgp2529.pho; neg_plane
+    LAYER=layer_3,274X\gnd2530.pho;neg_plane  
+    LAYER=sst,274X\Sst0126.pho ;SILK_TOP
+    LAYER=spt,274X\Sp0128.pho;PASTE_TOP
+    LAYER=smb,274X\Sm0227.pho;MASK_BOTTOM
+    LAYER=smt,274X\Sm0128.pho;MASK_TOP
+    LAYER=drill,274X\Drill.drl;DRILL_THRUHOLE
+}
+
+# Lets run DFM Checker
+# Note:  Remove the '#' in front of output_gerber_file if you have the ability to export Gerber.
+#        CloudDFM.com users can export Gerber, if you have the CAM Add-on
+# Note:  For more information about the DFMCHECKER array please review the MATRIX file User Reference,
+#        https://numerical-help-guide.s3.amazonaws.com/matrixfile/html/matrix-dfmchecker-array.html
+
+DFMCHECKER {
+    cell=active
+    units=mil
+    signal_minimum_pad_size=15.0
+    signal_minimum_smt_pad_width=5.0
+    signal_minimum_trace_width=4.0
+    signal_minimum_clearance_outer_layers=9.0
+    signal_minimum_clearance_inner_layers=6.0
+    signal_minimum_annular_ring_drill_pad=4.0
+    signal_clearance_from_board_edge=10.0
+    drill_minimum_drill_size=7.0
+    drill_find_double_hits
+    drill_find_pads_without_drills
+    drill_find_plated_drill_without_pads
+    drill_find_touching_holes
+    silk_minimum_silkscreen_line_width=4.0
+    silk_find_silkscreen_over_mask=1.0
+    silk_clearance_board_edge=10.0
+    mask_find_undersized_mask_clearances=4.0
+    mask_find_missing_mask_clearances
+    plane_minimum_clearance=8.0
+    output_text_file="dfmresults\sampleDfmReport.txt"
+    output_pdf_file="dfmresults\sampleDfmReportWithImages.pdf"
+#    output_gerber_file="dfmresults\sampleDfmReportWithImages.gbr"
+}
+
+
+# Optionally Export ODB++.  CloudDFM.com users can export ODB++, if you have the CAM Add-on
+# Note:  The ODB++ includes extracted nets plus an additional Gerber layer (created from the DFMChecker) which can be used to easily 
+#        cross-probe and verify each DFM Error over the design.  Typically these features cost thousands $$ in many advanced CAM/PCB layout tools.
+# Note:  Remove the '#' in front of all below if you have the ability to export ODB++. 
+# Note:  For more information about the EXPORT_ODB array please review the MATRIX file User Reference,
+#        https://numerical-help-guide.s3.amazonaws.com/matrixfile/html/matrix-export_odb-array.html
+
+#EXPORT_ODB {
+#   CELL=active
+#   FILE=myFilesOutput/MyBottomPreview.tgz
+#}
+

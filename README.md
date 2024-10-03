@@ -1,7 +1,14 @@
 # PCB Preflight API Example
-Examples on how you can integrate PCB Preflight APIs on your own web server.  
-Always remember to keep your PCB Preflight API Key hidden from public view.
+Example tutorials demonstrating how to integrate the PCB Preflight API.  
 
-## Examples
-1. Basic Example - HTML and Javascript
-2. NodeJS Server Example - Processing a job on a NodeJS(v16+) server.
+
+## API Examples
+1) Basic Example - HTML and Javascript
+1) NodeJS Server Example - Processing a job on a NodeJS(v16+) server.
+1) JSON Extract Example - HTML and Javascript
+1) Online PCB Viewer Example - HTML and Javascript
+
+
+### PCB Preflight - API Sandbox Files
+A controlled set of sample files allowing people to freely test and evaluate the PCB Preflight API results without incurring any costs.
+* API Sandbox Files are located in the folder: Sandbox_Files
