@@ -1,7 +1,6 @@
 # PCB Preflight NodeJS Example
-This is a very basic example for processing a job on a NodeJS server.  
-Your PCB Preflight API Key should never be exposed to the public.  
-This is only to show how our API can be used, you can use your own preferred language.
+Demonstrates processing a PCB design on a NodeJS server.
+PCB Preflight utilizes REST API, and is compatible with ANY web framework such as Angular, React, Vue, and more.
 
 ## Installation
 * Make sure you have Node 16 or higher installed on your system `nvm use 16`.

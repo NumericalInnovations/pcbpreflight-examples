@@ -1,13 +1,13 @@
-# PCB Preflight Basic Example
-This is a very basic example of uploading a design and getting back results.  
-Your PCB Preflight API Key should never be exposed to the public.  
-This is only to show how our API can be used, you can use your own preferred language.
+# PCB Preflight Getting Started Example
+Automates the extraction of PCB Design information and displays the resulting JSON file. 
+This simple example demonstrates how easily the PCB Preflight API can be utilized into a cost-effective manufacturing solution.
+
 
 ## Installation
 * Open `index.html` in an editor to view and edit the code.
 * Open a browser and point to the `index.html` local file.
 * Enter your own API key in the form.
-* Pick Gerber files to upload, you can use our included samples for testing.
+* Select PCB manufacturing files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581) to upload, you can use our included samples for testing.
 * Press the submit button, wait for processing, and a job_id_hash will be returned.
 * With job_id_hash it will keep checking if the job is complete
 * Once complete, JSON will be returned with the result.
