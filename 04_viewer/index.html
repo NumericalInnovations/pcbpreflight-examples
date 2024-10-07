@@ -236,7 +236,7 @@
 						const dx = ((e.clientX - startPoint.x) * viewBox.width) / container.clientWidth
 						const dy = ((e.clientY - startPoint.y) * viewBox.height) / container.clientHeight
 						viewBox.x -= dx
-						viewBox.y -= dy
+						viewBox.y += dy
 						startPoint = { x: e.clientX, y: e.clientY }
 						updateSVG()
 					}
