@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Interactive SVG Viewer</title>
+		<title>Online PCB Viewer</title>
 		<style>
 			#container {
 				display: none;
@@ -16,28 +16,30 @@
 				transform: translate(-50%, -50%);
 				background-color: rgba(255, 255, 255, 1);
 			}
-			#svgContainer {
+			#viewContainer {
 				width: 100%;
 				height: 100%;
 			}
 			#zoomInfo {
 				position: absolute;
 				top: 10px;
-				left: 10px;
+				left: 75px;
 				background-color: rgba(255, 255, 255, 0.7);
 				padding: 5px;
 				border-radius: 5px;
 			}
 			#resetButton {
 				position: absolute;
-				bottom: 10px;
-				right: 10px;
+				top: 10px;
+				left: 10px;
+				padding: 5px;
+				border-radius: 5px;			
 			}
 		</style>
 	</head>
 	<body>
 		<div id="container">
-			<div id="svgContainer"></div>
+			<div id="viewContainer"></div>
 			<div id="zoomInfo">Zoom: 100%</div>
 			<button id="resetButton">Reset</button>
 		</div>
@@ -80,11 +82,11 @@
 			let job_id = null
 
 			const container = document.getElementById('container')
-			const svgContainer = document.getElementById('svgContainer')
+			const viewContainer = document.getElementById('viewContainer')
 			const zoomInfo = document.getElementById('zoomInfo')
 			const resetButton = document.getElementById('resetButton')
 
-			let svg
+			let pcbDesign
 			let originalViewBox = { x: 0, y: 0, width: 0, height: 0 }
 			let viewBox = { x: 0, y: 0, width: 100, height: 100 }
 			let isPanning = false
@@ -135,7 +137,7 @@
 
 					// Keep trying to get the job until status=='complete' put a delay so it is not too frequent
 					while (job == null || job.status != 'complete') {
-						await delay(1000)
+						await delay(2000)
 						job = await checkJob()
 						document.getElementById('loadingMessage').style.display = 'block'
 						document.getElementById('loadingMessage').textContent += '.'
@@ -146,7 +148,7 @@
 					const svgOutput = job.outputs.find(n => n.path == 'viewer.svg')
 					if(!svgOutput) throw Error(`Job did not have an "viewer.svg" output file.`)
 
-					// Start the SVG viewer with SVG file
+					// Start the Viewer
 					startViewer(svgOutput.url)
 				} catch (err) {
 					console.error(err)
@@ -165,43 +167,43 @@
 				throw Error(data.err.message)
 			}
 
-			// Load SVG
+			// Load PCB Design
 			function startViewer(url) {
 				fetch(url)
 					.then(response => response.text())
 					.then(svgContent => {
 						container.style.display = 'block'
-						svgContainer.innerHTML = svgContent
-						svg = svgContainer.querySelector('svg')
-						svg.setAttribute('width', '100%')
-						svg.setAttribute('height', '100%')
-						svg.setAttribute('transform', 'scale(1,-1)')
+						viewContainer.innerHTML = svgContent
+						pcbDesign = viewContainer.querySelector('svg')
+						pcbDesign.setAttribute('width', '100%')
+						pcbDesign.setAttribute('height', '100%')
+						pcbDesign.setAttribute('transform', 'scale(1,-1)')
 
-						const gElements = svg.querySelectorAll('g')
+						const gElements = pcbDesign.querySelectorAll('g')
 						gElements.forEach(g => {
 							g.setAttribute('display', 'inline')
 						})
 
-						originalViewBox.x = svg.viewBox.baseVal.x
-						originalViewBox.y = svg.viewBox.baseVal.y
-						originalViewBox.width = svg.viewBox.baseVal.width
-						originalViewBox.height = svg.viewBox.baseVal.height
+						originalViewBox.x = pcbDesign.viewBox.baseVal.x
+						originalViewBox.y = pcbDesign.viewBox.baseVal.y
+						originalViewBox.width = pcbDesign.viewBox.baseVal.width
+						originalViewBox.height = pcbDesign.viewBox.baseVal.height
 						resetView()
 					})
 					.catch(error => {
-						console.error('Error loading SVG:', error)
-						svgContainer.textContent = 'Failed to load SVG. Please check the file path and try again.'
+						console.error('Error loading PCB:', error)
+						viewContainer.textContent = 'Failed to load PCB. Please check the file path and try again.'
 					})
 
-				function updateSVG() {
-					if (svg) {
-						svg.setAttribute('viewBox', `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`)
-						zoomInfo.textContent = `Zoom: ${Math.round((100 / viewBox.width) * 100)}%`
+				function updateViewBox() {
+					if (pcbDesign) {
+						pcbDesign.setAttribute('viewBox', `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`)
+						zoomInfo.textContent = `Zoom: ${Math.round(zoomLevel * 100)}%`
 					}
 				}
 
 				function resetView() {
-					if (svg) {
+					if (pcbDesign) {
 						const svgViewBox = originalViewBox
 						const containerAspectRatio = container.clientWidth / container.clientHeight
 						const svgAspectRatio = svgViewBox.width / svgViewBox.height
@@ -220,7 +222,7 @@
 						viewBox.y = svgViewBox.y + (svgViewBox.height - viewBox.height) / 2
 
 						zoomLevel = svgViewBox.width / viewBox.width
-						updateSVG()
+						updateViewBox()
 					}
 				}
 
@@ -238,7 +240,7 @@
 						viewBox.x -= dx
 						viewBox.y += dy
 						startPoint = { x: e.clientX, y: e.clientY }
-						updateSVG()
+						updateViewBox()
 					}
 				})
 
@@ -251,23 +253,22 @@
 					let zoom = e.deltaY < 0 ? 0.9 : 1.1
 
 					// Check if zooming out would exceed the minimum zoom
-					if (zoom > 1 && viewBox.width * zoom > svg.viewBox.baseVal.width / MIN_ZOOM) {
-						zoom = svg.viewBox.baseVal.width / MIN_ZOOM / viewBox.width
+					if (zoom > 1 && viewBox.width * zoom > pcbDesign.viewBox.baseVal.width / MIN_ZOOM) {
+						zoom = pcbDesign.viewBox.baseVal.width / MIN_ZOOM / viewBox.width
 					}
 
 					const mouseX = e.clientX - container.getBoundingClientRect().left
-					const mouseY = e.clientY - container.getBoundingClientRect().top
+					const mouseY = container.getBoundingClientRect().bottom - e.clientY
 
-					const svgX = viewBox.x + (mouseX / container.clientWidth) * viewBox.width
-					const svgY = viewBox.y + (mouseY / container.clientHeight) * viewBox.height
+					const baseX = viewBox.x + (mouseX / container.clientWidth) * viewBox.width
+					const baseY = viewBox.y + (mouseY / container.clientHeight) * viewBox.height
 
 					viewBox.width *= zoom
 					viewBox.height *= zoom
-					viewBox.x = svgX - (mouseX / container.clientWidth) * viewBox.width
-					viewBox.y = svgY - (mouseY / container.clientHeight) * viewBox.height
-
-					zoomLevel = svg.viewBox.baseVal.width / viewBox.width
-					updateSVG()
+					viewBox.x = baseX - (mouseX / container.clientWidth) * viewBox.width
+					viewBox.y = baseY - (mouseY / container.clientHeight) * viewBox.height
+					zoomLevel = originalViewBox.width / viewBox.width
+					updateViewBox()
 				})
 
 				resetButton.addEventListener('click', resetView)
