@@ -1,6 +1,6 @@
-# PCB Preflight Extract Example
-This is a example extracts the JSON and displays the information in a table.  
-
+# PCB Preflight API - PCB Data Extraction 
+This example extracts the mission-critical data required by PCB Sales/Engineering teams to generate price Quotes for PCB Fabrication and Assembly.
+Then displays the information in a report table.  
 
 
 ## Installation

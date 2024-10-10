@@ -1,6 +1,7 @@
-# PCB Preflight - NodeJS Example
-Demonstrates utilizing the PCB Preflight API within a NodeJS server.  
-* This example is primarily intended for NodeJS users.
+# PCB Preflight API - NodeJS Example
+Demonstrates using the PCB Preflight API used within a NodeJS server. 
+* PCB Preflight API is compatible with almost all web frameworks: Angular, React, Django, Vue, plain HTML/JS, and more. 
+* Did you Know? The PCBPreflight.com site was built using web framework: `NodeJS/Vue`
 
 ## Installation
 * Make sure you have Node 16 or higher installed on your system `nvm use 16`.

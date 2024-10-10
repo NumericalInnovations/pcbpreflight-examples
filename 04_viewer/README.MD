@@ -1,4 +1,4 @@
-# PCB Preflight - Online PCB Viewer Example
+# PCB Preflight API - Online PCB Viewer Example
 This example demonstrates uploading your PCB design and displays the results online.
 You can use your left mouse button to grab and drag, and use the scroll wheel to zoom.
 

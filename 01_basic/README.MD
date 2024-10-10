@@ -1,6 +1,6 @@
-# PCB Preflight Getting Started Example
-Automates the extraction of PCB Design information and displays the resulting JSON file. 
-This simple example demonstrates how easily the PCB Preflight API can be utilized into a cost-effective manufacturing solution.
+# PCB Preflight API - Getting Started Example
+Automates the extraction of basic PCB Design information such as: layers, nets, stackup, apertures, nctools, components, and board dimensions. Displays the resulting JSON file afterwards.
+Note: This simple example demonstrates how easily the PCB Preflight API can be utilized into a cost-effective manufacturing solution. To get mission-critical data required by PCB Sales/Engineering teams review API Example: `03_extract`
 
 
 ## Installation
