@@ -41,14 +41,14 @@
 		<div id="container">
 			<div id="viewContainer"></div>
 			<div id="zoomInfo">Zoom: 100%</div>
-			<button id="resetButton">Reset</button>
+			<button id="resetButton">Zoom All</button>
 		</div>
 
 		<h1>PCB Preflight API - Online Viewer Example</h1>
 		<div>
 			This example demonstrates uploading your PCB design and displays the results online.
 			<ol>
-				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.</li>
+				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.<br />Note: The API-key should be hidden in production releases.</li>
 				<li><b>Upload</b> your PCB Design manufacturing files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace). <br />Note: You can upload a ZIP file or multiple files.</li>
 				<li>Once the viewer opens, use your left mouse button to grab and drag, and your mouse wheel to zoom.</li>
 			</ol>
@@ -111,6 +111,10 @@
 			async function submit() {
 				const formData = new FormData(document.getElementById('form1'))
 
+				// Request some simple Instructions for the PCB Preflight API to Detect incoming files and generate a Viewer (Using Numerical Matrix format)
+				// FormData is used to send Matrix commands (or include a matrix file *.fm6 with the uploaded files)
+				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_files\n   preflight-generate_viewer\n}\n'); 
+
 				// Clear error
 				document.getElementById('errorMessage').textContent = ''
 
@@ -144,9 +148,9 @@
 					}
 					document.getElementById('loadingMessage').textContent += ' Done!'
 
-					// Find "viewer.svg" in list of outputs
+					// Find svg in list of outputs
 					const svgOutput = job.outputs.find(n => n.path == 'viewer.svg')
-					if(!svgOutput) throw Error(`Job did not have an "viewer.svg" output file.`)
+					if(!svgOutput) throw Error(`Unable to generate viewer output.`)
 
 					// Start the Viewer
 					startViewer(svgOutput.url)

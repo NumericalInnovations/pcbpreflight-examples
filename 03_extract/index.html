@@ -177,6 +177,7 @@
 
 			async function submit() {
 				const formData = new FormData(document.getElementById('form1'))
+				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_files\n   preflight-extract_pcb_info\n}\n'); 
 
 				// Clear error
 				document.getElementById('errorMessage').textContent = ''

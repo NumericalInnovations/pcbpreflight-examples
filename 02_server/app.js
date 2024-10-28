@@ -18,6 +18,7 @@ async function processJob(file) {
 		form.append('output', 'zip') // Choose zip or files for output
 		form.append('save_input', true) // Save the input for future reference
 		form.append('send_email', true) // Send an email after the job is done
+    form.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_files\n   preflight-extract_pcb_info\n}\n'); //Send Requests to PCB Preflight
 		form.append('timeout', 60)
 
     // Request to process job, get a job ID
