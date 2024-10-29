@@ -17,7 +17,7 @@ PCB Preflight utilizes the popular REST API methodology and is compatible with a
 1) PCB Assembly Quoting - `Coming Soon!`
 1) Interactive Customer Sales/Support - `Coming Soon!`
 1) PCB Preflight's AI Integration (utilizing ChatGPT) - `Coming Soon!`
-1) CAM Editing (Add teardrops) - `Coming Soon!`
+1) Advanced CAM Editing (Etch compensation, Copper pour, Teardrops) - `Coming Soon!`
 1) Complete Online PCB Procurement - `Coming Soon!`
 
 
@@ -27,4 +27,4 @@ A controlled set of sample files allowing people to freely test and evaluate the
 
 
 ## Need more API examples? Contact us
-<a href="https://support.numericalinnovations.com/support/tickets/new">Submit a Support Ticket</a> and describe what you would like us to create.
+Contact <a href="https://support.numericalinnovations.com/support/tickets/new">Numerical Innovations Support</a> and describe the PCB Preflight API example you would like us to create.
