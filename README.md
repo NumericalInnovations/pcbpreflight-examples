@@ -26,5 +26,5 @@ A controlled set of sample files allowing people to freely test and evaluate the
 * API Sandbox Files are located in the folder: `sandbox_samples`
 
 
-## Need more API examples? Contact us
+## Need more API examples? Contact us!
 Contact <a href="https://support.numericalinnovations.com/support/tickets/new">Numerical Innovations Support</a> and describe the PCB Preflight API example you would like us to create.
