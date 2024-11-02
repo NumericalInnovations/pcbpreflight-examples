@@ -1,11 +1,11 @@
 # PCB Preflight API - PCB Data Extraction 
 This example extracts the mission-critical data required by PCB Sales/Engineering teams to generate price Quotes for PCB Fabrication and Assembly.
 Then displays the information in a report table.  
+* Open `index.html` in an editor to view and edit the code.
 
 
 ## Installation
-* Open `index.html` in an editor to view and edit the code.
-* Open a browser and point to the `index.html` local file.
+* Open a browser and point to this local file: `index.html`
 * Enter your own API key in the form.
 * Pick Gerber files to upload, you can use our included samples for testing.
 * Press the submit button, wait for processing, and a job_id_hash will be returned.

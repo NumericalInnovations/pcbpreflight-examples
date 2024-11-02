@@ -1,11 +1,10 @@
 # PCB Preflight API - Compare PCB Designs
 Perform a PCB design comparison and highlight any differences.
 You can use your left mouse button to grab and drag, and use the scroll wheel to zoom.
-
+* Open `index.html` in an editor to view and edit the code.
 
 ## Installation
-* Open `index.html` in an editor to view and edit the code.
-* Open a browser and point to the `index.html` local file.
+* Open a browser and point to this local file: `index.html`
 * Enter your own API key in the form.
 * Upload First PCB Design.
 * Upload Second PCB Design.
