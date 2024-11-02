@@ -21,8 +21,8 @@ PCB Preflight utilizes the popular REST API methodology and is compatible with a
 1) Complete Online PCB Procurement - `Coming Soon!`
 
 
-## API Sandbox Files - Free to Use while Testing API
-A controlled set of sample files allowing people to freely test and evaluate the PCB Preflight API results without incurring any API call usage.
+## API Sandbox Files (Free usage)
+PCB Preflight API includes a FREE set of sample files allowing people to test and fully evaluate the results - without incurring any API call usage.
 * API Sandbox Files are located in the folder: `sandbox_samples`
 
 

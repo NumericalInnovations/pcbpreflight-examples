@@ -11,5 +11,6 @@ Automates the extraction of basic PCB Design information such as: layers, nets, 
 * With job_id_hash it will keep checking if the job is complete
 * Once complete, JSON will be returned with the result.
 
-# Notes
-* Check out `API Example: 03_extract` to extract mission-critical data required by PCB Sales/Engineering teams for pricing RFQ's.
+
+## Need more API examples? Contact us!
+Contact <a href="https://support.numericalinnovations.com/support/tickets/new">Numerical Innovations Support</a> and describe the PCB Preflight API example you would like us to create.
