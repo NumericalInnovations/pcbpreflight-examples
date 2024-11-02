@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>PCB Preflight API - Compare PCB Designs</title>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+		<meta content="utf-8" http-equiv="encoding" />
+	</head>
+	<body>
+		<h1>Compare PCB Designs</h1>
+		<div>
+			Perform a PCB design comparison and highlight any differences.  
+			<ol>
+				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.</li>
+				<li>Upload <b>First</b> PCB Design.</li>
+				<li>Upload <b>Second</b> PCB Design.</li>
+				<li>Press <b>Submit</b> to begin Comparison.</li>
+			</ol>
+		</div>
+
+		<form id="form1">
+			Your API Key <input id="api_key" type="text" value="" />
+			<input type="hidden" name="output" value="files" />
+			<input type="hidden" name="output2" value="files2" />
+			<input type="hidden" name="save_input" value="false" />
+			<input type="hidden" name="send_email" value="true" />
+			<input type="hidden" name="timeout" value="60" />
+			<p>Upload <b>PCB Design #1</b> <input type="file" name="files" id="files" multiple /></p>
+			<p>Upload <b>PCB Design #2</b> <input type="file" name="files2" id="files2" multiple /></p>
+			<p><input type="submit" id="submitButton" value="Submit" /></p>
+		</form>
+
+		<span id="errorMessage" style="color: red"></span><br />
+		<br />
+
+		<div id="result1Container" style="display: none">
+			<div>Get Job ID, then keep checking if status='complete' every few seconds.</div>
+			<pre id="result1" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
+		</div>
+		<br />
+
+		<div id="result2Container" style="display: none">
+			<div>Result of processing</div>
+			<pre id="result2" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
+		</div>
+
+		<script>
+			let api_key = null
+			let job = null
+			let job_id = null
+
+			document.addEventListener('DOMContentLoaded', init)
+
+			function delay(ms) {
+				return new Promise(resolve => setTimeout(resolve, ms))
+			}
+
+			function init() {
+				document.getElementById('submitButton').addEventListener('click', async function (e) {
+					e.preventDefault()
+					submit()
+				})
+			}
+
+			async function submit() {
+
+				// FormData is used to pass Matrix commands to the PCB Preflight AP (or include a matrix file *.fm6 with the uploaded files)
+				// preflight-autodetect_files   Automatically detect file formats and import. If problems occur use matrix directly.
+				// preflight-extract_pcb_info   Detects and extracts all PCB fabrication information, plus Assembly/BOM details.
+				// Request some simple commands for the PCB Preflight API to perform
+				const formData = new FormData(document.getElementById('form1'))
+				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_files\n   preflight-extract_pcb_info\n}\n'); 
+
+
+				
+				// Clear error
+				document.getElementById('errorMessage').textContent = ''
+
+				try {
+					api_key = document.getElementById('api_key').value
+
+					const response = await fetch('https://www.pcbpreflight.com/api/v1/job', {
+						method: 'POST',
+						headers: { Authorization: api_key },
+						body: formData,
+						cache: 'no-cache',
+					})
+
+					const data = await response.json()
+					if (data.ok === 1) {
+						job_id = data.result.job_id
+						document.getElementById('result1Container').style.display = 'block'
+						const result1 = document.getElementById('result1')
+						result1.textContent = JSON.stringify(data.result, null, 2)
+
+						// Keep trying to get the job until status=='complete'
+						while (job == null || job.status != 'complete') {
+							await delay(1000)
+							job = await checkJob()
+							updateResult()
+						}
+					} else {
+						document.getElementById('errorMessage').textContent = data.err.message
+					}
+				} catch (err) {
+					console.error(err)
+					document.getElementById('errorMessage').textContent = err.message
+				}
+			}
+
+			async function checkJob() {
+				const response = await fetch(`https://www.pcbpreflight.com/api/v1/job/${job_id}`, {
+					method: 'GET',
+					headers: { Authorization: api_key },
+					cache: 'no-cache',
+				})
+				const data = await response.json()
+				if (data.ok === 1) return data.result
+				throw Error(data.err.message)
+			}
+
+			function updateResult() {
+				document.getElementById('result2Container').style.display = 'block'
+				document.getElementById('result2').textContent = JSON.stringify(job, null, 2)
+			}
+		</script>
+	</body>
+</html>
