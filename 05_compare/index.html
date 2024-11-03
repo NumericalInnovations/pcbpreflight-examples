@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>PCB Preflight API - Compare PCB Designs</title>
+		<title>PCB Preflight API Basic Example</title>
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
 		<meta content="utf-8" http-equiv="encoding" />
 	</head>
@@ -13,19 +13,26 @@
 				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.</li>
 				<li>Upload <b>First</b> PCB Design.</li>
 				<li>Upload <b>Second</b> PCB Design.</li>
+				<li>Review Compare PCB options.</li>
 				<li>Press <b>Submit</b> to begin Comparison.</li>
 			</ol>
 		</div>
 
 		<form id="form1">
 			Your API Key <input id="api_key" type="text" value="" />
-			<input type="hidden" name="output" value="files" />
-			<input type="hidden" name="output2" value="files2" />
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />
 			<input type="hidden" name="timeout" value="60" />
-			<p>Upload <b>PCB Design #1</b> <input type="file" name="files" id="files" multiple /></p>
-			<p>Upload <b>PCB Design #2</b> <input type="file" name="files2" id="files2" multiple /></p>
+			<p>Upload <b>PCB Design #1:</b> <input type="file" name="files" id="files" /></p>
+			<p>Upload <b>PCB Design #2:</b> <input type="file" name="compareFiles" id="compareFiles" /></p>
+			<p>Minimum Error Size (mm.): <input type="text" name="min_size" id="min_size" value="0.2" /></p>
+			<p>Map Layers by: 
+				<select id="mapLayers">
+					<option value="mapLayerName">Name</option>
+					<option value="mapLayerType">Type</option>
+				</select>
+			</p>
+
 			<p><input type="submit" id="submitButton" value="Submit" /></p>
 		</form>
 
@@ -63,15 +70,16 @@
 
 			async function submit() {
 
-				// FormData is used to pass Matrix commands to the PCB Preflight AP (or include a matrix file *.fm6 with the uploaded files)
-				// preflight-autodetect_files   Automatically detect file formats and import. If problems occur use matrix directly.
-				// preflight-extract_pcb_info   Detects and extracts all PCB fabrication information, plus Assembly/BOM details.
-				// Request some simple commands for the PCB Preflight API to perform
+				// FormData is used to pass Matrix commands to the PCB Preflight AP
 				const formData = new FormData(document.getElementById('form1'))
-				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_files\n   preflight-extract_pcb_info\n}\n'); 
 
+				let sMatrix = '\n\nOPTIONS {\ndetect_layer_types\n}\n';
+				sMatrix 	+= '\nCOMPARE_LAYERS {\nLAYER_1=toplayer.stp\nLAYER_2=bottomlayer.stp';
+				sMatrix 	+= '\nMETHOD=Blend\nUNITS=mm';
+				sMatrix 	+= '\nMinErrorSize=' + formData.get("min_size");
+				sMatrix 	+= '\noutput_pdf_file=comparepcb_jobs.pdf\n}\n'
+				formData.append('matrix', sMatrix); 
 
-				
 				// Clear error
 				document.getElementById('errorMessage').textContent = ''
 

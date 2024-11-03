@@ -60,11 +60,13 @@
 
 			async function submit() {
 
-				// FormData is used to pass Matrix commands to the PCB Preflight AP (or include a matrix file *.fm6 with the uploaded files)
-				// preflight-autodetect_files   Automatically detect file formats and import. If problems occur use matrix directly.
-				// preflight-extract_pcb_info   Detects and extracts all PCB fabrication information, plus Assembly/BOM details.
-				// Request some simple commands for the PCB Preflight API to perform
+				// FormData is used to pass Matrix commands to the PCB Preflight AP
 				const formData = new FormData(document.getElementById('form1'))
+
+				/* Request some simple options for the PCB Preflight API to perform
+					preflight-autodetect_files   Automatically detect file formats and import. If problems occur use matrix directly.
+					preflight-extract_pcb_info   Detects and extracts all PCB fabrication information, plus Assembly/BOM details. 
+				*/
 				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_files\n   preflight-extract_pcb_info\n}\n'); 
 
 				// Clear error
