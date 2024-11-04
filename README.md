@@ -11,8 +11,8 @@ PCB Preflight utilizes the popular REST API methodology and is compatible with a
 1) <b>Automated PCB Quotes</b> - HTML and Javascript
 1) DFM Error Browsing - `Coming Soon!`
 1) SMT Stencil Editing - `Coming Soon!`
-1) <b>PCB Panelization</b> - HTML and Javascript
-1) Netlist Comparison (Ensure PCB Design Integrity) - `Coming Soon!`
+1) PCB Panelization - `Coming Soon!`
+1) Perform and Electrical Test on a PCB - `Coming Soon!`
 1) PreCAM Editing (Prepare 1UP) - `Coming Soon!`
 1) Convert Gerber to ODB++ (Requires PRO plan)- `Coming Soon!`
 1) PCB Assembly Quoting - `Coming Soon!`
