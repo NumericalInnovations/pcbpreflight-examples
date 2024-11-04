@@ -1,0 +1,89 @@
+# Comments start with #
+# Matrix File Reference, https://www.numericalinnovations.com/pages/fab-3000-matrix-file-description
+
+##############################
+# Load Sample Job Files (Job files are previously saved)
+# For more information, https://www.numericalinnovations.com/blogs/news/save-you-designs-as-job-files-and-then-easily-create-a-panel-with-unlimited-pcbs
+##############################
+
+JOBFILE {
+   FILE=../examples/jobs/Board1.job
+   FILE=../examples/jobs/Board4.job
+}
+
+
+##############################
+# Create Panel with Rails and Fiducials
+##############################
+
+PANEL {
+    NAME=mypanel
+    UNITS=INCH
+    WIDTH=19.2
+    HEIGHT=16.5
+	BORDERSPACING=1.0
+	INSERT=Board4,1.1,13,0,No
+	INSERT=Board4,5.2,13,0,No
+	INSERT=Board4,9.3,13,0,No
+	INSERT=Board4,17.5,15.35,180,No
+	INSERT=Board1,1.5,1.5,0,No
+    STEPREPEAT=Board4,18,1.25,0,2.5,1,5,90,No
+    STEPREPEAT=Board1,18,5.5,3.8,3.4,2,5,90,No
+	FIDUCIAL=circle,0.05,0.05,0.5,0.5,0,0.05,top,bottom
+	FIDUCIAL=circle,0.05,0.05,18.7,16.0,0,0.05,top,bottom
+	VENT=rail,0,0,0,1,top,bottom
+}
+
+
+##############################
+# Add Panel Text and Coupons
+##############################
+
+ADD {
+   CELL=current
+   UNITS=INCH
+ 
+   INSERT_MATRIX=coupon.fm6,2,0.1,0,FALSE
+   INSERT_MATRIX=coupon.fm6,19.1,2,90,FALSE
+   INSERT_MATRIX=coupon.fm6,17.2,16.4,180,FALSE
+   INSERT_MATRIX=coupon.fm6,0.1,14.5,270,FALSE
+   
+   INSERT_MATRIX=coupon_activelayer.fm6,2,0.1,0,FALSE,bottom
+   INSERT_MATRIX=coupon_activelayer.fm6,19.1,2,90,FALSE,bottom
+   INSERT_MATRIX=coupon_activelayer.fm6,17.2,16.4,180,FALSE,bottom
+   INSERT_MATRIX=coupon_activelayer.fm6,0.1,14.5,270,FALSE,bottom
+   
+   COMPOSITE=9
+   TEXTSTYLE=arial.fnt
+   TEXT=top,8,0.45,0.2,0,FALSE,My Automated Panel Design using Matrix
+   TEXTSTYLE=fab.fnt
+   TEXT=bottom,13.5,0.45,0.2,0,TRUE,My Automated Panel Design using Matrix
+ 
+}
+
+
+# REFERENCES
+
+##############################
+# Add Fiducials
+##############################
+#FIDUCIAL=shape,width,height,x,y,rotation,clearance,layer(s)
+#shape=[circle hash target cross octagon butterfly rectrounded donut oblong rectangle diamond]
+
+##############################
+# Add Tooling Holes
+##############################
+#TOOLINGHOLE=shape,width,height,x,y,rotation,clearance,layer(s)
+#shape=[circle slot]
+
+##############################
+# Venting Pattern(s)
+##############################
+#VENT=pattern,width,height,x,y,rotation,clearance,layer(s)
+#pattern=[rail vrail hrail solid dot hatch]
+#vent=rail,panel_clearance,symbol_clearance,width,layer(s)
+#vent=vrail,panel_clearance,symbol_clearance,width,layer(s)
+#vent=hrail,panel_clearance,symbol_clearance,width,layer(s)
+#vent=solid,panel_clearance,job_clearance,symbol_clearance,layer(s)
+#vent=dot,panel_clearance,job_clearance,symbol_clearance,patternX,patternY,dy,shape1,width1,x1,dx1,shape2,width2,x2,dx2,layer(s)
+#vent=hatch,panel_clearance,job_clearance,symbol_clearance,patternX,patternY,width1,offset1,angle1,width2,offset2,angle2,width3,offset3,angle3,layer(s)

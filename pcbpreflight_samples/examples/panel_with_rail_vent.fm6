@@ -1,0 +1,87 @@
+# SAMPLE PANEL MATRIX FILE
+# Merge 3 different gerber jobs into one panel named: mypanel
+# Add Panel Rails, Fiducials, and Venting
+#
+# Comments start with #
+# Matrix File Reference, https://www.numericalinnovations.com/pages/fab-3000-matrix-file-description
+
+
+#Job - 1
+JOB {
+    NAME=testgerber
+    LAYER=layer_1,../examples/274X/Art0121.pho;TOP
+    LAYER=layer_4,../examples/274X/Art02.pho;BOTTOM    
+    LAYER=layer_2,../examples/274X/Pgp2529.pho;NEG_PLANE
+    LAYER=layer_3,../examples/274X/gnd2530.pho;NEG_PLANE   
+    LAYER=sst,../examples/274X/Sst0126.pho;SILK_TOP
+    LAYER=spt,../examples/274X/Sp0128.pho;PASTE_TOP
+    LAYER=smb,../examples/274X/Sm0227.pho;MASK_BOTTOM
+    LAYER=smt,../examples/274X/Sm0128.pho;MASK_TOP
+    LAYER=d_1_2,../examples/274X/Drill.drl;DRILL_THRUHOLE	
+}
+
+#Job - 2
+JOB {
+    NAME=board1
+    LAYER=smb,..\examples\Board1\Bottom Mask.gbr;MASK_BOTTOM
+    LAYER=layer_4,..\examples\Board1\Bottom.gbr;BOTTOM
+    LAYER=smt,..\examples\Board1\Top Mask.gbr;MASK_TOP
+    LAYER=layer_1,..\examples\Board1\Top.gbr;TOP
+    LAYER=sst,..\examples\Board1\Top Silk.gbr;SILK_TOP
+    LAYER=d_1_2,..\examples\Board1\drill.drl;DRILL_THRUHOLE
+}
+
+#Job - 3
+JOB {
+    NAME=board4
+    LAYER=smb,../examples/Board4\Bottom Mask.gbr;MASK_BOTTOM
+    LAYER=layer_4,../examples/Board4\Bottom.gbr;BOTTOM
+    LAYER=smt,../examples/Board4\Top Mask.gbr;MASK_TOP
+    LAYER=layer_1,../examples/Board4\Top.gbr;TOP
+    LAYER=sst,../examples/Board4\Top Silk.gbr;SILK_TOP
+    LAYER=d_1_2,../examples/Board4\drill.drl;DRILL_THRUHOLE
+}
+
+
+#Panel - 1
+PANEL {
+    NAME=mypanel
+    UNITS=INCH
+    WIDTH=19
+    HEIGHT=19.5
+	BORDERSPACING=0.5
+    STEPREPEAT=board4,18,0.5,0,2.5,1,7,90,No
+    STEPREPEAT=board1,17.5,4.5,3.8,3.4,2,5,90,No
+    STEPREPEAT=testgerber,18.35,12.0,7,6,1,3,90,No
+	FIDUCIAL=circle,0.05,0.05,0.25,0.25,0,0.05,layer_1,layer_4
+	FIDUCIAL=circle,0.05,0.05,18.75,19.25,0,0.05,layer_1,layer_4
+	VENT=rail,0,0,0,0.5,layer_1,layer_4
+	VENT=solid,0.1,0,0.1,layer_2
+	VENT=dot,0,0.1,0.1,0,0,0.12,circle,0.06,0,0.12,circle,0.06,0.06,.12,layer_3
+	VENT=hatch,0.1,0,0,0,0,0.01,0.5,0,0.01,0.5,45,0.01,0.5,90,layer_4
+}
+
+##############################
+# Add Fiducials
+##############################
+#FIDUCIAL=shape,width,height,x,y,rotation,clearance,layer(s)
+#shape=[circle hash target cross octagon butterfly rectrounded donut oblong rectangle diamond]
+
+##############################
+# Add Tooling Holes
+##############################
+#TOOLINGHOLE=shape,width,height,x,y,rotation,clearance,layer(s)
+#shape=[circle slot]
+
+##############################
+# Venting Pattern(s)
+##############################
+#VENT=pattern,width,height,x,y,rotation,clearance,layer(s)
+#pattern=[rail vrail hrail solid dot hatch]
+#vent=rail,panel_clearance,symbol_clearance,width,layer(s)
+#vent=vrail,panel_clearance,symbol_clearance,width,layer(s)
+#vent=hrail,panel_clearance,symbol_clearance,width,layer(s)
+#vent=solid,panel_clearance,job_clearance,symbol_clearance,layer(s)
+#vent=dot,panel_clearance,job_clearance,symbol_clearance,patternX,patternY,dy,shape1,width1,x1,dx1,shape2,width2,x2,dx2,layer(s)
+#vent=hatch,panel_clearance,job_clearance,symbol_clearance,patternX,patternY,width1,offset1,angle1,width2,offset2,angle2,width3,offset3,angle3,layer(s)
+

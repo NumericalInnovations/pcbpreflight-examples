@@ -1,0 +1,21 @@
+[Options]
+AddStackup=No
+AddDimensions=Yes
+AddNCRouts=No
+AddLayerTable=Yes
+AddBorder=Yes
+AddJobRef=Yes
+
+[HoleSchedule]
+Add=No
+LettersOnly=No
+
+[Information]
+Contact=Engineer
+AddNotes=No
+Notes="* FR4 Material\n* Board thickness is 0.062 +/- 10% inches.\n* Drills shown as finished sizes."
+Company=My Company
+
+[General]
+Units=English
+

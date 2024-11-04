@@ -1,0 +1,10 @@
+[Bom]
+Start=1
+Separated=SeparatedBy
+RefDes=1
+Footprint=2
+Description=4
+SeparatedValue=Semicolon
+FixedValue=
+PartNumber=0
+

@@ -1,0 +1,39 @@
+
+##############################
+# Add Coupon
+# No Defined Layer - see Active
+##############################
+
+
+#RECTANGLE2PT=layer,X1,Y1,X2,Y2
+#CIRCLE=layer,X,Y,OD,ID         (ID is optional)
+#PATH=layer,Width,Point Count,X,Y,...
+
+
+ADD {
+   CELL=active
+   UNITS=INCH
+   COMPOSITE=CLEAR
+   RECTANGLE2PT=active,0,0,3,0.8
+   COMPOSITE=DARK
+#   
+   CIRCLE=active,0.25,0.4,0.05,0
+   CIRCLE=active,2.75,0.4,0.05,0
+   PATH=active,0.01,2,0.25,0.4,2.75,0.4
+#
+   CIRCLE=active,0.25,0.3,0.05,0
+   CIRCLE=active,2.75,0.3,0.05,0
+   PATH=active,0.01,2,0.25,0.3,2.75,0.3
+#
+   CIRCLE=active,0.25,0.5,0.05,0
+   CIRCLE=active,2.75,0.5,0.05,0
+   PATH=active,0.01,2,0.25,0.5,2.75,0.5   
+#
+   CIRCLE=active,0.25,0.2,0.05,0
+   CIRCLE=active,2.75,0.2,0.05,0
+   PATH=active,0.01,2,0.25,0.2,2.75,0.2
+#
+   CIRCLE=active,0.25,0.6,0.05,0
+   CIRCLE=active,2.75,0.6,0.05,0
+   PATH=active,0.01,2,0.25,0.6,2.75,0.6      
+}

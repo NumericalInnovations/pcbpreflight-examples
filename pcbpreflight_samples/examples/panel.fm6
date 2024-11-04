@@ -1,0 +1,52 @@
+# SAMPLE PANEL MATRIX FILE
+# Merge 3 different Gerber/Drill jobs into one Panel.
+#
+# Comments start with #
+# Matrix File Reference, https://www.numericalinnovations.com/pages/fab-3000-matrix-file-description
+
+#Job - 1
+JOB {
+    NAME=testgerber
+    LAYER=layer_1,../examples/274X/Art0121.pho;TOP
+    LAYER=layer_4,../examples/274X/Art02.pho;BOTTOM    
+    LAYER=layer_2,../examples/274X/Pgp2529.pho;NEG_PLANE
+    LAYER=layer_3,../examples/274X/gnd2530.pho;NEG_PLANE   
+    LAYER=sst,../examples/274X/Sst0126.pho;SILK_TOP
+    LAYER=spt,../examples/274X/Sp0128.pho;PASTE_TOP
+    LAYER=smb,../examples/274X/Sm0227.pho;MASK_BOTTOM
+    LAYER=smt,../examples/274X/Sm0128.pho;MASK_TOP
+    LAYER=d_1_2,../examples/274X/Drill.drl;DRILL_THRUHOLE	
+}
+
+#Job - 2
+JOB {
+    NAME=board1
+    LAYER=smb,..\examples\Board1\Bottom Mask.gbr;MASK_BOTTOM
+    LAYER=layer_4,..\examples\Board1\Bottom.gbr;BOTTOM
+    LAYER=smt,..\examples\Board1\Top Mask.gbr;MASK_TOP
+    LAYER=layer_1,..\examples\Board1\Top.gbr;TOP
+    LAYER=sst,..\examples\Board1\Top Silk.gbr;SILK_TOP
+    LAYER=d_1_2,..\examples\Board1\drill.drl;DRILL_THRUHOLE
+}
+
+#Job - 3
+JOB {
+    NAME=board4
+    LAYER=smb,../examples/Board4\Bottom Mask.gbr;MASK_BOTTOM
+    LAYER=layer_4,../examples/Board4\Bottom.gbr;BOTTOM
+    LAYER=smt,../examples/Board4\Top Mask.gbr;MASK_TOP
+    LAYER=layer_1,../examples/Board4\Top.gbr;TOP
+    LAYER=sst,../examples/Board4\Top Silk.gbr;SILK_TOP
+    LAYER=d_1_2,../examples/Board4\drill.drl;DRILL_THRUHOLE
+}
+
+#Panel - 1
+PANEL {
+    NAME=mypanel
+    UNITS=INCH
+    WIDTH=18
+    HEIGHT=18.5
+    STEPREPEAT=board4,17.5,0,0,2.5,1,7,90,No
+    STEPREPEAT=board1,17.0,4,3.8,3.4,2,5,90,No
+    STEPREPEAT=testgerber,17.85,11.5,7,6,1,3,90,No
+}

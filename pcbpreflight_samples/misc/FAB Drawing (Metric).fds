@@ -1,0 +1,19 @@
+[Options]
+AddStackup=Yes
+AddDimensions=Yes
+AddNCRouts=No
+AddLayerTable=No
+AddBorder=Yes
+
+[HoleSchedule]
+Add=Yes
+LettersOnly=No
+AddSlots=Yes
+
+[Information]
+AddNotes=Yes
+Notes="Fabrication Drawing Notes:\n--------------------\nJob Reference Name: $$CELL \nNumber of Metal Layers: $$LAYERS_TOTAL\nTotal Thickness (mm.): $$TOTAL_THICKNESS_MM"
+
+[General]
+Units=Metric
+

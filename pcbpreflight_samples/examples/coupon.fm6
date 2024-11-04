@@ -1,0 +1,38 @@
+
+##############################
+# Add Coupon
+##############################
+
+
+#RECTANGLE2PT=layer,X1,Y1,X2,Y2
+#CIRCLE=layer,X,Y,OD,ID         (ID is optional)
+#PATH=layer,Width,Point Count,X,Y,...
+
+
+ADD {
+   CELL=current
+   UNITS=INCH
+   COMPOSITE=CLEAR
+   RECTANGLE2PT=top,0,0,3,0.8
+   COMPOSITE=DARK
+#   
+   CIRCLE=top,0.25,0.4,0.05,0
+   CIRCLE=top,2.75,0.4,0.05,0
+   PATH=top,0.01,2,0.25,0.4,2.75,0.4
+#
+   CIRCLE=top,0.25,0.3,0.05,0
+   CIRCLE=top,2.75,0.3,0.05,0
+   PATH=top,0.01,2,0.25,0.3,2.75,0.3
+#
+   CIRCLE=top,0.25,0.5,0.05,0
+   CIRCLE=top,2.75,0.5,0.05,0
+   PATH=top,0.01,2,0.25,0.5,2.75,0.5   
+#
+   CIRCLE=top,0.25,0.2,0.05,0
+   CIRCLE=top,2.75,0.2,0.05,0
+   PATH=top,0.01,2,0.25,0.2,2.75,0.2
+#
+   CIRCLE=top,0.25,0.6,0.05,0
+   CIRCLE=top,2.75,0.6,0.05,0
+   PATH=top,0.01,2,0.25,0.6,2.75,0.6      
+}

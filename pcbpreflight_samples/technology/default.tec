@@ -1,0 +1,180 @@
+[Bottom_Paste]
+FlashColor="128 0 0"
+Color="128 0 0"
+Name=BottomPaste.pho
+
+[Bottom_Mask]
+FlashColor="92 92 92"
+Color="92 92 92"
+Name=BottomMask.pho
+
+[Neg_Plane_2]
+FlashColor="100 192 128"
+Color="100 192 128"
+Name=NegPlane2.pho
+
+[Neg_Plane_3]
+FlashColor="100 192 128"
+Color="100 192 128"
+Name=NegPlane3.pho
+
+[Neg_Plane_1]
+FlashColor="100 192 128"
+Color="100 192 128"
+Name=NegPlane.pho
+
+[Border]
+FlashColor="0 255 255"
+Color="0 255 255"
+Name=Border.pho
+
+[Neg_Plane_4]
+FlashColor="100 192 128"
+Color="100 192 128"
+Name=NegPlane4.pho
+
+[Bottom]
+FlashColor="0 255 0"
+Color="0 255 0"
+Name=Bottom.pho
+
+[Pos_Plane_4]
+FlashColor="128 96 32"
+Color="128 96 32"
+Name=PosPlane4.pho
+
+[Bottom_Silk]
+FlashColor="0 128 0"
+Color="0 128 0"
+Name=BottomSilk.pho
+
+[Neg_Plane_5]
+FlashColor="100 192 128"
+Color="100 192 128"
+Name=NegPlane5.pho
+
+[Top_Silk]
+FlashColor="222 222 100"
+Color="222 222 100"
+Name=TopSilk.pho
+
+[Pos_Plane_1]
+FlashColor="128 96 32"
+Color="128 96 32"
+Name=PosPlane.pho
+
+[Fab_Drawing]
+FlashColor="255 92 255"
+Color="255 92 255"
+Name=Fab.pho
+
+[Rout]
+FlashColor="100 192 100"
+Color="100 192 100"
+Name=rout.nc
+
+[Top_Components]
+FlashColor="192 92 100"
+Color="192 92 100"
+Name=comp_+_top.pho
+
+[NC_Primary]
+FlashColor="192 192 100"
+Color="192 192 100"
+Name=Drill.drl
+
+[Top_Mask]
+FlashColor="128 128 128"
+Color="128 128 128"
+Name=TopMask.pho
+
+[NC_Secondary_5]
+FlashColor="192 192 100"
+Color="192 192 100"
+Name=Drill5.drl
+
+[Pos_Plane_2]
+FlashColor="128 96 32"
+Color="128 96 32"
+Name=PosPlane2.pho
+
+[Pos_Plane_5]
+FlashColor="128 96 32"
+Color="128 96 32"
+Name=PosPlane5.pho
+
+[NC_Secondary_2]
+FlashColor="192 192 100"
+Color="192 192 100"
+Name=Drill2.drl
+
+[NC_Secondary_1]
+FlashColor="192 192 100"
+Color="192 192 100"
+Name=Drill1.drl
+
+[Top_Paste]
+FlashColor="128 128 0"
+Color="128 128 0"
+Name=TopPaste.pho
+
+[Score]
+FlashColor="255 32 32"
+Color="255 32 32"
+Name=Score.pho
+
+[Internal_1]
+FlashColor="192 32 192"
+Color="192 32 192"
+Name=Internal.pho
+
+[Internal_2]
+FlashColor="192 32 192"
+Color="192 32 192"
+Name=Internal2.pho
+
+[Top]
+FlashColor="222 92 92"
+Color="222 92 92"
+Name=Top.pho
+
+[Internal_4]
+FlashColor="192 32 192"
+Color="192 32 192"
+Name=Internal4.pho
+
+[Internal_5]
+FlashColor="192 32 192"
+Color="192 32 192"
+Name=Internal5.pho
+
+[NC_Secondary_4]
+FlashColor="192 192 100"
+Color="192 192 100"
+Name=Drill4.drl
+
+[Insulator]
+FlashColor="0 92 255"
+Color="0 92 255"
+Name=Insulator.pho
+
+[Pos_Plane_3]
+FlashColor="128 96 32"
+Color="128 96 32"
+Name=PosPlane3.pho
+
+[NC_Secondary_3]
+FlashColor="192 192 100"
+Color="192 192 100"
+Name=Drill3.drl
+
+[Internal_3]
+FlashColor="192 32 192"
+Color="192 32 192"
+Name=Internal3.pho
+
+[Bottom_Components]
+FlashColor="192 92 255"
+Color="192 92 255"
+Name=comp_+_bot.pho
+

@@ -1,0 +1,295 @@
+[LAYER42]
+Priority=42
+OffsetY=3
+OffsetX=3
+Name=NWELL
+Type=N-Well
+Pen="128 96 32"
+Fill="128 96 32"
+Pattern=19
+
+[LAYER63]
+Priority=63
+OffsetY=1
+OffsetX=1
+Name=NGF_no_pattern_fill
+Type=Graphic
+Pen="32 100 96"
+Fill="32 100 96"
+Pattern=17
+
+[LAYER62]
+Priority=62
+OffsetY=0
+OffsetX=0
+Name=THINOX
+Type=Graphic
+Pen="32 96 100"
+Fill="32 96 100"
+Pattern=16
+
+[LAYER34]
+Priority=34
+OffsetY=3
+OffsetX=3
+Name=M3_T
+Type=Graphic
+Pen="32 100 192"
+Fill="32 100 192"
+Pattern=11
+
+[LAYER78]
+Priority=78
+OffsetY=1
+OffsetX=1
+Name=RESTRM_resistor_terminal
+Type=Graphic
+Pen="100 192 128"
+Fill="100 192 128"
+Pattern=9
+
+[LAYER3]
+Priority=3
+OffsetY=3
+OffsetX=3
+Name=NOPWELL
+Type=Graphic
+Pen="100 100 223"
+Fill="100 100 223"
+Pattern=1
+
+[LAYER103]
+Priority=103
+OffsetY=3
+OffsetX=3
+Name=CATDOP_for_PINBLUE
+Type=Graphic
+Pen="32 100 192"
+Fill="32 100 192"
+Pattern=11
+
+[LAYER1]
+Priority=1
+OffsetY=1
+OffsetX=1
+Name=ACTIVE
+Type=Active
+Pen="44 208 34"
+Fill="44 208 34"
+Pattern=1
+
+[LAYER7]
+Priority=7
+OffsetY=1
+OffsetX=5
+Name=CONT
+Type=Contact
+Pen="255 255 255"
+Fill="255 255 255"
+Pattern=0
+
+[LAYER6]
+Priority=6
+OffsetY=2
+OffsetX=2
+Name=NIMP
+Type=N-Well
+Pen="0 0 255"
+Fill="0 0 255"
+Pattern=2
+
+[LAYER5]
+Priority=5
+OffsetY=1
+OffsetX=5
+Name=PIMP
+Type=P-Well
+Pen="223 100 223"
+Fill="223 100 223"
+Pattern=1
+
+[LAYER4]
+Priority=4
+OffsetY=4
+OffsetX=4
+Name=POLY1
+Type=N-Well
+Pen="255 0 0"
+Fill="255 0 0"
+Pattern=4
+
+[LAYER9]
+Priority=9
+OffsetY=2
+OffsetX=2
+Name=VIA1
+Type=Via
+Pen="211 211 0"
+Fill="211 211 0"
+Pattern=13
+
+[LAYER8]
+Priority=8
+OffsetY=3
+OffsetX=7
+Name=MET1
+Type=Metal
+Pen="0 0 255"
+Fill="0 0 255"
+Pattern=20
+
+[LAYER30]
+Priority=30
+OffsetY=3
+OffsetX=7
+Name=VIA2
+Type=Via
+Pen="32 192 100"
+Fill="32 192 100"
+Pattern=7
+
+[LAYER31]
+Priority=31
+OffsetY=0
+OffsetX=8
+Name=MET3
+Type=Graphic
+Pen="45 188 192"
+Fill="45 188 192"
+Pattern=20
+
+[LAYER10]
+Priority=10
+OffsetY=2
+OffsetX=6
+Name=MET2
+Type=Metal
+Pen="128 0 128"
+Fill="128 0 128"
+Pattern=6
+
+[LAYER11]
+Priority=11
+OffsetY=3
+OffsetX=3
+Name=PAD
+Type=Pads
+Pen="32 100 192"
+Fill="32 100 192"
+Pattern=21
+
+[LAYER16]
+Priority=16
+OffsetY=0
+OffsetX=0
+Name=M1_T
+Type=Graphic
+Pen="32 96 100"
+Fill="32 96 100"
+Pattern=16
+
+[LAYER17]
+Priority=17
+OffsetY=1
+OffsetX=1
+Name=M2_T
+Type=Graphic
+Pen="100 192 128"
+Fill="100 192 128"
+Pattern=9
+
+[LAYER51]
+Priority=51
+OffsetY=4
+OffsetX=4
+Name=POLY2
+Type=Poly
+Pen="223 223 100"
+Fill="223 223 100"
+Pattern=4
+
+[LAYER39]
+Priority=39
+OffsetY=0
+OffsetX=0
+Name="CETXT_LVS text"
+Type=Graphic
+Pen="32 96 100"
+Fill="32 96 100"
+Pattern=16
+
+[LAYER54]
+Priority=54
+OffsetY=0
+OffsetX=8
+Name=SBLK
+Type="Silicide Block"
+Pen="192 32 32"
+Fill="192 32 32"
+Pattern=8
+
+[LAYER96]
+Priority=96
+OffsetY=4
+OffsetX=4
+Name=RESDEF
+Type=Graphic
+Pen="223 223 100"
+Fill="223 223 100"
+Pattern=4
+
+[LAYER79]
+Priority=79
+OffsetY=2
+OffsetX=2
+Name=DIODEF_diode_defn
+Type=Graphic
+Pen="128 128 128"
+Fill="128 128 128"
+Pattern=10
+
+[LAYER59]
+Priority=59
+OffsetY=1
+OffsetX=5
+Name=HRES_POLY1
+Type=Poly
+Pen="192 32 192"
+Fill="192 32 192"
+Pattern=13
+
+[LAYER230]
+Priority=230
+OffsetY=0
+OffsetX=0
+Name=" LL230_Text"
+Type=Graphic
+Pen="100 223 223"
+Fill="100 223 223"
+Pattern=0
+
+[LAYER109]
+Priority=109
+OffsetY=1
+OffsetX=1
+Name=OPTO
+Type=Graphic
+Pen="32 100 96"
+Fill="32 100 96"
+Pattern=17
+
+[General]
+ActiveLayerNumber=8
+FillMode=Pattern
+Version=1
+
+[LAYER190]
+Priority=190
+OffsetY=2
+OffsetX=6
+Name=PRBNDRY
+Type=Graphic
+Pen="173 173 173"
+Fill="173 173 173"
+Pattern=6
+

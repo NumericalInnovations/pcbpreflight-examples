@@ -1,0 +1,10 @@
+[Information]
+AddNotes=Yes
+Notes="Stackup Drawing Notes:\n--------------------\nJob Reference Name: $$CELL \nNumber of Metal Layers: $$LAYERS_TOTAL\nTotal Stackup Layers: $$STACKUP_TOTAL\nTotal Thickness (mm.): $$TOTAL_THICKNESS_MM"
+
+[Options]
+DrawingScale=2.0
+
+[General]
+Units=Metric
+

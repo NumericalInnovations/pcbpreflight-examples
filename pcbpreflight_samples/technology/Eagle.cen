@@ -1,0 +1,17 @@
+[Centroid]
+Start=0
+Layer=0
+RefDes=1
+Description=6
+Centroid_Rotation=Counter-Clockwise
+SeparatedValue=Whitespace
+Rotate=4
+End=999
+Centroid_Angle=3 O-Clock
+PartNumber=5
+Units=Millimeter
+X=2
+Y=3
+FixedValue=
+Separated=SeparatedBy
+

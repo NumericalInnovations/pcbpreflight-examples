@@ -1,0 +1,682 @@
+[Minimum Annular Ring: Drill-SMT Stencil Pad]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Test Point to Rout]
+Red=2.5400
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Silkscreen Text Height]
+Red=1.2700
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Annular Ring: Drill-Pad]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Acid Traps]
+Red=0.1778
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Rout to Rout]
+Red=0.2540
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Plated Drills to Copper]
+Red=0.2540
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Solder Mask to Rout]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance:  SMT Pad to Board Edge]
+Red=0.0889
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Invalid Polygons]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Silk Screen to Board Edge]
+Red=0.2540
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Find Overlapped Traces]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Thermal Air gap]
+Red=0.1778
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Copper Slivers]
+Red=0.0762
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Width: Silkscreen Line]
+Red=0.1778
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Pad-Pad]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Silk Screen (Pad to Pad)]
+Red=0.2540
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Aspect Ratio: SMT Stencil Pad]
+Red=1.5
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Neg. Plane Thermal Conflicts]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[BOM File Comparison]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Features Connection]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[SMT Stencil Pad to Pad Registration]
+Red=0.0254
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Pads without Drills]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Test Point to Mask]
+Red=0.0254
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Mask (Pad to Pad)]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: SMT Stencil (Pad to Pad)]
+Red=0.0889
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Unplated Drills to Copper]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Verify Text Features]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Isolated Connections]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Silk Screen to Drill]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Silk Screen to Rout]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Track-Pad]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Double Drill Hits]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Silkscreen over Soldermask]
+Red=0.1016
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Distance: Test Point Center to Center]
+Red=1.0160
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Solder Bridges]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Annular Ring: Drill-Plane]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Antennas / Dangling Traces]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Invalid RefDes]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Test Point Diameter]
+Red=0.3810
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Rout-Copper]
+Red=0.2540
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Drill Size]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Maximum Component Height]
+Red=11
+Yellow=
+Green=
+Check=1
+Fix=0
+
+[Silkscreen over Copper Text]
+Red=0.1016
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Small Component]
+Red=0.3048
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Component Overlaps]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Plated Drill without Pads]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Undersized Mask Clearances]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Volume: SMT Stencil Pad]
+Red=10.1600
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Find Overlapped Pads]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Solder Mask to Copper]
+Red=0.1016
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Footprint to Pad Registration]
+Red=0.0254
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Partial Clearances]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Power/Ground Short]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Test Point Pad to Pad]
+Red=0.3810
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Width: Trace]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Missing Mask Clearances]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Plane to Rout]
+Red=0.2540
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Drill Registration]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Touching Drill Hits]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Mask Slivers]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Component to Board Edge]
+Red=1.5240
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Drill Hole Spacing]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Component]
+Red=2.5400
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Mask (Draw to Draw)]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Width: SMT Pad]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Same Net]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Redundant Pads]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Drill-Plane Shorts]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Find Test Point without Net]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Hole Registration]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Find Net Discrepancy]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Width: SMT Stencil Pad]
+Red=0.1778
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Mask (Draw to Pad)]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Silk Screen (Line to Line)]
+Red=0.2540
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Track-Track]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Pad Size]
+Red=0.3810
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Find Missing Pads]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Starved Thermal]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Width: Plane]
+Red=0.1778
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Invalid Component Rotation]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Non-Functional Pads]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Silk Screen (Line to Pad)]
+Red=0.2540
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Plane to Drill]
+Red=0.1778
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Area Ratio: SMT Stencil Pad]
+Red=0.666
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Plane]
+Red=0.1778
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Inner Layers]
+Red=0.2032
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Silk Screen to Copper]
+Red=0.1016
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Outer Layers]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[General]
+Units=Millimeter
+
+[Find Overlapped Polygons]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Thermal Spoke Width]
+Red=0.1778
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[SMT Stencil Foil Thickness]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Test Point to Board Edge]
+Red=2.5400
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Unconnected Lines]
+Red=N/A
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: BGA Component]
+Red=5.0800
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Minimum Clearance: Drills to Rout]
+Red=0.1270
+Yellow=
+Green=
+Check=0
+Fix=0
+
+[Clearance from Board Edge]
+Red=0.3810
+Yellow=
+Green=
+Check=0
+Fix=0
+

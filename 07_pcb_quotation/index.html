@@ -4,11 +4,35 @@
 		<title>Automated PCB Quotes</title>
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
 		<meta content="utf-8" http-equiv="encoding" />
+		<style>
+			table {
+				width: 50%;
+				border-collapse: collapse;
+			}
+			th,
+			td {
+				border: 1px solid black;
+				padding: 8px;
+				text-align: left;
+			}
+			th {
+				background-color: #f2f2f2;
+			}
+			td {
+				text-align: right;
+			}
+		</style>
 	</head>
 	<body>
-		<h1>PCB Preflight API - Automated PCB Quotes)</h1>
+		<h1>PCB Preflight API - Automated PCB Quotes</h1>
 		<div>
-			Generate automated PCB Request for Quotations (RFQ).
+			Generate automated PCB Request for Quotations (RFQ) and displays the pricing in a table.
+			<ol>
+				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.<br />Note: The API-key should be hidden in production releases.</li>
+				<li><b>Upload</b> your PCB Design manufacturing files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace). <br />Note: You can upload a ZIP file or multiple files.</li>
+				<li><b>Review</b> PCB Quote options.</li>
+				<li>Press <b>Get Price Quote</b> to begin.</li>
+			</ol>
 		</div>
 
 		<form id="form1">
@@ -17,8 +41,38 @@
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />
 			<input type="hidden" name="timeout" value="60" />
-			<p>Upload Multiple Files <input type="file" name="files" id="files" multiple /></p>
-			<p><input type="submit" id="submitButton" value="Submit" /></p>
+			<hr>
+			<p>Upload your PCB design <input type="file" name="files" id="files" multiple /></p>
+			<input type="checkbox" id="singlePriceQuote" name="singlePriceQuote" value="SingleQuoteOnly" checked>
+			<label for="vehicle1"> Display PCB Price Grid (Quantity/Delivery)</label><br>
+			<p  style="display: none">Quantity: 
+				<select id="pcbQuantity">
+					<option value="quantity_1">1</option>
+					<option value="quantity_5">5</option>
+					<option value="quantity_10">10</option>
+					<option value="quantity_25">25</option>
+					<option value="quantity_50">50</option>
+					<option value="quantity_100">100</option>
+					<option value="quantity_500">500</option>
+					<option value="quantity_1000">1000</option>
+				</select>
+			</p>
+			<p  style="display: none">Lead Time: 
+				<select id="pcbDays">
+					<option value="days_1">1 Day</option>
+					<option value="days_2">2 Days</option>
+					<option value="days_3">3 Days</option>
+					<option value="days_4">4 Days</option>
+					<option value="days_5">5 Days</option>
+					<option value="days_6">6 Days</option>
+					<option value="days_7">7 Days</option>
+					<option value="days_10">10 Days</option>
+					<option value="days_14">14 Days</option>
+				</select>
+			</p>
+			<p>Tax Rate (%): <input type="text" name="tax_rate" id="tax_rate" value="7.5" /></p>
+
+			<p><input type="submit" id="submitButton" value="Get Price Quote" /></p>
 		</form>
 
 		<span id="errorMessage" style="color: red"></span><br />
@@ -29,16 +83,143 @@
 			<pre id="result1" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
 		</div>
 		<br />
+		<span id="loadingMessage" style="color: blue; display: none">Loading ...</span><br />
+		<br />
 
-		<div id="result2Container" style="display: none">
-			<div>Result of processing</div>
-			<pre id="result2" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
-		</div>
+		<table id="resultPricing" style="display: none">
+			<caption>Bareboard Pricing Grid (Unit cost)</caption>
+			<tr>
+				<th> </th>
+				<th>1 Day</th>
+				<th>3 Days</th>
+				<th>14 Days</th>
+			</tr>
+			<tr>
+				<th>1-9 Units</th>
+				<td id="1-9.1day">-</td>
+				<td id="1-9.3day">-</td>
+				<td id="1-9.14day">-</td>
+			</tr>
+			<tr>
+				<th>10-20 Units</th>
+				<td id="10-20.1day">-</td>
+				<td id="10-20.3day">-</td>
+				<td id="10-20.14day">-</td>
+			</tr>
+			<tr>
+				<th>21-49 Units</th>
+				<td id="21-49.1day">-</td>
+				<td id="21-49.3day">-</td>
+				<td id="21-49.14day">-</td>
+			</tr>
+		</table>
+		<br />
+
+		<table id="resultExtract" style="display: none">
+			<caption>PCB Dimensions</caption>
+			<tr>
+				<th>Job ID</th>
+				<td id="jobId">-</td>
+			</tr>
+			<tr>
+				<th>Board Size</th>
+				<td id="board.BoardSize">-</td>
+			</tr>
+			<tr>
+				<th>Board Thickness</th>
+				<td id="board.Thickness-mm">-</td>
+			</tr>
+			<tr>
+				<th>Board Units (source)</th>
+				<td id="board.Units">-</td>
+			</tr>
+			<tr>
+				<th>Layer Count</th>
+				<td id="board.LayerCount">-</td>
+			</tr>
+			<tr>
+				<th>Min Trace</th>
+				<td id="board.MinTrace-mm">-</td>
+			</tr>
+			<tr>
+				<th>Min Space</th>
+				<td id="board.MinSpace-mm">-</td>
+			</tr>
+			<tr>
+				<th>Min SMT Pitch Size</th>
+				<td id="board.MinSmtPitch-mm">-</td>
+			</tr>
+			<tr>
+				<th>Min SMT Pad Width</th>
+				<td id="board.MinSmtPadWidth-mm">-</td>
+			</tr>
+			<tr>
+				<th>Drill Count</th>
+				<td id="board.DrillCount">-</td>
+			</tr>
+			<tr>
+				<th>Unique Drill Sizes</th>
+				<td id="board.UniqueDrillSizes">-</td>
+			</tr>
+			<tr>
+				<th>Min Drill Diameter</th>
+				<td id="board.MinDrillSize-mm">-</td>
+			</tr>
+			<tr>
+				<th>Buried Via Count</th>
+				<td id="board.BuriedViaCount">-</td>
+			</tr>
+			<tr>
+				<th>Blind Via Count</th>
+				<td id="board.BlindViaCount">-</td>
+			</tr>
+			<tr>
+				<th>Nets Total Count</th>
+				<td id="nets.TotalCount">-</td>
+			</tr>
+			<tr>
+				<th>Nets Endpoint Count</th>
+				<td id="nets.EndpointCount">-</td>
+			</tr>
+			<tr>
+				<th>Components Total</th>
+				<td id="components.Total">-</td>
+			</tr>
+			<tr>
+				<th>Components Top</th>
+				<td id="components.TopCount">-</td>
+			</tr>
+			<tr>
+				<th>Components Bottom</th>
+				<td id="components.BottomCount">-</td>
+			</tr>
+			<tr>
+				<th>Unique Components</th>
+				<td id="board.UniqueComponents">-</td>
+			</tr>
+			<tr>
+				<th>Thru-Hole Count</th>
+				<td id="board.ThruholeCount">-</td>
+			</tr>
+			<tr>
+				<th>SMT Count</th>
+				<td id="board.SMTCount">-</td>
+			</tr>
+			<tr>
+				<th>BGA Count</th>
+				<td id="board.BGACount">-</td>
+			</tr>
+			<tr>
+				<th>Fine Pitch Count</th>
+				<td id="board.FinePitchCount">-</td>
+			</tr>
+			<tr>
+				<th>Press-Fit Count</th>
+				<td id="board.PressFitCount">-</td>
+			</tr>
+		</table>
 
 		<script>
-			/*
-			TODO: Display PDF in Browser and/or have an option to email PDF.
-			*/
 			let api_key = null
 			let job = null
 			let job_id = null
@@ -61,71 +242,26 @@
 				// FormData is used to pass Matrix commands to the PCB Preflight AP
 				const formData = new FormData(document.getElementById('form1'))
 
-				//Assign Matrix DFM Rules 
-				let sMatrix = '\n\nOPTIONS {\npreflight-autodetect_files\n   preflight-extract_pcb_info\n}\n';
-				sMatrix += '\n\n';
-				sMatrix += "DFMCHECKER {\n";
-				sMatrix += "cell=active\n";
-				sMatrix += "units=mil\n";
-				sMatrix += "maximumErrorsPerRule=5\n";				
-				sMatrix += "signal_minimum_annular_ring_drill_pad=4.0\n";
-				sMatrix += "signal_minimum_pad_size=8.0\n";
-				sMatrix += "signal_minimum_smt_pad_width=4.0\n";
-				sMatrix += "signal_minimum_trace_width=4.0\n";
-				sMatrix += "signal_minimum_clearance_outer_layers=4.0\n";
-				sMatrix += "signal_minimum_clearance_inner_layers=4.0\n";
-				sMatrix += "signal_minimum_clearance_track_track=4.0\n";
-				sMatrix += "signal_minimum_clearance_track_pad=4.0\n";
-				sMatrix += "signal_minimum_clearance_pad_pad=4.0\n";
-				sMatrix += "signal_find_acid_traps=5.0\n";
-				sMatrix += "plane_minimum_annular_ring=5.0\n";
-				sMatrix += "plane_minimum_width=6\n";
-				sMatrix += "plane_minimum_drill_clearance=6\n";
-				sMatrix += "plane_find_starved_thermal=7\n";
-				sMatrix += "drill_minimum_clearance_plated_drills_copper=7\n";
-				sMatrix += "drill_minimum_clearance_unplated_drills_copper=5\n";
-				sMatrix += "signal_clearance_from_board_edge=10.0\n";
-
-				sMatrix += "signal_minimum_clearance_rout_copper=8.0\n";
-				sMatrix += "find_nonfunctional_internalpads\n";
-				sMatrix += "signal_find_redundant_pads\n";
-				sMatrix += "signal_verify_text_features\n";
-				sMatrix += "signal_find_redundant_pads\n";
-				sMatrix += "plane_find_powerground_short\n";
-
-				sMatrix += "drill_minimum_drill_size=6.0\n";
-				sMatrix += "drill_find_double_hits\n";
-				sMatrix += "drill_find_pads_without_drills\n";
-				sMatrix += "drill_find_plated_drill_without_pads\n";
-				sMatrix += "drill_find_touching_holes\n";
-				sMatrix += "drill_minimum_clearance_drills_rout=10\n";
-				sMatrix += "drill_minimum_clearance_rout_rout=10.0\n";
-
-				sMatrix += "silk_minimum_silkscreen_line_width=4.0\n";
-				sMatrix += "silk_minimum_silkscreen_text_height=50\n";
-				sMatrix += "silk_find_silkscreen_over_mask=5.0\n";
-				sMatrix += "silk_find_silkscreen_over_copper_text=5\n";
-				sMatrix += "silk_minimum_clearance_silkscreen_copper=5\n";
-				sMatrix += "silk_minimum_clearance_silkscreen_drill=8\n";
-				sMatrix += "silk_minimum_clearance_silkscreen_rout=8\n";
-				sMatrix += "silk_clearance_board_edge=10.0\n";
-
-				sMatrix += "mask_find_undersized_mask_clearances=5.0\n";
-				sMatrix += "mask_find_missing_mask_clearances\n";
-				sMatrix += "mask_find_mask_slivers=8\n";
-				sMatrix += "mask_find_solder_bridges=8\n";
-				sMatrix += "mask_detect_partial_clearances\n";
-
-				sMatrix += "assembly_minimum_component_clearance=100\n";
-				sMatrix += "assembly_minimum_component_clearance_small=12\n";
-				sMatrix += "assembly_minimum_component_clearance_bga=200\n";
-				sMatrix += "assembly_clearance_from_board_edge=60\n";
-				sMatrix += "assembly_maximum_component_height=300\n";
-				sMatrix += "assembly_find_component_overlaps\n";
-				sMatrix += "assembly_find_invalid_component_refdes\n";
-				sMatrix += "assembly_find_invalid_component_rotation\n";
-
-				sMatrix += "output_pdf_file=DFMReportWithImages.pdf\n";
+				//Assign Matrix Pricing template
+				let sMatrix = "\n\nOPTIONS {\npreflight-autodetect_files\n   preflight-extract_pcb_info\n}\n";
+				sMatrix += "\n\n";
+				sMatrix += "QUOTE_PCB {\n";
+				sMatrix += "CURRENCY=USD\n";
+				sMatrix += "PromoRate=0.9\n";
+				sMatrix += "Shipping=35\n";
+				sMatrix += "Notes=Save 10%: Special 1-Day Promotion sale only. Place order before 11:59PM today.\n";
+				sMatrix += "DeliveryFactor=1,2.0\n";
+				sMatrix += "DeliveryFactor=3,1.5\n";
+				sMatrix += "DeliveryFactor=14,0.75\n";
+				sMatrix += "QuantityDiscount=10,1.0\n";
+				sMatrix += "QuantityDiscount=21,0.85\n";
+				sMatrix += "QuantityDiscount=50,0.75\n";
+				sMatrix += "LayerPrice=2,5.0,3.0,1.0\n";
+				sMatrix += "LayerPriceNoMask=2,5.0,2.0,1.0\n";
+				sMatrix += "LayerPrice=4,95.0,4.0,1.0\n";
+				sMatrix += "LayerPrice=6,125.0,6.0,1.1\n";
+				sMatrix += "LayerPrice=8,225.0,8.0,1.2\n";
+				sMatrix += 'TaxRate=' + formData.get("tax_rate") + "\n";
 				sMatrix += "}\n\n";
 
 				formData.append('matrix', sMatrix); 
@@ -136,6 +272,7 @@
 				try {
 					api_key = document.getElementById('api_key').value
 
+					// Start job
 					const response = await fetch('https://www.pcbpreflight.com/api/v1/job', {
 						method: 'POST',
 						headers: { Authorization: api_key },
@@ -144,21 +281,25 @@
 					})
 
 					const data = await response.json()
-					if (data.ok === 1) {
-						job_id = data.result.job_id
-						document.getElementById('result1Container').style.display = 'block'
-						const result1 = document.getElementById('result1')
-						result1.textContent = JSON.stringify(data.result, null, 2)
-
-						// Keep trying to get the job until status=='complete'
-						while (job == null || job.status != 'complete') {
-							await delay(1000)
-							job = await checkJob()
-							updateResult()
-						}
-					} else {
-						document.getElementById('errorMessage').textContent = data.err.message
+					if (data.ok === 0) {
+						throw Error(data.err.message)
 					}
+
+					job_id = data.result.job_id
+					document.getElementById('result1Container').style.display = 'block'
+					const result1 = document.getElementById('result1')
+					result1.textContent = JSON.stringify(data.result, null, 2)
+
+					// Keep trying to get the job until status=='complete' put a delay so it is not too frequent
+					while (job == null || job.status != 'complete') {
+						await delay(1000)
+						job = await checkJob()
+						document.getElementById('loadingMessage').style.display = 'block'
+						document.getElementById('loadingMessage').textContent += '.'
+					}
+					document.getElementById('loadingMessage').textContent += ' Done!'
+
+					showResult()
 				} catch (err) {
 					console.error(err)
 					document.getElementById('errorMessage').textContent = err.message
@@ -176,9 +317,59 @@
 				throw Error(data.err.message)
 			}
 
-			function updateResult() {
-				document.getElementById('result2Container').style.display = 'block'
-				document.getElementById('result2').textContent = JSON.stringify(job, null, 2)
+			function showResult() {
+				let data = job.cam_json.cam_info
+				console.log(data)
+
+				//Show table
+				document.getElementById('resultExtract').style.display = 'block'
+
+				//Pricing Attributes
+				if( job.cam_json.cam_quotes.length)
+				{
+					document.getElementById('resultPricing').style.display = 'block'
+					let arPrice = job.cam_json.cam_quotes[0].quotes;
+
+					for(let i=0;i<arPrice.length;i++) 
+					{
+						let sIdSearch 	=  arPrice[i].quantity_range;
+						sIdSearch += ".";
+						sIdSearch 		+= arPrice[i].days;
+						sIdSearch += "day";
+						console.log("sIdSearch >>>", sIdSearch);
+						document.getElementById(sIdSearch).textContent = `$ ${arPrice[i].unit_price}`
+					}
+				}
+
+				//Dimension Attributes
+				document.getElementById('jobId').textContent = job_id
+				document.getElementById('board.BoardSize').textContent = `${data.board['Width-mm']}mm x ${data.board['Height-mm']}mm`
+				document.getElementById('board.Thickness-mm').textContent = data.board['Thickness-mm']
+				document.getElementById('board.Units').textContent = data.board['Units']
+				document.getElementById('board.LayerCount').textContent = data.board['LayerCount']
+				document.getElementById('board.MinTrace-mm').textContent = data.board['MinTrace-mm']
+				document.getElementById('board.MinSpace-mm').textContent = data.board['MinSpace-mm']
+				document.getElementById('board.MinSmtPitch-mm').textContent = data.board['MinSmtPitch-mm']
+				document.getElementById('board.MinSmtPadWidth-mm').textContent = data.board['MinSmtPadWidth-mm']
+				document.getElementById('board.DrillCount').textContent = data.board['DrillCount']
+				document.getElementById('board.UniqueDrillSizes').textContent = data.board['UniqueDrillSizes']
+				document.getElementById('board.MinDrillSize-mm').textContent = data.board['MinDrillSize-mm']
+				document.getElementById('board.BuriedViaCount').textContent = data.board['BuriedViaCount']
+				document.getElementById('board.BlindViaCount').textContent = data.board['BlindViaCount']
+
+				document.getElementById('nets.TotalCount').textContent = data.nets['TotalCount']
+				document.getElementById('nets.EndpointCount').textContent = data.nets['EndpointCount']
+
+				document.getElementById('components.Total').textContent = data.components['TopCount'] + data.components['BottomCount']
+				document.getElementById('components.TopCount').textContent = data.components['TopCount']
+				document.getElementById('components.BottomCount').textContent = data.components['BottomCount']
+
+				document.getElementById('board.UniqueComponents').textContent = data.board['UniqueComponents']
+				document.getElementById('board.ThruholeCount').textContent = data.board['ThruholeCount']
+				document.getElementById('board.SMTCount').textContent = data.board['SMTCount']
+				document.getElementById('board.BGACount').textContent = data.board['BGACount']
+				document.getElementById('board.FinePitchCount').textContent = data.board['FinePitchCount']
+				document.getElementById('board.PressFitCount').textContent = data.board['PressFitCount']
 			}
 		</script>
 	</body>

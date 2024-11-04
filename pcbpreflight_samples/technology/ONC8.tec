@@ -1,0 +1,125 @@
+[LAYER12]
+Priority=12
+OffsetY=0
+OffsetX=4
+Name=VIA
+Type=Graphic
+Pen="192 192 100"
+Fill="192 192 100"
+Pattern=12
+
+[LAYER13]
+Priority=13
+OffsetY=1
+OffsetX=5
+Name=MET2
+Type=Graphic
+Pen="141 141 141"
+Fill="141 141 141"
+Pattern=13
+
+[LAYER10]
+Priority=10
+OffsetY=2
+OffsetX=2
+Name=CONT
+Type=Graphic
+Pen="255 255 255"
+Fill="255 255 255"
+Pattern=16
+
+[LAYER11]
+Priority=11
+OffsetY=3
+OffsetX=3
+Name=MET1
+Type=Graphic
+Pen="0 0 255"
+Fill="0 0 255"
+Pattern=11
+
+[LAYER16]
+Priority=16
+OffsetY=0
+OffsetX=0
+Name=PAD
+Type=Graphic
+Pen="255 0 255"
+Fill="255 0 255"
+Pattern=19
+
+[LAYER14]
+Priority=14
+OffsetY=2
+OffsetX=6
+Name=VIA2
+Type=Graphic
+Pen="30 128 96"
+Fill="30 128 96"
+Pattern=14
+
+[LAYER15]
+Priority=15
+OffsetY=3
+OffsetX=7
+Name=MET3
+Type=Graphic
+Pen="0 255 255"
+Fill="0 255 255"
+Pattern=15
+
+[LAYER26]
+Priority=26
+OffsetY=3
+OffsetX=3
+Name=POLY0
+Type=Graphic
+Pen="223 172 67"
+Fill="223 172 67"
+Pattern=1
+
+[LAYER2]
+Priority=2
+OffsetY=2
+OffsetX=2
+Name=DIFF
+Type=Graphic
+Pen="100 223 0"
+Fill="100 223 0"
+Pattern=7
+
+[LAYER1]
+Priority=1
+OffsetY=1
+OffsetX=1
+Name=NWELL
+Type=Graphic
+Pen="255 255 0"
+Fill="255 255 0"
+Pattern=1
+
+[LAYER7]
+Priority=7
+OffsetY=3
+OffsetX=7
+Name=PSEL
+Type=Graphic
+Pen="255 0 255"
+Fill="255 0 255"
+Pattern=1
+
+[General]
+ActiveLayerNumber=10
+FillMode=Pattern
+Version=1
+
+[LAYER4]
+Priority=4
+OffsetY=4
+OffsetX=4
+Name=POLY
+Type=Graphic
+Pen="255 0 0"
+Fill="255 0 0"
+Pattern=5
+

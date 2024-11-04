@@ -1,0 +1,15 @@
+#Sample Matrix file using Workspace, Panel Wizard (Smallest), plus venting.
+
+WORKSPACE {
+   FILE=274X_1up.wrk
+}
+
+PANEL {
+    NAME=mypanel
+	UNITS=MM
+    PANEL_FILE=Panel 406x508.pan
+    PANELWIZARD_SMALLEST=2.54,2.54,,2
+	panel_orientation=landscape
+}
+
+

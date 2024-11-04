@@ -9,6 +9,12 @@
 		<h1>PCB Preflight API - PCB Panelization</h1>
 		<div>
 			Generate a complete and optimized PCB Panel. 
+			<ol>
+				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.<br />Note: The API-key should be hidden in production releases.</li>
+				<li><b>Upload</b> your PCB Design manufacturing files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace). <br />Note: You can upload a ZIP file or multiple files.</li>
+				<li><b>Review</b> PCB Panelization options.</li>
+				<li>Press <b>Submit</b> to begin.</li>
+			</ol>
 		</div>
 
 		<form id="form1">
@@ -64,69 +70,31 @@
 				//Assign Matrix DFM Rules 
 				let sMatrix = '\n\nOPTIONS {\npreflight-autodetect_files\n   preflight-extract_pcb_info\n}\n';
 				sMatrix += '\n\n';
-				sMatrix += "DFMCHECKER {\n";
-				sMatrix += "cell=active\n";
-				sMatrix += "units=mil\n";
-				sMatrix += "maximumErrorsPerRule=5\n";				
-				sMatrix += "signal_minimum_annular_ring_drill_pad=4.0\n";
-				sMatrix += "signal_minimum_pad_size=8.0\n";
-				sMatrix += "signal_minimum_smt_pad_width=4.0\n";
-				sMatrix += "signal_minimum_trace_width=4.0\n";
-				sMatrix += "signal_minimum_clearance_outer_layers=4.0\n";
-				sMatrix += "signal_minimum_clearance_inner_layers=4.0\n";
-				sMatrix += "signal_minimum_clearance_track_track=4.0\n";
-				sMatrix += "signal_minimum_clearance_track_pad=4.0\n";
-				sMatrix += "signal_minimum_clearance_pad_pad=4.0\n";
-				sMatrix += "signal_find_acid_traps=5.0\n";
-				sMatrix += "plane_minimum_annular_ring=5.0\n";
-				sMatrix += "plane_minimum_width=6\n";
-				sMatrix += "plane_minimum_drill_clearance=6\n";
-				sMatrix += "plane_find_starved_thermal=7\n";
-				sMatrix += "drill_minimum_clearance_plated_drills_copper=7\n";
-				sMatrix += "drill_minimum_clearance_unplated_drills_copper=5\n";
-				sMatrix += "signal_clearance_from_board_edge=10.0\n";
-
-				sMatrix += "signal_minimum_clearance_rout_copper=8.0\n";
-				sMatrix += "find_nonfunctional_internalpads\n";
-				sMatrix += "signal_find_redundant_pads\n";
-				sMatrix += "signal_verify_text_features\n";
-				sMatrix += "signal_find_redundant_pads\n";
-				sMatrix += "plane_find_powerground_short\n";
-
-				sMatrix += "drill_minimum_drill_size=6.0\n";
-				sMatrix += "drill_find_double_hits\n";
-				sMatrix += "drill_find_pads_without_drills\n";
-				sMatrix += "drill_find_plated_drill_without_pads\n";
-				sMatrix += "drill_find_touching_holes\n";
-				sMatrix += "drill_minimum_clearance_drills_rout=10\n";
-				sMatrix += "drill_minimum_clearance_rout_rout=10.0\n";
-
-				sMatrix += "silk_minimum_silkscreen_line_width=4.0\n";
-				sMatrix += "silk_minimum_silkscreen_text_height=50\n";
-				sMatrix += "silk_find_silkscreen_over_mask=5.0\n";
-				sMatrix += "silk_find_silkscreen_over_copper_text=5\n";
-				sMatrix += "silk_minimum_clearance_silkscreen_copper=5\n";
-				sMatrix += "silk_minimum_clearance_silkscreen_drill=8\n";
-				sMatrix += "silk_minimum_clearance_silkscreen_rout=8\n";
-				sMatrix += "silk_clearance_board_edge=10.0\n";
-
-				sMatrix += "mask_find_undersized_mask_clearances=5.0\n";
-				sMatrix += "mask_find_missing_mask_clearances\n";
-				sMatrix += "mask_find_mask_slivers=8\n";
-				sMatrix += "mask_find_solder_bridges=8\n";
-				sMatrix += "mask_detect_partial_clearances\n";
-
-				sMatrix += "assembly_minimum_component_clearance=100\n";
-				sMatrix += "assembly_minimum_component_clearance_small=12\n";
-				sMatrix += "assembly_minimum_component_clearance_bga=200\n";
-				sMatrix += "assembly_clearance_from_board_edge=60\n";
-				sMatrix += "assembly_maximum_component_height=300\n";
-				sMatrix += "assembly_find_component_overlaps\n";
-				sMatrix += "assembly_find_invalid_component_refdes\n";
-				sMatrix += "assembly_find_invalid_component_rotation\n";
-
-				sMatrix += "output_pdf_file=DFMReportWithImages.pdf\n";
+				sMatrix += 'PANEL {\n';
+				sMatrix += '    NAME=mypanel\n';
+				sMatrix += '    UNITS=INCH\n';
+    			sMatrix += '    WIDTH=19\n';
+				sMatrix += '    HEIGHT=19.5\n';
+				sMatrix += '    BORDERSPACING=0.5\n';
+				sMatrix += '    PANELWIZARD_FIXED=0.1,0.1,,4,100\n';
+				/*
+				sMatrix += '    STEPREPEAT=board4,18,0.5,0,2.5,1,7,90,No\n';
+				sMatrix += '    STEPREPEAT=board1,17.5,4.5,3.8,3.4,2,5,90,No\n';
+				sMatrix += '    STEPREPEAT=testgerber,18.35,12.0,7,6,1,3,90,No\n';
+				sMatrix += '    FIDUCIAL=circle,.03,rectangle,.06,@.5,@.72,Panel,[Top+Bottom]\n';
+				sMatrix += '    FIDUCIAL=rectangle,.03,rectangle,.06,@-.25,@-.5,,topside34dd,botside34dd\n';
+				sMatrix += '    VENT=rail,0,0,0,0.5,[Top+Bottom]\n';
+ 				sMatrix += '    VENT=solid,0.1,0,0.1,layer_2\n';
+				sMatrix += '    VENT=dot,0,0.1,0.1,0,0,0.12,circle,0.06,0,0.12,circle,0.06,0.06,.12,layer_3\n';
+				sMatrix += '    VENT=hatch,0.1,0,0,0,0,0.01,0.5,0,0.01,0.5,45,0.01,0.5,90,layer_4\n';
+				*/
 				sMatrix += "}\n\n";
+
+				//Output a workspace file (to verify)
+				sMatrix += "SERIALIZE{\n";
+				sMatrix += "FILE=panelize10.wrk\n";
+				sMatrix += "}\n\n";
+
 
 				formData.append('matrix', sMatrix); 
 

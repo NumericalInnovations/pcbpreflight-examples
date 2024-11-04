@@ -1,0 +1,46 @@
+# SAMPLE MATRIX FILE - RUN DFM CHECK
+# Comments start with #
+# Matrix File Reference, https://www.numericalinnovations.com/pages/fab-3000-matrix-file-description
+
+OPTIONS {
+   fab-generate_border
+}
+
+#Create Job named "testgerber" and import gerber/drill files
+JOB {
+    NAME=testgerber
+    LAYER=,../examples/274X\Art0121.pho;TOP    
+    LAYER=,../examples/274X\Pgp2529.pho;NEG_PLANE
+    LAYER=,../examples/274X\gnd2530.pho;NEG_PLANE    
+    LAYER=,../examples/274X\Art02.pho;BOTTOM
+    LAYER=,../examples/274X\Sst0126.pho;SILK_TOP
+    LAYER=,../examples/274X\Sp0128.pho;PASTE_TOP
+    LAYER=,../examples/274X\Sm0227.pho;MASK_BOTTOM
+    LAYER=,../examples/274X\Sm0128.pho;MASK_TOP
+    LAYER=,../examples/274X\Drill.drl;DRILL_THRUHOLE
+}
+
+#Lets run DFM Checker (choose units or mil or mm) and output a PDF named "mySampleDFM.pdf"
+#Remove comment at the bottom to generate a PDF file with errors displayed.
+DFMCHECKER {
+    units=mil
+    signal_minimum_pad_size=15.0
+    signal_minimum_smt_pad_width=5.0
+    signal_minimum_trace_width=4.0
+    signal_minimum_clearance_outer_layers=9.0
+    signal_minimum_clearance_inner_layers=6.0
+    signal_minimum_annular_ring_drill_pad=4.0
+    signal_clearance_from_board_edge=10.0
+    find_nonfunctional_internalpads
+    drill_minimum_drill_size=7.0
+    drill_find_double_hits
+    drill_find_pads_without_drills
+    drill_find_plated_drill_without_pads
+    drill_find_touching_holes
+    silk_minimum_silkscreen_line_width=4.0
+    silk_find_silkscreen_over_mask=1.0
+    silk_clearance_board_edge=10.0
+    mask_find_undersized_mask_clearances=4.0
+    mask_find_missing_mask_clearances
+	output_pdf_file=output/mySampleDFM.pdf
+}
