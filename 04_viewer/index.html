@@ -113,7 +113,7 @@
 
 				// Request some simple Instructions for the PCB Preflight API to Detect incoming files and generate a Viewer (Using Numerical Matrix format)
 				// FormData is used to send Matrix commands (or include a matrix file *.fm6 with the uploaded files)
-				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_files\n   preflight-generate_viewer\n}\n'); 
+				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_import\n   preflight-generate_viewer\n}\n'); 
 
 				// Clear error
 				document.getElementById('errorMessage').textContent = ''
