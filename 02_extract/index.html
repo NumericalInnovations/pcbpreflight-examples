@@ -26,7 +26,8 @@
 	<body>
 		<h1>PCB Preflight API Extract Example</h1>
 		<div>
-			This example demonstrates how to easily extract the resulting JSON and displays the information in a table.
+			Easily extract the detailed PCB design information required for Manufacturng and Assembly - such as Minimum space/trace and annular rings, Min. Smt Pitch and Pad width, and more.
+			 Displays the resulting PCB design information in a formatted table.
 			<ol>
 				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.</li>
 				<li><b>Upload</b> your PCB Design manufacturing files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace). <br />Note: You can upload a ZIP file or multiple files.</li>
@@ -178,6 +179,9 @@
 
 			async function submit() {
 				const formData = new FormData(document.getElementById('form1'))
+
+				// Note:  The primary difference between example 1 and example 2 is the additional option: preflight-extract_pcb_info
+				// preflight-extract_pcb_info:  Detects and extracts all PCB fabrication information plus Assembly/BOM details
 				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_import\n   preflight-extract_pcb_info\n}\n'); 
 
 				// Clear error

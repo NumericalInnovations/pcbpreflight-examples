@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>PCB Preflight API Basic Example</title>
+		<title>Compare PCB Designs Example</title>
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
 		<meta content="utf-8" http-equiv="encoding" />
 	</head>
@@ -74,9 +74,11 @@
 				const formData = new FormData(document.getElementById('form1'))
 
 				let sMatrix = '\n\nOPTIONS {\ndetect_layer_types\n}\n';
-				sMatrix 	+= '\nCOMPARE_LAYERS {\nLAYER_1=toplayer.stp\nLAYER_2=bottomlayer.stp';
+				sMatrix 	+= '\nCOMPARE_JOBS {\nJOB_1=$1\nJOB_2=$2';
 				sMatrix 	+= '\nMETHOD=Blend\nUNITS=mm';
 				sMatrix 	+= '\nMinErrorSize=' + formData.get("min_size");
+				//TODO: Let user choose the Comparison method.
+				//TODO: Add Combo for use to select All Layers or they could type the layer they wish to compare
 				sMatrix 	+= '\noutput_pdf_file=comparepcb_jobs.pdf\n}\n'
 				formData.append('matrix', sMatrix); 
 

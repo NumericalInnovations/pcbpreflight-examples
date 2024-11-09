@@ -26,14 +26,14 @@
 		<br />
 
 		<div id="result1Container" style="display: none">
-			<div>Get Job ID, then keep checking if status='complete' every few seconds.</div>
+			<div><b>Processing DFM Report...</b> Please wait until completion (may be a few minutes)</div>
 			<pre id="result1" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
 		</div>
 		<br />
 
 		<div id="result2Container" style="display: none">
-			<div>Result of processing</div>
-			<pre id="result2" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
+			<div><b>Done!</b>  Click below to view your DFM results</div><br/>
+			<button type="button" id="download_pdf">Download DFM Report (PDF)</button>
 		</div>
 
 		<script>
@@ -155,8 +155,10 @@
 						while (job == null || job.status != 'complete') {
 							await delay(1000)
 							job = await checkJob()
-							updateResult()
 						}
+
+						//Show results to User
+						updateResult()
 					} else {
 						document.getElementById('errorMessage').textContent = data.err.message
 					}
@@ -178,9 +180,18 @@
 			}
 
 			function updateResult() {
+
 				document.getElementById('result2Container').style.display = 'block'
-				document.getElementById('result2').textContent = JSON.stringify(job, null, 2)
 			}
+
+
+			function showPdfReport() {
+				let data = job.outputs
+				console.log("button pressed >>>", data)
+				//document.getElementById('jobId').textContent = job_id
+				//document.getElementById('board.BoardSize').textContent = `${data.board['Width-mm']}mm x ${data.board['Height-mm']}mm`
+			}
+
 		</script>
 	</body>
 </html>

@@ -8,8 +8,10 @@
 	<body>
 		<h1>PCB Preflight API Basic Example</h1>
 		<div>
-			Automates the extraction of basic PCB Design information such as: layers, nets, stackup, apertures, nctools, components, and board dimensions. 
-			Displays the resulting JSON file afterwards.  
+			Extraction of PCB Design information such as: layers, nets, stackup, apertures, nctools, components, and board dimensions. 
+			Displays the resulting JSON file afterwards.  <br />
+			<b>Note:</b>  To extract more PCB design data like Minimum Space, Trace width, annular rings, Min. SMT pitch and more - <a href="https://github.com/NumericalInnovations/pcbpreflight-examples/tree/master/02_extract">See Example 2: PCB Data Extraction </a><br />
+			<br />
 			<ol>
 				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.</li>
 				<li><b>Upload</b> your PCB Design manufacturing files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace). <br />Note: You can upload a ZIP file or multiple files.</li>
@@ -65,9 +67,8 @@
 
 				/* Request some simple options for the PCB Preflight API to perform
 					preflight-autodetect_import   Automatically detect file formats and import. If problems occur use matrix directly.
-					preflight-extract_pcb_info   Detects and extracts all PCB fabrication information, plus Assembly/BOM details. 
 				*/
-				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_import\n   preflight-extract_pcb_info\n}\n'); 
+				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_import\n}\n'); 
 
 				// Clear error
 				document.getElementById('errorMessage').textContent = ''
