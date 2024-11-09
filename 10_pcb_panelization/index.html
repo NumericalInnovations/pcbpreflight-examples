@@ -8,7 +8,7 @@
 	<body>
 		<h1>PCB Preflight API - PCB Panelization</h1>
 		<div>
-			Generate a complete and optimized PCB Panel. 
+			Generate a complete and optimized PCB Panel. Optionally select a second PCB design to be merged into the Panel.
 			<ol>
 				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.<br />Note: The API-key should be hidden in production releases.</li>
 				<li><b>Upload</b> your PCB Design manufacturing files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace). <br />Note: You can upload a ZIP file or multiple files.</li>
@@ -23,8 +23,20 @@
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />
 			<input type="hidden" name="timeout" value="60" />
-			<p>Upload Multiple Files <input type="file" name="files" id="files" multiple /></p>
-			<p><input type="submit" id="submitButton" value="Submit" /></p>
+			<hr/>
+			<p>Upload <b>PCB Design #1:</b> <input type="file" name="files" id="files" /></p>
+			<p><b>Min. Count:</b> <input type="text" name="pcb_count_1" id="pcb_count_1" value="2" /></p>
+			<hr/>
+			<p><b>(OPTIONAL)</b> Select a Second PCB design to be merged in the Panel.</p>
+			<p>Upload PCB Design #2: <input type="file" name="secondFiles" id="secondFiles" /></p>
+			<p><b>Min. Count:</b> <input type="text" name="pcb_count_2" id="pcb_count_2" value="2" /></p>
+			<hr/>
+			<p><b>Panel Width (in.):</b> <input type="text" name="panel_width" id="panel_width" value="18.0" /></p>
+			<p><b>Panel Height (in.):</b> <input type="text" name="panel_height" id="panel_height" value="12.0" /></p>
+			<p><b>Job Spacing (in.):</b> <input type="text" name="job_spacing" id="job_spacing" value="0.1" /></p>
+			<p><i>Note: Fiducials, Tooling holes, and Venting will be included for demonstration purposes.</i></p>
+			<hr/>
+			<p><input type="submit" id="submitButton" value="Create Panel" /></p>
 		</form>
 
 		<span id="errorMessage" style="color: red"></span><br />
@@ -42,9 +54,6 @@
 		</div>
 
 		<script>
-			/*
-			TODO: Display PDF in Browser and/or have an option to email PDF.
-			*/
 			let api_key = null
 			let job = null
 			let job_id = null
@@ -68,36 +77,36 @@
 				const formData = new FormData(document.getElementById('form1'))
 
 				//Assign Matrix DFM Rules 
-				let sMatrix = '\n\nOPTIONS {\npreflight-autodetect_import\n   preflight-extract_pcb_info\n}\n';
-				sMatrix += '\n\n';
-				sMatrix += 'PANEL {\n';
-				sMatrix += '    NAME=mypanel\n';
-				sMatrix += '    UNITS=INCH\n';
-    			sMatrix += '    WIDTH=19\n';
-				sMatrix += '    HEIGHT=19.5\n';
-				sMatrix += '    BORDERSPACING=0.5\n';
-				sMatrix += '    PANELWIZARD_FIXED=0.1,0.1,,4,100\n';
-				/*
-				sMatrix += '    STEPREPEAT=board4,18,0.5,0,2.5,1,7,90,No\n';
-				sMatrix += '    STEPREPEAT=board1,17.5,4.5,3.8,3.4,2,5,90,No\n';
-				sMatrix += '    STEPREPEAT=testgerber,18.35,12.0,7,6,1,3,90,No\n';
-				sMatrix += '    FIDUCIAL=circle,.03,rectangle,.06,@.5,@.72,Panel,[Top+Bottom]\n';
-				sMatrix += '    FIDUCIAL=rectangle,.03,rectangle,.06,@-.25,@-.5,,topside34dd,botside34dd\n';
-				sMatrix += '    VENT=rail,0,0,0,0.5,[Top+Bottom]\n';
- 				sMatrix += '    VENT=solid,0.1,0,0.1,layer_2\n';
-				sMatrix += '    VENT=dot,0,0.1,0.1,0,0,0.12,circle,0.06,0,0.12,circle,0.06,0.06,.12,layer_3\n';
-				sMatrix += '    VENT=hatch,0.1,0,0,0,0,0.01,0.5,0,0.01,0.5,45,0.01,0.5,90,layer_4\n';
-				*/
-				sMatrix += "}\n\n";
+				let sMatrix = '\n\nOPTIONS {\npreflight-autodetect_import\n}\n';
+				sMatrix += '\n';
+				sMatrix += '\nPANEL {';
+				sMatrix += '\n    NAME=mypanel';
+				sMatrix += '\n    UNITS=INCH';
+				sMatrix += '\n    WIDTH=' + formData.get("panel_width");
+				sMatrix += '\n    HEIGHT=' + formData.get("panel_height");
+				sMatrix += '\n    BORDERSPACING=0.5';
+				//Determine if Second PCB was selected for Merge
+				let sBoardTwo = formData.get("secondFiles")
+				if( sBoardTwo && sBoardTwo.size>0)
+				{
+					sMatrix += '\n    PANELWIZARD_FIXED=' + formData.get("job_spacing") + ','  + formData.get("job_spacing") + ',$1,' + formData.get("pcb_count_1") + ',10,';
+					sMatrix += '$2,' + formData.get("pcb_count_2") + ',10';
+				}
+				else
+				{
+					sMatrix += '\n    PANELWIZARD_FIXED=' + formData.get("job_spacing") + ','  + formData.get("job_spacing") + ',$1,\n';
+				}
+				sMatrix += "\n}\n\n";
 
-				//Output a workspace file (to verify)
+				//Output a workspace file (to verify results)
 				sMatrix += "SERIALIZE{\n";
-				sMatrix += "FILE=panelize10.wrk\n";
+				sMatrix += "FILE=panelizedResults.wrk\n";
 				sMatrix += "}\n\n";
-
 
 				formData.append('matrix', sMatrix); 
+				console.log("sBoardTwo >>>", sBoardTwo, "Matrix >>>", sMatrix)
 
+				/*
 				// Clear error
 				document.getElementById('errorMessage').textContent = ''
 
@@ -131,6 +140,7 @@
 					console.error(err)
 					document.getElementById('errorMessage').textContent = err.message
 				}
+					*/
 			}
 
 			async function checkJob() {
