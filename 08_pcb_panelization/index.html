@@ -83,11 +83,14 @@
 				sMatrix += '\n    WIDTH=' + formData.get("panel_width");
 				sMatrix += '\n    HEIGHT=' + formData.get("panel_height");
 				sMatrix += '\n    BORDERSPACING=' + formData.get("border_spacing");
-				sMatrix += '\n    ADD_OUTLINE_LAYER'
-				sMatrix += '\n    ADD_CROP_MARKS'			
 				sMatrix += '\n    PANELWIZARD_FIXED=' + formData.get("job_spacing") + ','  + formData.get("job_spacing");
 				sMatrix += ',,'; //Empty Job - because only one PCB design
 				sMatrix += formData.get("pcb_count") + ','  + formData.get("pcb_surplus"); //Add Count and Surplus Count
+				sMatrix += '\n    FIDUCIAL=circle,.03,rectangle,.06,@.25,@.25,Panel,[Top+Bottom]'
+				sMatrix += '\n    FIDUCIAL=rectangle,.03,rectangle,.06,@-.25,@-.25,,[Top+Bottom]'
+				sMatrix += '\n    VENT=rail,0,0,0,0.5,[All Metal]'
+				sMatrix += '\n    ADD_OUTLINE_LAYER'
+				sMatrix += '\n    ADD_CROP_MARKS'			
 				sMatrix += "\n}\n\n";
 
 				//Output a workspace file (to verify results)
@@ -95,8 +98,8 @@
 				sMatrix += "FILE=panelizedResults.wrk\n";
 				sMatrix += "}\n\n";
 
+				//Append Matrix command to Form data 
 				formData.append('matrix', sMatrix); 
-				//console.log("Matrix >>>", sMatrix)
 
 				// Clear error
 				document.getElementById('errorMessage').textContent = ''
