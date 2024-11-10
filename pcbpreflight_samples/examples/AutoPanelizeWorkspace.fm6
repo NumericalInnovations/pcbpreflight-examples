@@ -1,6 +1,6 @@
 #Sample Matrix file using Workspace, Panel Wizard (Smallest), plus venting.
 
-WORKSPACE {
+DESERIALIZE {
    FILE=274X_1up.wrk
 }
 
