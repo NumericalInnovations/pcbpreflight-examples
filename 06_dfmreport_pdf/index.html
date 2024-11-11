@@ -177,17 +177,12 @@
 			}
 
 			function updateResult() {
-
 				document.getElementById('result2Container').style.display = 'block'
 			}
 
 			function showPdfReport() {
-				let data = job.outputs
-				console.log("button pressed >>>", data)
-				//document.getElementById('jobId').textContent = job_id
-				//document.getElementById('board.BoardSize').textContent = `${data.board['Width-mm']}mm x ${data.board['Height-mm']}mm`
+				window.open(job.outputs[0].url,"_blank")
 			}
-
 		</script>
 	</body>
 </html>
