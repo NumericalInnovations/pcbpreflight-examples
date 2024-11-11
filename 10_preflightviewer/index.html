@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Compare PCB Designs Example</title>
+		<title>Generate DFM Report (PDF)</title>
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
 		<meta content="utf-8" http-equiv="encoding" />
 	</head>
 	<body>
-		<h1>Compare PCB Designs</h1>
+		<h1>PCB Preflight API - Generate Workspace file (*.wrk)</h1>
 		<div>
-			Perform a PCB design comparison and highlight any differences.  
-			<ol>
-				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.</li>
-				<li>Upload <b>First</b> PCB Design.</li>
-				<li>Upload <b>Second</b> PCB Design.</li>
-				<li>Review Compare PCB options.</li>
-				<li>Press <b>Submit</b> to begin Comparison.</li>
-			</ol>
+			Generate Workspace file (*.wrk) and display (offline) in the Free PCB Preflight Viewer.
 		</div>
+		<br />
 
 		<form id="form1">
 			Your API Key <input id="api_key" type="text" value="" />
@@ -24,16 +18,8 @@
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />
 			<input type="hidden" name="timeout" value="60" />
-			<p>Upload <b>PCB Design #1:</b> <input type="file" name="files"/></p>
-			<p>Upload <b>PCB Design #2:</b> <input type="file" name="files"/></p>
-			<p>Minimum Error Size (mm.): <input type="text" name="min_size" id="min_size" value="0.2" /></p>
-			<p>Map Layers by: 
-				<select id="mapLayers">
-					<option value="mapLayerName">Name</option>
-					<option value="mapLayerType">Type</option>
-				</select>
-			</p>
-
+			<hr/>
+			<p>Upload Multiple Files <input type="file" name="files" id="files" multiple /></p>
 			<p><input type="submit" id="submitButton" value="Submit" /></p>
 		</form>
 
@@ -41,14 +27,14 @@
 		<br />
 
 		<div id="result1Container" style="display: none">
-			<div>Get Job ID, then keep checking if status='complete' every few seconds.</div>
+			<div><b>Generating Workspace file...</b> Please wait until completion</div>
 			<pre id="result1" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
 		</div>
 		<br />
 
 		<div id="result2Container" style="display: none">
-			<div>Result of processing</div>
-			<pre id="result2" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
+			<div><b>Done!</b>  Click below to view results in the PCB Preflight Viewer</div><br/>
+			<button type="button" id="download_pdf" onclick="showFreeViewer()">Start PCB Preflight Viewer</button>
 		</div>
 
 		<script>
@@ -74,17 +60,12 @@
 				// FormData is used to pass Matrix commands to the PCB Preflight AP
 				const formData = new FormData(document.getElementById('form1'))
 
-				let sMatrix = "\n\nCOMPARE_JOBS {"
-				sMatrix 	+= "\nJOB_1=$first"
-				sMatrix 	+= "\nJOB_2=$last"
-				sMatrix 	+= "\nMETHOD=Blend"
-				sMatrix 	+= "\nUNITS=mm"
-				sMatrix 	+= "\nMinErrorSize=" + formData.get("min_size");
-				//TODO: Let user choose the Comparison method.
-				//TODO: Add Combo for use to select All Layers or they could type the layer they wish to compare
-				sMatrix 	+= '\noutput_pdf_file=CompareJobsResult.pdf\n'
+				//Assign Matrix DFM Rules 
+				let sMatrix = '\n\nOPTIONS {\npreflight-autodetect_import\n}\n';
+				sMatrix += '\n\n';
+				sMatrix += "SERIALIZE {\n";
+				sMatrix += "file=previewWorkspace.wrk\n";
 				sMatrix += "}\n\n";
-				//console.log("sMatrix >>>", sMatrix);
 
 				formData.append('matrix', sMatrix); 
 
@@ -98,8 +79,9 @@
 						method: 'POST',
 						headers: { Authorization: api_key },
 						body: formData,
-						cache: 'no-cache'
+						cache: 'no-cache',
 					})
+
 					const data = await response.json()
 					if (data.ok === 1) {
 						job_id = data.result.job_id
@@ -111,8 +93,10 @@
 						while (job == null || job.status != 'complete') {
 							await delay(1000)
 							job = await checkJob()
-							updateResult()
 						}
+
+						//Show results to User
+						updateResult()
 					} else {
 						document.getElementById('errorMessage').textContent = data.err.message
 					}
@@ -134,9 +118,24 @@
 			}
 
 			function updateResult() {
-				console.error(job)
 				document.getElementById('result2Container').style.display = 'block'
-				document.getElementById('result2').textContent = JSON.stringify(job, null, 2)
+			}
+
+			function showFreeViewer() {
+				//PCB Preflight Free Viewer - Windows Registry value (for executable path)
+				//HKEY_CURRENT_USER\SOFTWARE\NumericalInnovations\PcbPreflightViewer\MM_GENERAL\RunPath
+				//The Default Installer path is,    C:\Numerical Innovations\PcbPreflightViewer/PcbPreflightViewer.exe
+				//Command line to start the viewer and open workspace: PcbPreflightViewer.exe workspacefile.wrk
+				//TODO:  Need to access the Registry value: RunPath  [Workspace file path]
+				//C:/Numerical Innovations/PcbPreflightViewer/PcbPreflightViewer.exe https://clouddfm1.s3.us-west-2.amazonaws.com/u/wO4Q7o/o/job-658-nQuNjN/previewWorkspace.wrk
+				//
+				//TODO:  	1. Workspace file URL (job.outputs[0].url) needs to be downloaded into a local temporary folder
+				//			2. Get PCB Preflight Viewer Installation path (from Registry value - mentioned above)
+				//			3. Create a string value:   PREFLIGHT_VIEWER_PATH WORKSPACE_FILE_LOCAL
+				//
+				//let sViewerPath = "C:/Numerical Innovations/PcbPreflightViewer/PcbPreflightViewer.exe " + job.outputs[0].url
+				//console.log(sViewerPath)
+				//window.open(sViewerPath,"_blank")
 			}
 		</script>
 	</body>
