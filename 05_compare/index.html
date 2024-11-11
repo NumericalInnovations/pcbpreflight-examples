@@ -20,11 +20,12 @@
 
 		<form id="form1">
 			Your API Key <input id="api_key" type="text" value="" />
+			<input type="hidden" name="output" value="files" /> <!-- either "zip" or "files" -->
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />
 			<input type="hidden" name="timeout" value="60" />
-			<p>Upload <b>PCB Design #1:</b> <input type="file" name="files" id="files" /></p>
-			<p>Upload <b>PCB Design #2:</b> <input type="file" name="compareFiles" id="compareFiles" /></p>
+			<p>Upload <b>PCB Design #1:</b> <input type="file" name="files"/></p>
+			<p>Upload <b>PCB Design #2:</b> <input type="file" name="files"/></p>
 			<p>Minimum Error Size (mm.): <input type="text" name="min_size" id="min_size" value="0.2" /></p>
 			<p>Map Layers by: 
 				<select id="mapLayers">
@@ -92,9 +93,8 @@
 						method: 'POST',
 						headers: { Authorization: api_key },
 						body: formData,
-						cache: 'no-cache',
+						cache: 'no-cache'
 					})
-
 					const data = await response.json()
 					if (data.ok === 1) {
 						job_id = data.result.job_id
@@ -129,6 +129,7 @@
 			}
 
 			function updateResult() {
+				console.error(job)
 				document.getElementById('result2Container').style.display = 'block'
 				document.getElementById('result2').textContent = JSON.stringify(job, null, 2)
 			}
