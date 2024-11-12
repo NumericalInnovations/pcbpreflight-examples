@@ -75,8 +75,8 @@
 				const formData = new FormData(document.getElementById('form1'))
 
 				let sMatrix = "\n\nCOMPARE_JOBS {"
-				sMatrix 	+= "\nJOB_1=$first"
-				sMatrix 	+= "\nJOB_2=$last"
+				sMatrix 	+= "\nJOB_1=@first"
+				sMatrix 	+= "\nJOB_2=@last"
 				sMatrix 	+= "\nMETHOD=Blend"
 				sMatrix 	+= "\nUNITS=mm"
 				sMatrix 	+= "\nMinErrorSize=" + formData.get("min_size");

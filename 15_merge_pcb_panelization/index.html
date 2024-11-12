@@ -89,12 +89,12 @@
 				let sBoardTwo = formData.get("secondFiles")
 				if( sBoardTwo && sBoardTwo.size>0)
 				{
-					sMatrix += '\n    PANELWIZARD_FIXED=' + formData.get("job_spacing") + ','  + formData.get("job_spacing") + ',$1,' + formData.get("pcb_count_1") + ',10,';
-					sMatrix += '$2,' + formData.get("pcb_count_2") + ',10';
+					sMatrix += '\n    PANELWIZARD_FIXED=' + formData.get("job_spacing") + ','  + formData.get("job_spacing") + ',@first,' + formData.get("pcb_count_1") + ',10,';
+					sMatrix += '@last,' + formData.get("pcb_count_2") + ',10';
 				}
 				else
 				{
-					sMatrix += '\n    PANELWIZARD_FIXED=' + formData.get("job_spacing") + ','  + formData.get("job_spacing") + ',$1,\n';
+					sMatrix += '\n    PANELWIZARD_FIXED=' + formData.get("job_spacing") + ','  + formData.get("job_spacing") + ',@first,\n';
 				}
 				sMatrix += "\n}\n\n";
 
