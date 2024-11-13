@@ -264,6 +264,24 @@
 				sMatrix += 'TaxRate=' + formData.get("tax_rate") + "\n";
 				sMatrix += "}\n\n";
 
+				//Generate Realistic Images
+				sMatrix += "EXPORT_REALISTIC {\n";
+				sMatrix += "cell=active\n";
+				sMatrix += "BOARDSIDE=top\n";
+				sMatrix += "BOARDFINISH=gold\n";
+				sMatrix += "width=640\n";
+				sMatrix += "file=thumbnail_top.png\n";
+				sMatrix += "}\n\n";
+
+				//Generate Realistic Images
+				sMatrix += "EXPORT_REALISTIC {\n";
+				sMatrix += "cell=active\n";
+				sMatrix += "BOARDSIDE=bottom\n";
+				sMatrix += "BOARDFINISH=gold\n";
+				sMatrix += "width=640\n";
+				sMatrix += "file=thumbnail_bottom.png\n";
+				sMatrix += "}\n\n";
+
 				formData.append('matrix', sMatrix); 
 
 				// Clear error
