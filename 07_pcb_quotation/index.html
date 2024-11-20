@@ -74,8 +74,18 @@
 			<input type="hidden" name="timeout" value="60" />
 			<hr>
 			<p>Upload your PCB design <input type="file" name="files" id="files" multiple /></p>
+
+			<p>Output Units: 
+				<select id="outputUnits">
+					<option value="outputUnitsMillimeter">Metric</option>
+					<option value="outputUnitsInch">English</option>
+				</select>
+			</p>
+
 			<input type="checkbox" id="singlePriceQuote" name="singlePriceQuote" value="SingleQuoteOnly" checked>
-			<label for="vehicle1"> Display PCB Price Grid (Quantity/Delivery)</label><br>
+			<label> Display PCB Price Grid (Quantity/Delivery)</label><br>
+
+
 			<p  style="display: none">Quantity: 
 				<select id="pcbQuantity">
 					<option value="quantity_1">1</option>
@@ -109,7 +119,7 @@
 		<span id="errorMessage" style="color: red"></span><br />
 		<br />
 
-		<div id="result1Container" style="display: none">
+		<div id="result1Container" style="display: none;">
 			<div>Get Job ID, then keep checking if status='complete' every few seconds.</div>
 			<pre id="result1" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
 		</div>
@@ -124,17 +134,17 @@
 			</tr>
 			<tr>
 				<td class="image-table__cell">
-					<img id="imageTop" class="image-table__img" src="" alt="First placeholder image">
+					<img id="imageTop" class="image-table__img" src="" alt="Top side">
 				</td>
 				<td class="image-table__cell">
-					<img id="imageBottom" class="image-table__img" src="" alt="Second placeholder image">
+					<img id="imageBottom" class="image-table__img" src="" alt="Bottom side">
 				</td>
 			</tr>
 		</table>
 		<br />
 
-		<table id="resultPricing" style="display: none">
-			<caption>Bareboard Pricing Grid (Unit cost)</caption>
+		<table id="resultPricing" style="display: none; margin: 0 auto;">
+			<caption><b>PCB Pricing Grid (Unit cost)</b></caption>
 			<tr>
 				<th> </th>
 				<th>1 Day</th>
@@ -162,23 +172,27 @@
 		</table>
 		<br />
 
-		<table id="resultExtract" style="display: none">
-			<caption>PCB Dimensions</caption>
+		<table id="resultExtract" style="display: none; float: left;">
+			<caption><b>PCB Bareboard Dimensions</b></caption>
 			<tr>
 				<th>Job ID</th>
 				<td id="jobId">-</td>
 			</tr>
 			<tr>
-				<th>Board Size</th>
+				<th>Units</th>
+				<td id="board.Units">-</td>
+			</tr>
+			<tr>
+				<th>Board Size (Width x Height)</th>
 				<td id="board.BoardSize">-</td>
 			</tr>
 			<tr>
-				<th>Board Thickness</th>
-				<td id="board.Thickness-mm">-</td>
+				<th>Board Area</th>
+				<td id="board.BoardArea">-</td>
 			</tr>
 			<tr>
-				<th>Board Units (source)</th>
-				<td id="board.Units">-</td>
+				<th>Board Thickness</th>
+				<td id="board.Thickness">-</td>
 			</tr>
 			<tr>
 				<th>Layer Count</th>
@@ -186,19 +200,59 @@
 			</tr>
 			<tr>
 				<th>Min Trace</th>
-				<td id="board.MinTrace-mm">-</td>
+				<td id="board.MinTrace">-</td>
 			</tr>
 			<tr>
 				<th>Min Space</th>
-				<td id="board.MinSpace-mm">-</td>
+				<td id="board.MinSpace">-</td>
 			</tr>
 			<tr>
-				<th>Min SMT Pitch Size</th>
-				<td id="board.MinSmtPitch-mm">-</td>
+				<th>Min Trace (Inner)</th>
+				<td id="board.MinTraceInner">-</td>
 			</tr>
 			<tr>
-				<th>Min SMT Pad Width</th>
-				<td id="board.MinSmtPadWidth-mm">-</td>
+				<th>Min Space (Inner)</th>
+				<td id="board.MinSpaceInner">-</td>
+			</tr>
+
+			<tr>
+				<th>Min Annular Ring</th>
+				<td id="board.MinAnnularRing">-</td>
+			</tr>
+			<tr>
+				<th>Min Annular Ring (Inner)</th>
+				<td id="board.MinAnnularRingInner">-</td>
+			</tr>
+
+			<tr>
+				<th>Border Edge Clearance</th>
+				<td id="board.MinBorderSpaceOuter">-</td>
+			</tr>
+			<tr>
+				<th>Border Edge Clearance (Inner)</th>
+				<td id="board.MinBorderSpaceOuterInner">-</td>
+			</tr>
+			<tr>
+				<th>Metal to Plated Hole</th>
+				<td id="board.MinSpacePlated">-</td>
+			</tr>
+			<tr>
+				<th>Metal to Non-Plated Hole</th>
+				<td id="board.MinSpaceNonPlated">-</td>
+			</tr>
+
+			<tr>
+				<th>Metal to Plated Hole (Inner)</th>
+				<td id="board.MinSpacePlatedInner">-</td>
+			</tr>
+			<tr>
+				<th>Metal to Non-Plated Hole (Inner)</th>
+				<td id="board.MinSpaceNonPlatedInner">-</td>
+			</tr>
+
+			<tr>
+				<th>Drill Density (dm²)</th>
+				<td id="board.DensityDrill">-</td>
 			</tr>
 			<tr>
 				<th>Drill Count</th>
@@ -210,7 +264,7 @@
 			</tr>
 			<tr>
 				<th>Min Drill Diameter</th>
-				<td id="board.MinDrillSize-mm">-</td>
+				<td id="board.MinDrillSize">-</td>
 			</tr>
 			<tr>
 				<th>Buried Via Count</th>
@@ -228,6 +282,15 @@
 				<th>Nets Endpoint Count</th>
 				<td id="nets.EndpointCount">-</td>
 			</tr>
+		</table>
+
+		<table id="resultExtractAssembly" style="display: none; float: left;">
+			<caption><b>PCB Assembly Details</b></caption>
+			<tr>
+				<th>Units</th>
+				<td id="board.UnitsAssembly">-</td>
+			</tr>
+
 			<tr>
 				<th>Components Total</th>
 				<td id="components.Total">-</td>
@@ -264,8 +327,26 @@
 				<th>Press-Fit Count</th>
 				<td id="board.PressFitCount">-</td>
 			</tr>
+			<tr>
+				<th>Min SMT Pitch Size</th>
+				<td id="board.MinSmtPitch">-</td>
+			</tr>
+			<tr>
+				<th>Min SMT Pad Width</th>
+				<td id="board.MinSmtPadWidth">-</td>
+			</tr>
+			<tr>
+				<th>Components Density Top (dm²)</th>
+				<td id="board.DensityTopSMD">-</td>
+			</tr>
+			<tr>
+				<th>Components Density Bottom (dm²)</th>
+				<td id="board.DensityBottomSMD">-</td>
+			</tr>
+
 		</table>
 		<br />
+
 
 		<script>
 			let api_key = null
@@ -352,7 +433,7 @@
 					}
 
 					job_id = data.result.job_id
-					document.getElementById('result1Container').style.display = 'block'
+					//document.getElementById('result1Container').style.display = 'block'
 					const result1 = document.getElementById('result1')
 					result1.textContent = JSON.stringify(data.result, null, 2)
 
@@ -389,6 +470,7 @@
 
 				//Show table
 				document.getElementById('resultExtract').style.display = 'block'
+				document.getElementById('resultExtractAssembly').style.display = 'block'
 
 				// Show images
 				if(job.outputs.length>=3) {
@@ -409,40 +491,103 @@
 						sIdSearch += ".";
 						sIdSearch 		+= arPrice[i].days;
 						sIdSearch += "day";
-						console.log("sIdSearch >>>", sIdSearch);
+						//console.log("sIdSearch >>>", sIdSearch);
 						document.getElementById(sIdSearch).textContent = `$ ${arPrice[i].unit_price}`
 					}
 				}
 
+				var outUnits = document.forms['form1'].elements['outputUnits'].value;
+
 				//Dimension Attributes
 				document.getElementById('jobId').textContent = job_id
-				document.getElementById('board.BoardSize').textContent = `${data.board['Width-mm']}mm x ${data.board['Height-mm']}mm`
-				document.getElementById('board.Thickness-mm').textContent = data.board['Thickness-mm']
-				document.getElementById('board.Units').textContent = data.board['Units']
 				document.getElementById('board.LayerCount').textContent = data.board['LayerCount']
-				document.getElementById('board.MinTrace-mm').textContent = data.board['MinTrace-mm']
-				document.getElementById('board.MinSpace-mm').textContent = data.board['MinSpace-mm']
-				document.getElementById('board.MinSmtPitch-mm').textContent = data.board['MinSmtPitch-mm']
-				document.getElementById('board.MinSmtPadWidth-mm').textContent = data.board['MinSmtPadWidth-mm']
+
+				if( outUnits=="outputUnitsMillimeter")
+				{
+					//Assembly Details
+					document.getElementById('board.UnitsAssembly').textContent = "Millimeter"
+
+					document.getElementById('board.Units').textContent = "Millimeter"
+					document.getElementById('board.BoardSize').textContent = `${data.board['Width-mm']} x ${data.board['Height-mm']}`
+					document.getElementById('board.BoardArea').textContent = data.board['Area-mm']
+					document.getElementById('board.Thickness').textContent = data.board['Thickness-mm']
+					document.getElementById('board.MinSmtPitch').textContent = data.board['MinSmtPitch-mm']
+					document.getElementById('board.MinSmtPadWidth').textContent = data.board['MinSmtPadWidth-mm']
+
+					document.getElementById('board.MinTrace').textContent = data.board['MinTrace-mm']
+					document.getElementById('board.MinSpace').textContent = data.board['MinSpace-mm']
+
+					document.getElementById('board.MinTraceInner').textContent = data.board['MinTraceInner-mm']
+					document.getElementById('board.MinSpaceInner').textContent = data.board['MinSpaceInner-mm']
+
+					document.getElementById('board.MinAnnularRing').textContent = data.board['MinAnnularRing-mm']
+					document.getElementById('board.MinAnnularRingInner').textContent = data.board['MinAnnularRingInner-mm']
+					document.getElementById('board.MinBorderSpaceOuter').textContent = data.board['MinBorderSpaceOuter-mm']
+					document.getElementById('board.MinBorderSpaceOuterInner').textContent = data.board['MinBorderSpaceOuterInner-mm']
+
+					document.getElementById('board.MinSpacePlated').textContent = data.board['MinSpacePlated-mm']
+					document.getElementById('board.MinSpaceNonPlated').textContent = data.board['MinSpaceNonPlated-mm']
+					document.getElementById('board.MinSpacePlatedInner').textContent = data.board['MinSpacePlatedInner-mm']
+					document.getElementById('board.MinSpaceNonPlatedInner').textContent = data.board['MinSpaceNonPlatedInner-mm']
+
+					document.getElementById('board.MinDrillSize').textContent = data.board['MinDrillSize-mm']
+				}
+				else
+				{
+					//Assembly Details
+					document.getElementById('board.UnitsAssembly').textContent = "MillimIncheter"
+
+					document.getElementById('board.Units').textContent = "Inch"
+					document.getElementById('board.BoardSize').textContent = `${data.board['Width']} x ${data.board['Height']}`
+					document.getElementById('board.BoardArea').textContent = data.board['Area']
+					document.getElementById('board.Thickness').textContent = data.board['Thickness']
+					document.getElementById('board.MinSmtPitch').textContent = data.board['MinSmtPitch']
+					document.getElementById('board.MinSmtPadWidth').textContent = data.board['MinSmtPadWidth']
+
+					document.getElementById('board.MinTrace').textContent = data.board['MinTrace']
+					document.getElementById('board.MinSpace').textContent = data.board['MinSpace']
+
+					document.getElementById('board.MinTraceInner').textContent = data.board['MinTraceInner']
+					document.getElementById('board.MinSpaceInner').textContent = data.board['MinSpaceInner']
+
+					document.getElementById('board.MinAnnularRing').textContent = data.board['MinAnnularRing']
+					document.getElementById('board.MinAnnularRingInner').textContent = data.board['MinAnnularRingInner']
+					document.getElementById('board.MinBorderSpaceOuter').textContent = data.board['MinBorderSpaceOuter']
+					document.getElementById('board.MinBorderSpaceOuterInner').textContent = data.board['MinBorderSpaceOuterInner']
+
+					document.getElementById('board.MinSpacePlated').textContent = data.board['MinSpacePlated']
+					document.getElementById('board.MinSpaceNonPlated').textContent = data.board['MinSpaceNonPlated']
+					document.getElementById('board.MinSpacePlatedInner').textContent = data.board['MinSpacePlatedInner']
+					document.getElementById('board.MinSpaceNonPlatedInner').textContent = data.board['MinSpaceNonPlatedInner']
+
+					document.getElementById('board.MinDrillSize').textContent = data.board['MinDrillSize']
+				}
+
+				//Drill
 				document.getElementById('board.DrillCount').textContent = data.board['DrillCount']
+				document.getElementById('board.DensityDrill').textContent = data.board['DensityDrill']
 				document.getElementById('board.UniqueDrillSizes').textContent = data.board['UniqueDrillSizes']
-				document.getElementById('board.MinDrillSize-mm').textContent = data.board['MinDrillSize-mm']
 				document.getElementById('board.BuriedViaCount').textContent = data.board['BuriedViaCount']
 				document.getElementById('board.BlindViaCount').textContent = data.board['BlindViaCount']
 
+				//Net Information
 				document.getElementById('nets.TotalCount').textContent = data.nets['TotalCount']
 				document.getElementById('nets.EndpointCount').textContent = data.nets['EndpointCount']
 
+				//Components
 				document.getElementById('components.Total').textContent = data.components['TopCount'] + data.components['BottomCount']
 				document.getElementById('components.TopCount').textContent = data.components['TopCount']
 				document.getElementById('components.BottomCount').textContent = data.components['BottomCount']
-
 				document.getElementById('board.UniqueComponents').textContent = data.board['UniqueComponents']
 				document.getElementById('board.ThruholeCount').textContent = data.board['ThruholeCount']
 				document.getElementById('board.SMTCount').textContent = data.board['SMTCount']
 				document.getElementById('board.BGACount').textContent = data.board['BGACount']
 				document.getElementById('board.FinePitchCount').textContent = data.board['FinePitchCount']
 				document.getElementById('board.PressFitCount').textContent = data.board['PressFitCount']
+				document.getElementById('board.DensityTopSMD').textContent = data.board['DensityTopSMD']
+				document.getElementById('board.DensityBottomSMD').textContent = data.board['DensityBottomSMD']
+
+
 			}
 		</script>
 	</body>
