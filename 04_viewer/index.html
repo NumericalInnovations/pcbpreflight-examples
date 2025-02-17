@@ -241,7 +241,7 @@
 							let foundCamLayer = job.cam_json.layers.array.find(n=>n.name==id) //Layer from SVG
 							if(foundCamLayer) {
 								foundCamLayer.svg = g; //Store SVG reference for later
-								layersHtml += `<div><input id="layer${i}" type="checkbox" checked onclick="onLayerClicked(${i})"/><label for="layer${i}">&nbsp;${foundCamLayer.name}</label></div>`
+								layersHtml += `<div><input id="layer${i}" type="checkbox" checked onclick="onLayerClicked(${i})"/>&nbsp;<label for="layer${i}"><div style="display:inline-block;width:12px;height:12px;background-color:rgba(${foundCamLayer.rgba.join(',')})"></div>&nbsp;${foundCamLayer.name}</label></div>`
 							}
 						}
 						document.getElementById('layersContainerInner').innerHTML = layersHtml
