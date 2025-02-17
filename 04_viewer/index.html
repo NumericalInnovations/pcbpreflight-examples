@@ -11,6 +11,7 @@
 			}
 			#container {
 				display: none;
+				user-select: none;
 				width: 100vw;
 				height: 100vh;
 				overflow: hidden;
@@ -22,7 +23,7 @@
 			}
 			#viewContainer {
 				position: absolute;
-				width: 60%;
+				width: 90%;
 				height: 70%;
 				border: 1px solid black;
 				padding: 5px;
@@ -59,6 +60,12 @@
 				padding: 5px;
 				border-radius: 5px;			
 			}
+			#layersContainer {
+				position:absolute;display:none;left:10px;top:54px;border-radius:8px;overflow:hidden;border:1px solid black;background-color:white;
+			}
+			#layersContainerInner {
+				overflow-y:auto;padding:12px;margin-right:12px;
+			}
 		</style>
 	</head>
 	<body>
@@ -68,6 +75,11 @@
 			<button id="resetButton">Zoom All</button>
 			<button id="browseButton">DFM Browser...</button>
 			<button id="layersButton">Layers...</button>
+			<div id="layersContainer">
+				<div id="layersContainerInner">
+					&nbsp;
+				</div>
+			</div>
 		</div>
 
 		<h1>PCB Preflight API - Online Viewer Example</h1>
@@ -188,6 +200,7 @@
 				}
 			}
 
+			// Check if the job has completed
 			async function checkJob() {
 				const response = await fetch(`https://www.pcbpreflight.com/api/v1/job/${job_id}`, {
 					method: 'GET',
@@ -197,6 +210,13 @@
 				const data = await response.json()
 				if (data.ok === 1) return data.result
 				throw Error(data.err.message)
+			}
+
+			// Toggle layer visibility when checkbox is clicked
+			function onLayerClicked(index) {
+				const layer = pcbDesign.querySelectorAll('g')[index]
+				const layerDisplay = layer.getAttribute('display')
+				layer.setAttribute('display',layerDisplay=='none' ? 'inline':'none')
 			}
 
 			// Load PCB Design
@@ -211,11 +231,21 @@
 						pcbDesign.setAttribute('height', '100%')
 						pcbDesign.setAttribute('transform', 'scale(1,-1)')
 
+						// Show all layers
+						let layersHtml = ''
 						const gElements = pcbDesign.querySelectorAll('g')
-						gElements.forEach(g => {
+						for(let i=0;i<gElements.length;i++) {
+							const g = gElements[i]
+							const id = g.getAttribute('id');	
 							g.setAttribute('display', 'inline')
-						})
-
+							let foundCamLayer = job.cam_json.layers.array.find(n=>n.name==id) //Layer from SVG
+							if(foundCamLayer) {
+								foundCamLayer.svg = g; //Store SVG reference for later
+								layersHtml += `<div><input id="layer${i}" type="checkbox" checked onclick="onLayerClicked(${i})"/><label for="layer${i}">&nbsp;${foundCamLayer.name}</label></div>`
+							}
+						}
+						document.getElementById('layersContainerInner').innerHTML = layersHtml
+						
 						originalViewBox.x = pcbDesign.viewBox.baseVal.x
 						originalViewBox.y = pcbDesign.viewBox.baseVal.y
 						originalViewBox.width = pcbDesign.viewBox.baseVal.width
@@ -258,20 +288,22 @@
 					}
 				}
 
+				// DFM top button
 				function browseView() {
 					if (pcbDesign) {
 						alert("Browse DFM Markers will be available shortly.");
 					}
 				}
 
+				// Layers top button
 				function layersView() {
-					if (pcbDesign) {
+					if (!pcbDesign) {
 						alert("Layers control will be available shortly.");
-
+						return
 					}
+					const layersContainer = document.getElementById('layersContainer')
+					layersContainer.style.display = layersContainer.style.display!='block' ? 'block':'none'
 				}
-
-
 
 				container.addEventListener('mousedown', e => {
 					if (e.button === 0) {
