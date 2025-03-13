@@ -57,22 +57,22 @@
 	<body>
 		<h1>PCB Preflight API - Automated PCB Quotes</h1>
 		<div>
-			Generate automated PCB Request for Quotations (RFQ) and displays the pricing in a table.
+			<b>Generate automated PCB Request for Quotations (RFQ) and displays the pricing in a table.</b>
 			<ol>
-				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.<br />Note: The API-key should be hidden in production releases.</li>
-				<li><b>Upload</b> your PCB Design manufacturing files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace). <br />Note: You can upload a ZIP file or multiple files.</li>
-				<li><b>Review</b> PCB Quote options.</li>
-				<li>Press <b>Get Price Quote</b> to begin.</li>
+				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a></li>
+				<li>Upload your EDA/CAM files.  Loads Gerber, NC Drill/Rout, ODB++, IPC-2581, <a href="https://www.numericalinnovations.com/collections/fab-3000-gerber-cam">FAB3000 Workspace (*.wrk)</a> <br /><b>Note:</b> You can upload a ZIP file or multiple files.</li>
+				<li><b>Review</b> options.</li>
+				<li>Press <b>Get Price Quote</b> to start.</li>
 			</ol>
+			<hr>
 		</div>
 
 		<form id="form1">
-			Your API Key <input id="api_key" type="text" value="" />
+			<p>Your API Key <input id="api_key" type="text" value="" /></p>
 			<input type="hidden" name="output" value="files" />
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />
 			<input type="hidden" name="timeout" value="60" />
-			<hr>
 			<p>Upload your PCB design <input type="file" name="files" id="files" multiple /></p>
 
 			<p>Output Units: 
@@ -82,9 +82,8 @@
 				</select>
 			</p>
 
-			<input type="checkbox" id="singlePriceQuote" name="singlePriceQuote" value="SingleQuoteOnly" checked>
-			<label> Display PCB Price Grid (Quantity/Delivery)</label><br>
-
+			<p><input type="checkbox" id="singlePriceQuote" name="singlePriceQuote" value="SingleQuoteOnly" checked>
+			<label> Display PCB Price Grid (Quantity/Delivery)</label></p>
 
 			<p  style="display: none">Quantity: 
 				<select id="pcbQuantity">
@@ -112,8 +111,8 @@
 				</select>
 			</p>
 			<p>Tax Rate (%): <input type="text" name="tax_rate" id="tax_rate" value="7.5" /></p>
+			<p><input type="submit" id="submitButton" value="Get Price Quote" style="color: white;background-color: #008CBA;border: none;padding: 10px 20px;"/></p>
 
-			<p><input type="submit" id="submitButton" value="Get Price Quote" /></p>
 		</form>
 
 		<span id="errorMessage" style="color: red"></span><br />

@@ -73,22 +73,22 @@
 			<div id="viewContainer"></div>
 			<div id="zoomInfo">Zoom: 100%</div>
 			<button id="resetButton">Zoom All</button>
-			<button id="browseButton">DFM Browser...</button>
+			<button id="browseButton" hidden>DFM Browser...</button>
 			<button id="layersButton">Layers...</button>
 			<div id="layersContainer">
 				<div id="layersContainerInner">
 					&nbsp;
-				</div>
+		</div>
 			</div>
 		</div>
 
 		<h1>PCB Preflight API - Online Viewer Example</h1>
 		<div>
-			This example demonstrates uploading your PCB design and displays the results online.
+			<b>Easily create your own EDA/CAM Online Viewer.</b>
 			<ol>
-				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.<br />Note: The API-key should be hidden in production releases.</li>
-				<li><b>Upload</b> your PCB Design manufacturing files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace). <br />Note: You can upload a ZIP file or multiple files.</li>
-				<li>Once the viewer opens, use your left mouse button to grab and drag, and your mouse wheel to zoom.</li>
+				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a></li>
+				<li>Upload your EDA/CAM files.  Loads Gerber, NC Drill/Rout, ODB++, IPC-2581, <a href="https://www.numericalinnovations.com/collections/fab-3000-gerber-cam">FAB3000 Workspace (*.wrk)</a> <br /><b>Note:</b> You can upload a ZIP file or multiple files.</li>
+				<li>Press <b>Start Online Viewer</b><br />Viewer features: Mouse button is used for pan/drag and wheel dynamically zooms (in/out).</li>
 			</ol>
 
 		</div>
@@ -100,7 +100,8 @@
 			<input type="hidden" name="send_email" value="true" />
 			<input type="hidden" name="timeout" value="60" />
 			<p>Upload Multiple Files <input type="file" name="files" id="files" multiple /></p>
-			<p><input type="submit" id="submitButton" value="Submit" /></p>
+			<p><input type="submit" id="submitButton" value="Start Online Viewer" style="color: white;background-color: #008CBA;border: none;padding: 10px 20px;"/></p>
+
 		</form>
 
 		<span id="errorMessage" style="color: red"></span><br />
@@ -190,7 +191,7 @@
 
 					// Find svg in list of outputs
 					const svgOutput = job.outputs.find(n => n.path == 'viewer.svg')
-					if(!svgOutput) throw Error(`Unable to generate viewer output.`)
+					if(!svgOutput) throw Error(`Unable to generate viewer output. Requires the PCB Preflight Visualizer plan ($33/mo) or above.`)
 
 					// Start the Viewer
 					startViewer(svgOutput.url)
@@ -245,7 +246,7 @@
 							}
 						}
 						document.getElementById('layersContainerInner').innerHTML = layersHtml
-						
+
 						originalViewBox.x = pcbDesign.viewBox.baseVal.x
 						originalViewBox.y = pcbDesign.viewBox.baseVal.y
 						originalViewBox.width = pcbDesign.viewBox.baseVal.width

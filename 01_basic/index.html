@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>PCB Preflight API Basic Example</title>
+		<title>PCB Preflight API - Display JSON file</title>
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
 		<meta content="utf-8" http-equiv="encoding" />
 		<style>
@@ -12,15 +12,19 @@
 			</style>
 	</head>
 	<body>
-		<h1>PCB Preflight API Basic Example</h1>
+		<h1>PCB Preflight API - Display JSON file</h1>
 		<div>
-			Extraction of PCB Design information such as: layers, nets, stackup, apertures, nctools, components, and board dimensions. 
-			Displays the resulting JSON file afterwards.  <br />
-			<b>Note:</b>  To extract more PCB design data like Minimum Space, Trace width, annular rings, Min. SMT pitch and more - <a href="https://github.com/NumericalInnovations/pcbpreflight-examples/tree/master/02_extract">See Example 2: PCB Data Extraction </a><br />
-			<br />
+			 The PCB Preflight API waits for you to request some PCB related information (i.e Minimum Space, Trace width, DFM errors, etc), and then performs the following steps:
 			<ol>
-				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.</li>
-				<li><b>Upload</b> your PCB Design manufacturing files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace). <br />Note: You can upload a ZIP file or multiple files.</li>
+				<li>Uploads your EDA/CAM files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace)</li>
+				<li>Extracts your requested infomation </li>
+				<li>Delivers those results in a JSON file - for your review.</li>
+			</ol>
+
+			<b>This example displays the resulting JSON file output by PCB Preflight API. </b> <br />
+			<ol>
+				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a></li>
+				<li><b>Upload</b> your EDA/CAM files. <br />Note: You can upload a ZIP file or multiple files.</li>
 			</ol>
 		</div>
 
@@ -31,7 +35,7 @@
 			<input type="hidden" name="send_email" value="true" />
 			<input type="hidden" name="timeout" value="60" />
 			<p>Upload Multiple Files <input type="file" name="files" id="files" multiple /></p>
-			<p><input type="submit" id="submitButton" value="Submit" /></p>
+			<p><input type="submit" id="submitButton" value="Generate JSON" style="color: white;background-color: #008CBA;border: none;padding: 10px 20px;"/></p>
 		</form>
 
 		<span id="errorMessage" style="color: red"></span><br />

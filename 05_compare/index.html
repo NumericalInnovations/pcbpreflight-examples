@@ -14,9 +14,9 @@
 	<body>
 		<h1>Compare PCB Designs</h1>
 		<div>
-			Perform a PCB design comparison and highlight any differences.  
+			<b>Perform a PCB design comparison and highlight any differences.</b>  
 			<ol>
-				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.</li>
+				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a></li>
 				<li>Upload <b>First</b> PCB Design.</li>
 				<li>Upload <b>Second</b> PCB Design.</li>
 				<li>Review Compare PCB options.</li>
@@ -25,7 +25,7 @@
 		</div>
 
 		<form id="form1">
-			Your API Key <input id="api_key" type="text" value="" />
+			<p>Your API Key <input id="api_key" type="text" value="" /></p>
 			<input type="hidden" name="output" value="files" /> <!-- either "zip" or "files" -->
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />
@@ -47,14 +47,16 @@
 		<br />
 
 		<div id="result1Container" style="display: none">
-			<div>Get Job ID, then keep checking if status='complete' every few seconds.</div>
+			<div><b>Processing PCB Design Comparison...</b> Please wait until completion (may be a few minutes)</div>
 			<pre id="result1" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
 		</div>
 		<br />
+		<span id="loadingMessage" style="color: blue; display: none">Comparing Designs ...</span><br />
+		<br />
 
 		<div id="result2Container" style="display: none">
-			<div>Result of processing</div>
-			<pre id="result2" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
+			<div><b>Done!</b>  Click below to view your PCB Compare results</div><br/>
+			<button type="button" onclick="showPdfReport()">Download PCB Comparison Report (PDF)</button>
 		</div>
 
 		<script>
@@ -86,11 +88,9 @@
 				sMatrix 	+= "\nMETHOD=Blend"
 				sMatrix 	+= "\nUNITS=mm"
 				sMatrix 	+= "\nMinErrorSize=" + formData.get("min_size");
-				//TODO: Let user choose the Comparison method.
-				//TODO: Add Combo for use to select All Layers or they could type the layer they wish to compare
 				sMatrix 	+= '\noutput_pdf_file=CompareJobsResult.pdf\n'
 				sMatrix += "}\n\n";
-				//console.log("sMatrix >>>", sMatrix);
+				console.log("sMatrix >>>", sMatrix);
 
 				formData.append('matrix', sMatrix); 
 
@@ -106,6 +106,7 @@
 						body: formData,
 						cache: 'no-cache'
 					})
+
 					const data = await response.json()
 					if (data.ok === 1) {
 						job_id = data.result.job_id
@@ -113,12 +114,16 @@
 						const result1 = document.getElementById('result1')
 						result1.textContent = JSON.stringify(data.result, null, 2)
 
-						// Keep trying to get the job until status=='complete'
+						// Keep trying to get the job until status=='complete' (put a delay so it is not too frequent)
 						while (job == null || job.status != 'complete') {
 							await delay(1000)
 							job = await checkJob()
-							updateResult()
+						document.getElementById('loadingMessage').style.display = 'block'
+						document.getElementById('loadingMessage').textContent += '.'
 						}
+
+						//Show results to User
+							updateResult()
 					} else {
 						document.getElementById('errorMessage').textContent = data.err.message
 					}
@@ -140,9 +145,12 @@
 			}
 
 			function updateResult() {
-				console.error(job)
 				document.getElementById('result2Container').style.display = 'block'
-				document.getElementById('result2').textContent = JSON.stringify(job, null, 2)
+			}
+
+			function showPdfReport() {
+				console.log("job.outputs >>>", job.outputs);
+				window.open(job.outputs[0].url,"_blank")
 			}
 		</script>
 	</body>

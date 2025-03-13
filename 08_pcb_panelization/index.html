@@ -16,8 +16,8 @@
 		<div>
 			Generate a complete and optimized PCB Panel. Generate a Numerical Workspace (*.wrk) to review inside the PCB Preflight Free Viewer.
 			<ol>
-				<li>Enter your own <b>PCB Preflight API-key</b> in the form below.<br />Note: The API-key should be hidden in production releases.</li>
-				<li><b>Upload</b> your PCB Design manufacturing files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace). <br />Note: You can upload a ZIP file or multiple files.</li>
+				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a></li>
+				<li>Upload your EDA/CAM files.  Loads Gerber, NC Drill/Rout, ODB++, IPC-2581, <a href="https://www.numericalinnovations.com/collections/fab-3000-gerber-cam">FAB3000 Workspace (*.wrk)</a> <br /><b>Note:</b> You can upload a ZIP file or multiple files.</li>
 				<li><b>Review</b> PCB Panelization options.</li>
 				<li>Press <b>Submit</b> to begin.</li>
 			</ol>
@@ -89,8 +89,9 @@
 				sMatrix += '\n    WIDTH=' + formData.get("panel_width");
 				sMatrix += '\n    HEIGHT=' + formData.get("panel_height");
 				sMatrix += '\n    BORDERSPACING=' + formData.get("border_spacing");
+				
 				sMatrix += '\n    PANELWIZARD_FIXED=' + formData.get("job_spacing") + ','  + formData.get("job_spacing");
-				sMatrix += ',,'; //Empty Job - because only one PCB design
+				sMatrix += ',@first,'; //Use Dynamic Job Reference (first imported job)
 				sMatrix += formData.get("pcb_count") + ','  + formData.get("pcb_surplus"); //Add Count and Surplus Count
 				sMatrix += '\n    FIDUCIAL=circle,.03,rectangle,.06,@.25,@.25,Panel,[Top+Bottom]'
 				sMatrix += '\n    FIDUCIAL=rectangle,.03,rectangle,.06,@-.25,@-.25,,[Top+Bottom]'
@@ -103,6 +104,9 @@
 				sMatrix += "SERIALIZE{\n";
 				sMatrix += "FILE=panelizedResults.wrk\n";
 				sMatrix += "}\n\n";
+
+				console.log("sMatrix >>>", sMatrix);
+
 
 				//Append Matrix command to Form data 
 				formData.append('matrix', sMatrix); 
