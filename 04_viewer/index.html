@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<title>Online PCB Viewer</title>
 		<style>
 			body {
@@ -31,7 +32,7 @@
 			#zoomInfo {
 				position: absolute;
 				top: 10px;
-				left: 305px;
+				left: 255px;
 				background-color: rgba(255, 255, 255, 0.7);
 				padding: 5px;
 				border-radius: 5px;
@@ -39,7 +40,7 @@
 			#resetButton {
 				position: absolute;
 				top: 10px;
-				left: 220px;
+				left: 165px;
 				width: 80px;
 				padding: 5px;
 				border-radius: 5px;			
@@ -47,10 +48,27 @@
 			#browseButton {
 				position: absolute;
 				top: 10px;
-				left: 95px;
+				left: 165px;
 				width: 120px;
 				padding: 5px;
 				border-radius: 5px;			
+			}
+			#layersAllOffButton {
+				position: absolute;
+				top: 10px;
+				left: 130px;
+				width: 30px;
+				padding: 5px;
+				border-radius: 5px;			
+			}
+			#layersAllOnButton {
+				position: absolute;
+				top: 10px;
+				left: 95px;
+				width: 30px;
+				padding: 5px;
+				border-radius: 5px;	
+				color:gold		
 			}
 			#layersButton {
 				position: absolute;
@@ -72,19 +90,21 @@
 		<div id="container">
 			<div id="viewContainer"></div>
 			<div id="zoomInfo">Zoom: 100%</div>
-			<button id="resetButton">Zoom All</button>
-			<button id="browseButton" hidden>DFM Browser...</button>
-			<button id="layersButton">Layers...</button>
+			<button id="resetButton" title="Zoom to Design Extents">Zoom All</button>
+			<button id="browseButton" title="Browse DFM Errors" hidden>DFM Errors...</button>
+			<button id="layersAllOnButton" title="All Layers ON (Visible)"><i class="fa fa-lightbulb-o"></i></button>
+			<button id="layersAllOffButton" title="All Layers OFF (Hide)"><i class="fa fa-lightbulb-o"></i></button>
+			<button id="layersButton" title="Layers Table.">Layers <i class="fa fa-angle-down"></i></button>
 			<div id="layersContainer">
 				<div id="layersContainerInner">
 					&nbsp;
-		</div>
+				</div>
 			</div>
 		</div>
 
-		<h1>PCB Preflight API - Online Viewer Example</h1>
+		<h1>PCB Preflight API - Online Gerber Viewer</h1>
 		<div>
-			<b>Easily create your own EDA/CAM Online Viewer.</b>
+			<b>Easily create an Online EDA/CAM Viewer in minutes!</b>
 			<ol>
 				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a></li>
 				<li>Upload your EDA/CAM files.  Loads Gerber, NC Drill/Rout, ODB++, IPC-2581, <a href="https://www.numericalinnovations.com/collections/fab-3000-gerber-cam">FAB3000 Workspace (*.wrk)</a> <br /><b>Note:</b> You can upload a ZIP file or multiple files.</li>
@@ -126,6 +146,8 @@
 			const resetButton = document.getElementById('resetButton')
 			const resebrowseButtontButton = document.getElementById('browseButton')
 			const layersButton = document.getElementById('layersButton')
+			const layersAllOnButton = document.getElementById('layersAllOnButton')
+			const layersAllOffButton = document.getElementById('layersAllOffButton')
 
 			let pcbDesign
 			let originalViewBox = { x: 0, y: 0, width: 0, height: 0 }
@@ -292,14 +314,50 @@
 				// DFM top button
 				function browseView() {
 					if (pcbDesign) {
-						alert("Browse DFM Markers will be available shortly.");
+						alert("No DFM Errors.");
 					}
+				}
+
+				// All Layers On
+				function layersAllOnView() {
+						// Show all layers
+						let layersHtml = ''
+						const gElements = pcbDesign.querySelectorAll('g')
+						for(let i=0;i<gElements.length;i++) {
+							const g = gElements[i]
+							const id = g.getAttribute('id');	
+							g.setAttribute('display', 'inline')
+							let foundCamLayer = job.cam_json.layers.array.find(n=>n.name==id) //Layer from SVG
+							if(foundCamLayer) {
+								foundCamLayer.svg = g; //Store SVG reference for later
+								layersHtml += `<div><input id="layer${i}" type="checkbox" checked onclick="onLayerClicked(${i})"/>&nbsp;<label for="layer${i}"><div style="display:inline-block;width:12px;height:12px;background-color:rgba(${foundCamLayer.rgba.join(',')})"></div>&nbsp;${foundCamLayer.name}</label></div>`
+							}
+						}
+						document.getElementById('layersContainerInner').innerHTML = layersHtml
+				}
+
+				// All Layers Off
+				function layersAllOffView() {
+						// Show all layers
+						let layersHtml = ''
+						const gElements = pcbDesign.querySelectorAll('g')
+						for(let i=0;i<gElements.length;i++) {
+							const g = gElements[i]
+							const id = g.getAttribute('id');	
+							g.setAttribute('display', 'none')
+							let foundCamLayer = job.cam_json.layers.array.find(n=>n.name==id) //Layer from SVG
+							if(foundCamLayer) {
+								foundCamLayer.svg = g; //Store SVG reference for later
+								layersHtml += `<div><input id="layer${i}" type="checkbox" onclick="onLayerClicked(${i})"/>&nbsp;<label for="layer${i}"><div style="display:inline-block;width:12px;height:12px;background-color:rgba(${foundCamLayer.rgba.join(',')})"></div>&nbsp;${foundCamLayer.name}</label></div>`
+							}
+						}
+						document.getElementById('layersContainerInner').innerHTML = layersHtml
 				}
 
 				// Layers top button
 				function layersView() {
 					if (!pcbDesign) {
-						alert("Layers control will be available shortly.");
+						alert("Empty Design - Nothing to do.");
 						return
 					}
 					const layersContainer = document.getElementById('layersContainer')
@@ -354,6 +412,8 @@
 				resetButton.addEventListener('click', resetView)
 				browseButton.addEventListener('click', browseView)
 				layersButton.addEventListener('click', layersView)
+				layersAllOnButton.addEventListener('click', layersAllOnView)
+				layersAllOffButton.addEventListener('click', layersAllOffView)
 			}
 		</script>
 	</body>
