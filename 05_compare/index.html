@@ -16,9 +16,9 @@
 		<div>
 			<b>Perform a PCB design comparison and highlight any differences.</b>  
 			<ol>
-				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a></li>
-				<li>Upload <b>First</b> PCB Design.</li>
-				<li>Upload <b>Second</b> PCB Design.</li>
+				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a><br />Security Notice: Your API key should be hidden in production releases.</li>
+				<li>Select <b>First</b> PCB Design.</li>
+				<li>Select <b>Second</b> PCB Design.</li>
 				<li>Review Compare PCB options.</li>
 				<li>Press <b>Submit</b> to begin Comparison.</li>
 			</ol>
@@ -30,8 +30,8 @@
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />
 			<input type="hidden" name="timeout" value="60" />
-			<p>Upload <b>PCB Design #1:</b> <input type="file" name="files"/></p>
-			<p>Upload <b>PCB Design #2:</b> <input type="file" name="files"/></p>
+			<p><b>PCB Design #1:</b> <input type="file" name="files"/></p>
+			<p><b>PCB Design #2:</b> <input type="file" name="files"/></p>
 			<p>Minimum Error Size (mm.): <input type="text" name="min_size" id="min_size" value="0.2" /></p>
 			<p>Map Layers by: 
 				<select id="mapLayers">

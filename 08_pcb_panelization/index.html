@@ -14,22 +14,22 @@
 	<body>
 		<h1>PCB Preflight API - PCB Panelization</h1>
 		<div>
-			Generate a complete and optimized PCB Panel. Generate a Numerical Workspace (*.wrk) to review inside the PCB Preflight Free Viewer.
+			<b>Generate a complete and optimized PCB Panel. Outputs a Numerical Workspace (*.wrk) to review inside the PCB Preflight Free Viewer.</b>
 			<ol>
-				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a></li>
+				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a><br />Security Notice: Your API key should be hidden in production releases.</li>
 				<li>Upload your EDA/CAM files.  Loads Gerber, NC Drill/Rout, ODB++, IPC-2581, <a href="https://www.numericalinnovations.com/collections/fab-3000-gerber-cam">FAB3000 Workspace (*.wrk)</a> <br /><b>Note:</b> You can upload a ZIP file or multiple files.</li>
 				<li><b>Review</b> PCB Panelization options.</li>
-				<li>Press <b>Submit</b> to begin.</li>
+				<li>Press <b>Create Panel</b> to start.</li>
 			</ol>
+			<hr>
 		</div>
 
 		<form id="form1">
-			Your API Key <input id="api_key" type="text" value="" />
+			<p>Your API Key <input id="api_key" type="text" value="" /></p>
 			<input type="hidden" name="output" value="files" />
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />
 			<input type="hidden" name="timeout" value="60" />
-			<hr/>
 			<p>Upload <b>PCB Design:</b> <input type="file" name="files" id="files" /></p>
 			<p><b>Min. Count:</b> <input type="text" name="pcb_count" id="pcb_count" value="5" /></p>
 			<p><b>Surplus Count:</b> <input type="text" name="pcb_surplus" id="pcb_surplus" value="50" /></p>
@@ -40,22 +40,26 @@
 			<p><b>Border Spacing (in.):</b> <input type="text" name="border_spacing" id="border_spacing" value="0.5" /></p>
 			<p><i>Note: Fiducials, Tooling holes, and Venting will be included for demonstration purposes.</i></p>
 			<hr/>
-			<p><input type="submit" id="submitButton" value="Create Panel" /></p>
+			<p><input type="submit" id="submitButton" value="Create Panel" style="color: white;background-color: #008CBA;border: none;padding: 10px 20px;"/></p>
+
 		</form>
 
 		<span id="errorMessage" style="color: red"></span><br />
 		<br />
 
-		<div id="result1Container" style="display: none">
-			<div>Get Job ID, then keep checking if status='complete' every few seconds.</div>
+		<div id="result1Container" style="display: none;">
 			<pre id="result1" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
 		</div>
 		<br />
+		<span id="loadingMessage" style="color: blue; display: none">Processing ...</span><br />
+		<br />
 
-		<div id="result2Container" style="display: none">
-			<div>Result of processing</div>
-			<pre id="result2" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
+		<div id="result2Container" style="color: blue; display: none; font-weight:bold">
+			<button type="button" id="download_wrk" onclick="showWorkspace()" style="color: white;background-color: #606060;border: none;padding: 10px 20px;">Download Workspace (WRK)</button>
+
 		</div>
+		<br />
+		<br />
 
 		<script>
 			let api_key = null
@@ -105,8 +109,17 @@
 				sMatrix += "FILE=panelizedResults.wrk\n";
 				sMatrix += "}\n\n";
 
-				console.log("sMatrix >>>", sMatrix);
+				//Generate a Panel Outlie
+				sMatrix += "EXPORT_SVG{\n";
+				sMatrix += "JOB=@active\n";
+				sMatrix += "UNITS=INCH\n";
+				sMatrix += "FILE=panel-outline.svg\n";
+				sMatrix += "purpose=panel-outline\n";
+				sMatrix += "BACKGROUND=white\n";
+				sMatrix += "}\n\n";
 
+				//View Matrix file
+				console.log("sMatrix >>>", sMatrix);
 
 				//Append Matrix command to Form data 
 				formData.append('matrix', sMatrix); 
@@ -117,6 +130,7 @@
 				try {
 					api_key = document.getElementById('api_key').value
 
+					// Start Preflight API job
 					const response = await fetch('https://www.pcbpreflight.com/api/v1/job', {
 						method: 'POST',
 						headers: { Authorization: api_key },
@@ -127,16 +141,21 @@
 					const data = await response.json()
 					if (data.ok === 1) {
 						job_id = data.result.job_id
-						document.getElementById('result1Container').style.display = 'block'
+						document.getElementById('result1Container').style.display = 'none'
 						const result1 = document.getElementById('result1')
 						result1.textContent = JSON.stringify(data.result, null, 2)
 
-						// Keep trying to get the job until status=='complete'
+					// Keep trying to get the job until status=='complete' put a delay so it is not too frequent
 						while (job == null || job.status != 'complete') {
 							await delay(1000)
 							job = await checkJob()
-							updateResult()
+						    document.getElementById('loadingMessage').style.display = 'block'
+						    document.getElementById('loadingMessage').textContent += '.'
 						}
+					document.getElementById('loadingMessage').textContent += ' Done!'
+
+						//Show results to User
+						updateResult()
 					} else {
 						document.getElementById('errorMessage').textContent = data.err.message
 					}
@@ -159,7 +178,15 @@
 
 			function updateResult() {
 				document.getElementById('result2Container').style.display = 'block'
-				document.getElementById('result2').textContent = JSON.stringify(job, null, 2)
+			}
+
+			function showWorkspace() {
+
+				const wrkOutput = job.outputs.find(n => n.path == 'panelizedResults.wrk');
+				if(!wrkOutput) throw Error(`Unable to generate workspace file. Requires the PCB Preflight Visualizer plan ($33/mo) or above.`)
+
+				//Open WRK
+				window.open(wrkOutput.url,"_blank")
 			}
 		</script>
 	</body>

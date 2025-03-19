@@ -16,7 +16,7 @@
 		<div>
 			<p><b>Generate a DFM report to identify and prevent any possible PCB manufacturing issues beforehand.</b><br />
 				<ol>
-					<li>Enter your own PCB Preflight API-key. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a></li>
+					<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a><br />Security Notice: Your API key should be hidden in production releases.</li>
 					<li>Upload your EDA/CAM files.  Loads Gerber, NC Drill/Rout, ODB++, IPC-2581, <a href="https://www.numericalinnovations.com/collections/fab-3000-gerber-cam">FAB3000 Workspace (*.wrk)</a> <br /><b>Note:</b> You can upload a ZIP file or multiple files.</li>
 					<li>Select the DFM Check Rules to use.<br /><b>Note:</b> PCB Preflight allows you to select and customize all DFM Rules.</li>
 					<li>Press Generate DFM Report to begin.</li>
@@ -48,7 +48,7 @@
 			<pre id="result1" style="width: 90%; padding: 8px; border: 1px solid black; font-family: 'Courier New', Courier, monospace; overflow: hidden"></pre>
 		</div>
 		<br />
-		<span id="loadingMessage" style="color: black; display: none; font-weight:bold">Processing DFM Report (may be a minute)...</span><br />
+		<span id="loadingMessage" style="color: black; display: none; font-weight:bold">Processing DFM Report (please wait)...</span><br />
 
 		<div id="result2Container" style="color: blue; display: none; font-weight:bold">
 			<div><b>Done!</b>  Click below to view your DFM results</div><br/>
@@ -206,7 +206,12 @@
 			}
 
 			function showPdfReport() {
-				window.open(job.outputs[0].url,"_blank")
+				// Find PDF Report in list of outputs
+				const pdfOutput = job.outputs.find(n => n.path == 'DFMReportWithImages.pdf');
+				if(!pdfOutput) throw Error(`Unable to generate viewer output. Requires the PCB Preflight Visualizer plan ($33/mo) or above.`)
+
+				//Open PDF In new Tab
+				window.open(pdfOutput.url,"_blank")
 			}
 		</script>
 	</body>

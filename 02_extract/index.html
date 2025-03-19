@@ -33,13 +33,13 @@
 			<b>Extract all PCB board information required for successful PCB Manufacturing and Assembly - displayed in a formatted table.</b> <br />
 			Easily parse the resulting PCB Preflight JSON file and display in a formatted table.
 			<ol>
-				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a></li>
+				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a><br />Security Notice: Your API key should be hidden in production releases.</li>
 				<li>Upload your EDA/CAM files.  Loads Gerber, NC Drill/Rout, ODB++, IPC-2581, <a href="https://www.numericalinnovations.com/collections/fab-3000-gerber-cam">FAB3000 Workspace (*.wrk)</a> <br /><b>Note:</b> You can upload a ZIP file or multiple files.</li>
 			</ol>
 		</div>
 
 		<form id="form1">
-			Your API Key <input id="api_key" type="text" value="" />
+			<p>Your API Key <input id="api_key" type="text" value="" /></p>
 			<input type="hidden" name="output" value="files" />
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />
