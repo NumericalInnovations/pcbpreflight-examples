@@ -14,17 +14,12 @@
 	<body>
 		<h1>PCB Preflight API - Display JSON file</h1>
 		<div>
-			 The PCB Preflight API waits for you to request some PCB related information (i.e Minimum Space, Trace width, DFM errors, etc), and then performs the following steps:
-			<ol>
-				<li>Uploads your EDA/CAM files (i.e Gerber, NC Drill/Rout, ODB++, IPC-2581, FAB3000 Workspace)</li>
-				<li>Extracts your requested infomation </li>
-				<li>Delivers those results in a JSON file - for your review.</li>
-			</ol>
+			<b>This example displays the resulting JSON file output after uploading your EDA/CAM files. </b> <br />
+			Note: For many API Users (who just want to extract PCB data required by PCB Sales/Engineering) this is first example is all they require. Simply parse the resulting JSON file to get all PCB details.
 
-			<b>This example displays the resulting JSON file output by PCB Preflight API. </b> <br />
 			<ol>
 				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a><br />Security Notice: Your PCB Preflight API key should be hidden in production releases.</li>
-				<li><b>Upload</b> your EDA/CAM files. <br />Note: You can upload a ZIP file or multiple files.</li>
+				<li>Upload your EDA/CAM files.  Loads Gerber, NC Drill/Rout, ODB++, IPC-2581, <a href="https://www.numericalinnovations.com/collections/fab-3000-gerber-cam">FAB3000 Workspace (*.wrk)</a> <br /><b>Note:</b> You can upload a ZIP file or multiple files.</li>
 			</ol>
 		</div>
 
@@ -77,8 +72,10 @@
 
 				/* Request some simple options for the PCB Preflight API to perform
 					preflight-autodetect_import   Automatically detect file formats and import. If problems occur use matrix directly.
+					preflight-extract_pcb_info    Detects and extracts all PCB fabrication information, plus Assembly/BOM details.
+					For more information about the PCB Matrix go to, https://www.pcbpreflight.com/admin/api/matrix
 				*/
-				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_import\n}\n'); 
+				formData.append('matrix', '\n\nOPTIONS {\npreflight-autodetect_import\n   preflight-extract_pcb_info\n}\n'); 
 
 				// Clear error
 				document.getElementById('errorMessage').textContent = ''

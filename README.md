@@ -2,7 +2,7 @@
 PCB Preflight utilizes the popular REST API methodology and is compatible with almost all web frameworks such as: Angular, React, Django, Vue, plain HTML/JS, and more. The following tutorials demonstrate how to integrate the PCB Preflight API. 
 
 ## API Examples
-1) <b>Getting Started</b> - HTML and Javascript
+1) <b>Generate JSON file</b> - HTML and Javascript
 1) <b>Extract PCB Design Information</b> - HTML and Javascript
 1) <b>NodeJS Server Example</b> - NodeJS(v16+) server
 1) <b>Online PCB Viewer Example</b> - HTML and Javascript
