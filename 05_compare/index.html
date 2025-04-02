@@ -22,6 +22,7 @@
 				<li>Review Compare PCB options.</li>
 				<li>Press <b>Submit</b> to begin Comparison.</li>
 			</ol>
+			<hr>
 		</div>
 
 		<form id="form1">
@@ -30,15 +31,24 @@
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />
 			<input type="hidden" name="timeout" value="60" />
-			<p><b>PCB Design #1:</b> <input type="file" name="files"/></p>
-			<p><b>PCB Design #2:</b> <input type="file" name="files"/></p>
-			<p>Minimum Error Size (mm.): <input type="text" name="min_size" id="min_size" value="0.2" /></p>
+			
+			<p>Units: 
+				<select id="outputUnits"  name="outputUnits">
+					<option value="mm">Millimeter</option>
+					<option value="in">Inch</option>
+				</select>
+			</p>
+
+			<p>Minimum Error Size: <input type="text" name="min_size" id="min_size" value="0.0" /></p>
 			<p>Map Layers by: 
 				<select id="mapLayers">
 					<option value="mapLayerName">Name</option>
 					<option value="mapLayerType">Type</option>
 				</select>
 			</p>
+			<hr>
+			<p><b>PCB Design #1:</b> <input type="file" name="files"/></p>
+			<p><b>PCB Design #2:</b> <input type="file" name="files"/></p>
 
 			<p><input type="submit" id="submitButton" value="Submit" /></p>
 		</form>
@@ -86,9 +96,10 @@
 				sMatrix 	+= "\nJOB_1=@first"
 				sMatrix 	+= "\nJOB_2=@last"
 				sMatrix 	+= "\nMETHOD=Blend"
-				sMatrix 	+= "\nUNITS=mm"
+				sMatrix 	+= "\nUNITS=" + formData.get("outputUnits")
 				sMatrix 	+= "\nMinErrorSize=" + formData.get("min_size");
 				sMatrix 	+= '\noutput_pdf_file=CompareJobsResult.pdf\n'
+				sMatrix 	+= '\noutput_text_file=CompareJobsResult.txt\n'
 				sMatrix += "}\n\n";
 				console.log("sMatrix >>>", sMatrix);
 
