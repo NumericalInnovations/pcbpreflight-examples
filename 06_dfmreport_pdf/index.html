@@ -15,17 +15,17 @@
 		<h1>PCB Preflight API - Generate DFM Report (PDF)</h1>
 		<div>
 			<p><b>Generate a DFM report to identify and prevent any possible PCB manufacturing issues beforehand.</b><br />
-				<ol>
-					<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a><br />Security Notice: Your PCB Preflight API key should be hidden in production releases.</li>
-					<li>Upload your EDA/CAM files.  Loads Gerber, NC Drill/Rout, ODB++, IPC-2581, <a href="https://www.numericalinnovations.com/collections/fab-3000-gerber-cam">FAB3000 Workspace (*.wrk)</a> <br /><b>Note:</b> You can upload a ZIP file or multiple files.</li>
-					<li>Select the DFM Check Rules to use.<br /><b>Note:</b> PCB Preflight allows you to select and customize all DFM Rules.</li>
-					<li>Press Generate DFM Report to begin.</li>
-				</ol>
-				<hr>
-			</div>
+			<ol>
+				<li>Enter your own <b>PCB Preflight API-key</b>. <a href="https://www.pcbpreflight.com/admin/api/keys">Get your API Key from the API Dashboard >></a><br />Security Notice: Your PCB Preflight API key should be hidden in production releases.</li>
+				<li>Upload your EDA/CAM files.  Loads Gerber, NC Drill/Rout, ODB++, IPC-2581, <a href="https://www.numericalinnovations.com/collections/fab-3000-gerber-cam">FAB3000 Workspace (*.wrk)</a> <br /><b>Note:</b> You can upload a ZIP file or multiple files.</li>
+				<li>Select the DFM Check Rules to use.<br /><b>Note:</b> PCB Preflight allows you to select and customize all DFM Rules.</li>
+				<li>Press Generate DFM Report to begin.</li>
+			</ol>
+		</div>
 
 		<form id="form1">
 			<p>Your API Key <input id="api_key" type="text" value="" /></p>
+			<hr>
 			<input type="hidden" name="output" value="files" /> <!-- either "zip" or "files" -->
 			<input type="hidden" name="save_input" value="false" />
 			<input type="hidden" name="send_email" value="true" />

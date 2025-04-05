@@ -5,10 +5,10 @@ PCB Preflight utilizes the popular REST API methodology and is compatible with a
 1) <b>Generate JSON file</b> - HTML and Javascript
 1) <b>Extract PCB Design Information</b> - HTML and Javascript
 1) <b>NodeJS Server Example</b> - NodeJS(v16+) server
-1) <b>Online PCB Viewer Example</b> - HTML and Javascript
+1) <b>Automated PCB Quotes</b> - HTML and Javascript
 1) <b>Compare PCB Designs</b> - HTML and Javascript
 1) <b>Generate DFM Report (PDF)</b> - HTML and Javascript
-1) <b>Automated PCB Quotes</b> - HTML and Javascript
+1) <b>Online PCB Viewer Example</b> - HTML and Javascript
 1) <b>PCB Panelization</b> - HTML and Javascript
 1) <b>Electrical Test on a PCB (Netlist Comparison)</b> - HTML and Javascript
 1) <b>Generate intelligent ODB++ file from Gerber/NC Files</b> - HTML and Javascript
